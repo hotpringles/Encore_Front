@@ -1,0 +1,53 @@
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    width: 80%; /* 카드 가로 크기 고정 */
+    height:85% /* 카드 세로 크기 고정 */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background-color: #eee;
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #213547; /* index.css의 light 모드 색상과 맞춤 */
+}
+
+.card-description {
+    font-size: 0.95rem;
+    color: #555;
+    flex-grow: 1;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+    align-self: flex-start;
+}
