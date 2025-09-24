@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './MenuSidebar.css';
 
-function MenuSidebar() {
+function MenuSidebar({ onClose }) {
     const menuItems = [
         { path: '/', label: 'Home' },
         { path: '/profile', label: '프로필 설정' },
@@ -14,7 +14,7 @@ function MenuSidebar() {
             <ul className="menu-sidebar-list">
                 {menuItems.map(item => (
                     <li key={item.path} className="menu-sidebar-item">
-                        <Link to={item.path} className="menu-sidebar-link">{item.label}</Link>
+                        <Link to={item.path} className="menu-sidebar-link" onClick={onClose}>{item.label}</Link>
                     </li>
                 ))}
             </ul>

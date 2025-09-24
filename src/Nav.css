@@ -1,65 +1,74 @@
 .navbar {
     display: flex;
-    justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
-    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
     width: 100%;
-    height: 60px; /* 네비게이션 바 높이 지정 */
-    padding: 0 24px; /* 좌우 여백 */
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-    box-sizing: border-box; /* padding과 border가 너비/높이에 포함되도록 설정 */
+    position: relative; /* 자식 요소의 absolute 위치 기준점 */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.navbar-logo {
-    /* 로고를 중앙에 위치시키기 위한 설정 */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-
-    /* 로고 텍스트 스타일 */
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #0056b3; /* 예시 색상 */
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    /* 로고와 겹치지 않도록 최소 너비를 확보합니다. */
+    /* 이 값은 오른쪽 컨텐츠 너비에 맞춰 조정할 수 있습니다. */
+    min-width: 180px; 
 }
 
-.navbar-left-section {
-    /* flex-grow, flex-shrink, flex-basis를 이용해 공간을 유연하게 관리 */
-    flex: 1 0 0;
+.nav-center {
+    position: absolute; /* 절대 위치 사용 */
+    left: 50%;          /* 왼쪽에서 50% 지점으로 이동 */
+    transform: translateX(-50%); /* 자기 너비의 50%만큼 왼쪽으로 이동하여 중앙 정렬 */
 }
 
-.menu-toggle-button {
+.nav-right {
+    justify-content: flex-end; /* 오른쪽 요소들을 오른쪽 끝으로 정렬 */
+}
+
+.nav-button {
     background: none;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem; /* 텍스트 아이콘 크기 */
     cursor: pointer;
-    color: #333;
-    padding: 0;
+    padding: 0 20px; /* 버튼의 클릭 영역과 여백 */
 }
 
-.navbar-right-section {
+.nav-logo a {
     display: flex;
     align-items: center;
-    gap: 20px; /* 오른쪽 요소들 사이의 간격 */
+    text-decoration: none;
+    color: #333;
 }
 
-.sidebar-toggle-button {
-    background-color: transparent;
-    color: #333;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+.nav-logo img {
+    height: 32px;
+    margin-right: 10px;
+}
+
+.nav-logo span {
+    font-size: 1.5rem;
     font-weight: bold;
-    line-height: 1; /* 텍스트 세로 정렬을 위해 추가 */
-    padding-bottom: 4px; /* ... 텍스트의 시각적 중앙 정렬 */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, border-color 0.2s;
 }
 
-.sidebar-toggle-button:hover {
-    background-color: #f0f0f0;
+.nav-user-profile {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.user-avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+    object-fit: cover; /* 이미지가 비율을 유지하며 채워지도록 합니다. */
+}
+
+.user-name {
+    font-weight: 500;
 }
