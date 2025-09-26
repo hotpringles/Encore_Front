@@ -1,8 +1,10 @@
 .main-content-wrapper {
-    padding: 24px;
+    padding: 36px; /* 일관된 패딩을 적용합니다. */
     display: flex;
     flex-direction: column; /* 내부 요소들을 세로로 정렬합니다. */
     flex-grow: 1; /* 부모(.app-main)의 남은 공간을 모두 채웁니다. */
+    min-height: 0; /* flex 자식 요소의 높이가 부모를 초과하지 않도록 보장합니다. */
+    box-sizing: border-box; /* padding이 높이에 포함되도록 하여 오버플로우를 방지합니다. */
 }
 
 .main-content-title {
@@ -18,10 +20,10 @@
 .card-carousel {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px; 
+    justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
+    gap: 36px;
     flex-grow: 1; /* 제목을 제외한 남은 세로 공간을 모두 차지 */
-    min-height: 0; /* flex item이 수축할 때 내용이 넘치는 것을 방지 */
+    min-height: 0; /* flex 컨테이너가 할당된 공간을 초과하지 않도록 보장합니다. */
 }
 
 .carousel-arrow {
@@ -45,8 +47,4 @@
 .carousel-arrow:hover {
     background-color: #f7f7f7;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.card-carousel .report-card {
-    width: 400px; /* MainContent 캐러셀 내 카드 너비 고정 */
 }

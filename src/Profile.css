@@ -1,13 +1,12 @@
 .profile-container {
-    padding: 24px;
+    padding: 36px 24px;
     /* 최대 너비를 설정하고 margin을 이용해 중앙에 배치합니다. */
-    max-width: 800px;
+    width: 85%;
+    max-width: 960px;
+    height: fit-content;
     margin: 0 auto;
+    overflow: auto;
 
-    /* 카드 형태의 디자인을 제거하여 다른 페이지와 통일감을 줍니다. */
-    /* background-color: #fff; */
-    /* border-radius: 8px; */
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); */
 }
 
 .profile-title {
@@ -20,8 +19,31 @@
     padding-bottom: 12px;
 }
 
+/* 사용자 이미지 섹션 */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.profile-image-container {
+    margin-right: 24px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+}
+
 .profile-section {
     margin-bottom: 32px;
+}
+
+.profile-section:last-child {
+    margin-bottom: 0;
 }
 
 .section-title {
@@ -48,6 +70,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
+    box-sizing: border-box; /* padding과 border를 너비에 포함시켜 오버플로우를 방지합니다. */
 }
 
 .profile-form input:read-only {

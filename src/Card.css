@@ -1,12 +1,16 @@
 .report-card {
-    height: 450px; /* 카드의 높이를 고정하여 레이아웃을 안정화합니다. */
+    flex-grow: 1; /* 캐러셀 내에서 남은 공간을 모두 차지하도록 설정 */
+    height: 100%; /* 부모(.card-carousel)의 높이를 채우도록 명시합니다. */
+    max-height: calc(100vh - 185px); /* 뷰포트 높이에서 상단 내비게이션, 패딩, 제목 높이를 제외한 최대 높이 */
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scrollbar-width: none; /* Firefox */
+    /* --- Scroll Snap 핵심 속성 --- */
+    scroll-snap-type: y mandatory; /* Y축으로 스크롤 시 페이지 단위로 강제 스냅 */
+    scroll-behavior: smooth;       /* 부드러운 스크롤 효과 */
 }
 
 .report-card:hover {
@@ -14,76 +18,49 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.card-image {
-    width: 100%;
-    height: 225px;
-    object-fit: cover;
+/* Chrome, Safari, Opera */
+.report-card::-webkit-scrollbar {
+    display: none;
 }
 
-.card-content {
-    padding: 20px;
+.card-page {
+    height: 100%; /* 각 페이지가 카드 높이를 꽉 채움 */
+    width: 100%;
+    scroll-snap-align: start; /* 페이지의 시작 부분이 컨테이너의 시작 부분에 스냅 */
+    scroll-snap-stop: always;  /* 빠른 스크롤에도 한 페이지씩 멈춤 */
     display: flex;
     flex-direction: column;
-    height: 205px; /* (카드 높이 - 이미지 높이 - 패딩)을 고려하여 스크롤 영역의 높이를 고정합니다. */
-    overflow-y: auto; /* 이 영역을 스크롤 가능하게 만듭니다. */
-    position: relative; /* 스크롤 인디케이터의 기준점 */
-    scrollbar-width: none; /* Firefox */
 }
 
-/* Chrome, Safari, Opera */
-.card-content::-webkit-scrollbar {
-    display: none;
+.card-image {
+    width: 100%;
+    /* flex-basis를 사용하여 높이 비율을 3으로 설정합니다. */
+    flex-basis: 75%;
+    object-fit: cover;
+    min-height: 0; /* 콘텐츠가 할당된 공간을 넘어서 부모를 밀어내는 것을 방지합니다. */
 }
 
 .card-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin: 0 0 12px 0;
-}
-
-/* 요약본과 전체 내용을 감싸는 래퍼 */
-.content-wrapper {
+    padding: 20px;
+    background-color: #fff;
+    margin: 0;
     display: flex;
-    flex-direction: column;
-    height: 100%; /* 부모(.card-content)의 높이를 채움 */
+    align-items: center;
+    justify-content: center;
+    /* flex-basis를 사용하여 높이 비율을 1로 설정합니다. */
+    flex-basis: 25%;
+    min-height: 0; /* 텍스트가 여러 줄이 되어도 할당된 공간을 넘지 않도록 합니다. */
 }
 
-.card-title {
-    flex-shrink: 0; /* 제목 높이가 줄어들지 않도록 함 */
-}
-
-.scroll-prompt {
-    color: #888;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 0.9rem;
-    /* flex-grow: 1; 이 속성이 스크롤 영역을 밀어내는 원인이었습니다. */
-}
-
-.card-summary-desc {
+.card-summary-content {
+    padding: 20px;
     font-size: 1rem;
     color: #555;
     line-height: 1.6;
-    margin: 0;
-    transition: opacity 0.3s ease, transform 0.4s ease;
-    opacity: 0;
-    transform: translateY(100%);
-    position: absolute; /* 슬라이드 애니메이션을 위해 */
-    bottom: 0;
-    left: 0;
-    padding: 20px; /* .card-content와 동일한 패딩 */
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-}
-
-/* 스크롤 시 요약본이 슬라이드되며 나타남 */
-.card-summary-desc.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.scroll-spacer {
-    height: 101%; /* .card-content 높이보다 1% 더 길게 만들어 항상 스크롤 가능하게 함 */
-    flex-shrink: 0;
+    /* 요약 내용이 길 경우를 대비해 내부 스크롤 허용 */
+    overflow-y: auto; /* 내용이 길어지면 스크롤됩니다. */
+    height: 100%; /* 부모(.card-page)의 높이를 채웁니다. */
+    box-sizing: border-box; /* padding이 높이에 포함되도록 설정합니다. */
 }

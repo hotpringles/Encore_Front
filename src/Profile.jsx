@@ -1,12 +1,14 @@
 import React from 'react';
 import './Profile.css';
+// 1. 사용자 이미지를 import 합니다. 이미지 경로가 올바른지 확인해주세요.
+import userAvatar from './assets/kiss.png';
 
 function Profile() {
     // 실제 애플리케이션에서는 사용자 데이터를 props나 context API로 받아옵니다.
     const userData = {
         name: '최정우',
         email: 'jwooch@example.com',
-        avatar: './assets/kiss.png' // Nav와 동일한 아바타 경로
+        avatar: userAvatar // import한 이미지 변수를 사용합니다.
     };
 
     const handlePasswordChange = (event) => {
@@ -16,7 +18,22 @@ function Profile() {
 
     return (
         <div className="profile-container">
-            <h2 className="profile-title">프로필 설정</h2>
+            <h1 className="profile-title">프로필 설정</h1>
+
+            {/* 2. 사용자 이미지와 정보를 표시하는 섹션을 추가합니다. */}
+            <div className="profile-header">
+                <div className="profile-image-container">
+                    <img
+                        src={userData.avatar}
+                        alt="사용자 프로필"
+                        className="profile-image"
+                    />
+                </div>
+                <div>
+                    <h2 className="section-title" style={{ marginBottom: '8px', borderBottom: 'none' }}>{userData.name}</h2>
+                    <p style={{ color: '#555', margin: 0 }}>{userData.email}</p>
+                </div>
+            </div>
 
             <div className="profile-section">
                 <h3 className="section-title">기본 정보</h3>

@@ -19,7 +19,8 @@
 .app-main {
     grid-area: main;
     display: flex; /* 자식 요소가 높이를 채울 수 있도록 flexbox 컨테이너로 만듭니다. */
-    overflow-y: auto;
+    overflow-y: auto; /* 내용이 넘칠 경우 이 영역이 스크롤되도록 다시 활성화합니다. */
+    min-height: 0; /* Grid 아이템이 부모의 크기를 초과하지 않도록 보장합니다. */
     background-color: #f4f4f8; /* 메인 콘텐츠 배경색을 구분하기 위해 추가 */
     margin-right: 0; /* 기본 오른쪽 여백 없음 */
     transition: margin-right 0.35s ease-in-out; /* 여백 변경에 애니메이션 적용 */
