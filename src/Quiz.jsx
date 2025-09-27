@@ -38,17 +38,17 @@ function Quiz() {
         <div className="quiz-container">
             <h2 className="quiz-title">경제 리포트 OX 퀴즈</h2>
             <div className="quiz-carousel">
-                <button onClick={handlePrev} className="carousel-arrow prev-arrow">&lt;</button> 
+                <button onClick={handlePrev} className="carousel-arrow prev-arrow">&lt;</button>
                 <div className="quiz-content-area">
                     {/* 상단: 뉴스 리포트 카드 */}
                     <Card
                         key={currentQuizItem.id}
                         title={currentQuizItem.title}
                         description={currentQuizItem.description}
-                        summary={currentQuizItem.summary} // summary prop 추가
+                        summary={currentQuizItem.summary}
                         imageUrl={currentQuizItem.imageUrl}
+                        variant="quiz" // 퀴즈 페이지용 variant 전달
                     />
-
                     {/* 하단: 퀴즈 섹션 */}
                     <div className="quiz-card">
                         <p className="quiz-question">{currentQuizItem.quiz.question}</p>

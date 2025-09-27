@@ -1,68 +1,157 @@
 .quiz-container {
-    width: 100%;
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
     display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* 부모(.app-main)의 남은 세로 공간을 모두 차지하도록 설정 */
+    flex-direction: column; /* 전체 컨테이너의 자식들을 세로로 배치 */
 }
 
 .quiz-title {
     font-size: 2rem;
     font-weight: 700;
     color: #213547;
-    margin-top: 0;
-    margin-bottom: 24px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .quiz-content-area {
-    flex-grow: 1;
-    min-width: 0; /* flex item이 부모를 넘어가지 않도록 설정 */
     display: flex;
-    flex-direction: column;
-    gap: 20px; /* 카드와 퀴즈 사이의 간격 */
-    /* 자식 요소들이 전체 너비를 차지하도록 align-items를 제거합니다. */
-    justify-content: center;
+    flex-direction: column; /* 뉴스 카드와 퀴즈 카드를 세로로 배치 */
+    gap: 24px; /* 카드 사이의 간격을 24px로 설정 */
+    width: 100%;
+    flex: 1; /* 캐러셀 내에서 남은 공간을 차지 */
 }
 
 .quiz-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 내부 콘텐츠를 중앙에 배치 */
+    padding: 1rem 1.5rem; /* 상하 패딩 줄임 */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    height: 200px; /* 높이를 200px로 고정 */
+    flex-shrink: 0; /* 높이가 줄어들지 않도록 설정 */
+    min-height: 0; /* 콘텐츠 넘침 방지 */
+}
+
+.quiz-carousel {
+    display: flex;
+    align-items: stretch; /* 아이템들이 같은 높이를 갖도록 함 */
+    height: 600px; /* 캐러셀 높이를 600px로 고정 */
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 함 */
+    overflow: visible; /* 요청에 따라 auto로 변경 */
+}
+
+.carousel-arrow {
+    width: 50px; /* 너비 지정 */
+    height: 50px; /* 높이 지정 */
+    border-radius: 50%; /* 원 모양으로 만들기 */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 고정 */
+    align-self: center;
+    display: flex; /* 내부 문자 정렬을 위해 flex 사용 */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow:hover {
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.quiz-content-area {
+    margin: 0 1.5rem; /* 화살표와 콘텐츠 영역 사이의 간격 */
+}
+
+/* --- 퀴즈 페이지 전용 리포트 카드 스타일 --- */
+.report-card-in-quiz {
+    display: flex; /* 이미지와 텍스트를 가로로 배치 */
     background-color: #fff;
     border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden; /* 내부 이미지가 삐져나오지 않도록 */    
+    height: 350px; /* 높이를 350px로 고정 */
+    flex-shrink: 0; /* 높이가 줄어들지 않도록 설정 */
+}
+
+/* 퀴즈 페이지 카드 내부 스타일 */
+.report-card-in-quiz .card-image-container {
+    flex-shrink: 0;
+    width: 40%; /* 이미지 너비 */
+}
+
+.report-card-in-quiz .card-image {
     width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 컨테이너에 꽉 차도록 */
+}
+
+.report-card-in-quiz .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 내용이 길 경우 스크롤 */
+}
+
+.report-card-in-quiz .card-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.report-card-in-quiz .card-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .quiz-question {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    line-height: 1.6;
-    text-align: center;
+    font-size: 1.1rem; /* 폰트 크기 축소 */
+    margin-bottom: 1rem; /* 하단 마진 축소 */
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .quiz-options {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 1.5rem; /* 버튼 사이 간격 조정 */
+    margin-bottom: 1rem; /* 하단 마진 축소 */
 }
 
 .quiz-button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    background-color: #f8f9fa;
-    font-size: 1.5rem;
+    width: 50px; /* 버튼 크기 축소 */
+    height: 50px; /* 버튼 크기 축소 */
+    padding: 0;
+    font-size: 1.2rem; /* 폰트 크기 축소 */
     font-weight: bold;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    background-color: #f0f0f0;
     cursor: pointer;
     transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .quiz-button:hover {
-    background-color: #e9ecef;
-    border-color: #adb5bd;
+    background-color: #e0e0e0;
+    border-color: #bbb;
 }
 
 .quiz-button.selected {
@@ -71,11 +160,33 @@
     border-color: #007bff;
 }
 
+.quiz-feedback-section {
+    min-height: 45px; /* 최소 높이 축소 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-button {
+    padding: 0.5rem 1.2rem; /* 패딩 축소 */
+    font-size: 0.9rem; /* 폰트 크기 축소 */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
 .quiz-result {
+    font-size: 1rem; /* 폰트 크기 축소 */
     font-weight: bold;
-    padding: 8px;
-    border-radius: 4px;
-    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
 .quiz-result.correct {
@@ -86,80 +197,4 @@
 .quiz-result.incorrect {
     color: #721c24;
     background-color: #f8d7da;
-}
-
-.quiz-feedback-section {
-    /* 버튼과 결과 메시지가 교체될 때 높이 변화를 방지하기 위해 최소 높이를 설정합니다. */
-    min-height: 62px; 
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    margin-top: 24px; /* 버튼과 결과 메시지에 공통으로 적용될 상단 여백 */
-}
-
-.quiz-submit-section {
-    display: flex;
-    justify-content: center;
-    /* margin-top을 부모인 .quiz-feedback-section으로 이동합니다. */
-    /* margin-top: 24px; */
-}
-
-.submit-button {
-    padding: 12px 40px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-    background-color: #28a745;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.submit-button:hover {
-    background-color: #218838;
-}
-
-.quiz-carousel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소들을 양쪽 끝으로 분산 배치 */
-    width: 80%;
-    margin: 0 auto; /* 하단 마진을 제거하고 중앙 정렬만 유지 */
-    gap: 20px;
-}
-
-.carousel-arrow {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #555;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 고정 */
-}
-
-.carousel-arrow:hover {
-    background-color: #f7f7f7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* 퀴즈 페이지의 리포트 카드 너비를 100%로 설정 */
-.quiz-content-area .report-card {
-    width: 100%;
-    height: auto; /* 높이는 내용에 맞게 자동 조절 */
-}
-
-/* 퀴즈 페이지의 퀴즈 카드 너비를 100%로 설정 */
-.quiz-content-area .quiz-card {
-    width: 100%;
-    height: auto; /* 높이는 내용에 맞게 자동 조절 */
 }
