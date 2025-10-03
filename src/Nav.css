@@ -2,37 +2,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0; /* 좌우 여백 제거 */
     height: 60px;
-    width: 100%;
-    position: relative; /* 자식 요소의 absolute 위치 기준점 */
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative; /* 자식 요소의 absolute 위치 기준점 */
 }
 
 .nav-left, .nav-right {
     display: flex;
     align-items: center;
-    /* 로고와 겹치지 않도록 최소 너비를 확보합니다. */
-    /* 이 값은 오른쪽 컨텐츠 너비에 맞춰 조정할 수 있습니다. */
-    min-width: 180px; 
+
+    padding: 0; /* 버튼이 가장자리에 붙지 않도록 내부 여백 추가 */
 }
 
 .nav-center {
-    position: absolute; /* 절대 위치 사용 */
-    left: 50%;          /* 왼쪽에서 50% 지점으로 이동 */
-    transform: translateX(-50%); /* 자기 너비의 50%만큼 왼쪽으로 이동하여 중앙 정렬 */
-}
-
-.nav-right {
-    justify-content: flex-end; /* 오른쪽 요소들을 오른쪽 끝으로 정렬 */
-}
-
-.nav-button {
-    background: none;
-    border: none;
-    font-size: 1.5rem; /* 텍스트 아이콘 크기 */
-    cursor: pointer;
-    padding: 0 20px; /* 버튼의 클릭 영역과 여백 */
+    position: absolute; /* 절대 위치로 변경 */
+    left: 50%; /* 왼쪽에서 50% 지점 */
+    transform: translateX(-50%); /* 자신의 너비의 50%만큼 왼쪽으로 이동 */
 }
 
 .nav-logo a {
@@ -40,35 +28,54 @@
     align-items: center;
     text-decoration: none;
     color: #333;
+    font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .nav-logo img {
     height: 32px;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
-.nav-logo span {
+.nav-button {
+    background: none;
+    border: none;
     font-size: 1.5rem;
-    font-weight: bold;
+    cursor: pointer;
+    color: #555;
 }
 
 .nav-user-profile {
     display: flex;
     align-items: center;
+    gap: 12px;
     text-decoration: none;
     color: #333;
-    padding: 0 15px;
-    height: 100%;
 }
 
 .user-avatar-img {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    margin-right: 8px;
-    object-fit: cover; /* 이미지가 비율을 유지하며 채워지도록 합니다. */
+    object-fit: cover;
 }
 
 .user-name {
     font-weight: 500;
+}
+
+/* --- 경험치 바 스타일 --- */
+.exp-bar-container {
+    width: 100px;
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.exp-bar-progress {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
 }

@@ -1,6 +1,7 @@
 .quiz-container {
     width: 90%;
     max-width: 1200px;
+    height: fit-content;
     margin: 2rem auto;
     padding: 2rem;
     display: flex;
@@ -18,7 +19,7 @@
 .quiz-content-area {
     display: flex;
     flex-direction: column; /* 뉴스 카드와 퀴즈 카드를 세로로 배치 */
-    gap: 24px; /* 카드 사이의 간격을 24px로 설정 */
+    justify-content: center; /* 내부 아이템(뉴스 카드)을 중앙에 배치 */
     width: 100%;
     flex: 1; /* 캐러셀 내에서 남은 공간을 차지 */
 }
@@ -40,7 +41,7 @@
 .quiz-carousel {
     display: flex;
     align-items: stretch; /* 아이템들이 같은 높이를 갖도록 함 */
-    height: 600px; /* 캐러셀 높이를 600px로 고정 */
+    height: 400px; /* 캐러셀 높이를 뉴스 카드에 맞게 조정 */
     flex-grow: 1; /* 남은 공간을 모두 차지하도록 함 */
     overflow: visible; /* 요청에 따라 auto로 변경 */
 }
@@ -80,7 +81,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow: hidden; /* 내부 이미지가 삐져나오지 않도록 */    
-    height: 350px; /* 높이를 350px로 고정 */
+    height: 400px; /* 높이를 350px로 고정 */
     flex-shrink: 0; /* 높이가 줄어들지 않도록 설정 */
 }
 
@@ -197,4 +198,88 @@
 .quiz-result.incorrect {
     color: #721c24;
     background-color: #f8d7da;
+}
+
+/* --- 사지선다 퀴즈 스타일 --- */
+.mcq-container {
+    width: 100%;
+    max-width: 800px; /* O/X 퀴즈보다 너비를 조금 좁게 설정 */
+    margin: 4rem auto 0; /* O/X 퀴즈와의 상단 간격 */
+}
+
+.mcq-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 24px; /* O/X 퀴즈와의 간격 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mcq-question {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.mcq-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2x2 그리드 */
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.mcq-option-button {
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mcq-option-button:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.mcq-option-button.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+.mcq-feedback-section {
+    width: 100%;
+    text-align: center;
+}
+
+.mcq-result {
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.mcq-result.correct {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.mcq-result.incorrect {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.mcq-explanation {
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-top: 0.75rem;
+    line-height: 1.5;
 }

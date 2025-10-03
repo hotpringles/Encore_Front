@@ -8,6 +8,9 @@ function Quiz() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [submitted, setSubmitted] = useState(false);
 
+    // 여러 사지선다 퀴즈의 답변과 제출 상태를 관리하는 상태
+    const [mcqAnswers, setMcqAnswers] = useState({});
+
     const handleAnswer = (questionId, answer) => {
         setUserAnswers({
             ...userAnswers,
@@ -30,9 +33,30 @@ function Quiz() {
         setSubmitted(false); // 퀴즈를 넘기면 채점 결과 숨기기
     };
 
+    // --- 사지선다 퀴즈 핸들러 ---
+    const handleOptionSelect = (questionId, option) => {
+        setMcqAnswers(prev => ({
+            ...prev,
+            [questionId]: {
+                ...prev[questionId],
+                selectedOption: option,
+                isSubmitted: false, // 새로운 선택 시 피드백 숨김
+            }
+        }));
+    };
+
+    const handleMcqSubmit = (questionId) => {
+        setMcqAnswers(prev => ({
+            ...prev,
+            [questionId]: { ...prev[questionId], isSubmitted: true }
+        }));
+    };
+    // ---------------------------
+
     const currentQuizItem = reportData[currentIndex];
     const userAnswer = userAnswers[currentQuizItem.id];
     const isCorrect = userAnswer === currentQuizItem.quiz.answer;
+    const currentMcqAnswer = mcqAnswers[currentQuizItem.mcq.id] || {};
 
     return (
         <div className="quiz-container">
@@ -48,39 +72,72 @@ function Quiz() {
                         summary={currentQuizItem.summary}
                         imageUrl={currentQuizItem.imageUrl}
                         variant="quiz" // 퀴즈 페이지용 variant 전달
-                    />
-                    {/* 하단: 퀴즈 섹션 */}
-                    <div className="quiz-card">
-                        <p className="quiz-question">{currentQuizItem.quiz.question}</p>
-                        <div className="quiz-options">
-                            <button
-                                onClick={() => handleAnswer(currentQuizItem.id, true)}
-                                className={`quiz-button ${userAnswer === true ? 'selected' : ''}`}
-                            >
-                                O
-                            </button>
-                            <button
-                                onClick={() => handleAnswer(currentQuizItem.id, false)}
-                                className={`quiz-button ${userAnswer === false ? 'selected' : ''}`}
-                            >
-                                X
-                            </button>
-                        </div>
-                        {/* 피드백 영역: 버튼 또는 결과 메시지를 표시합니다. */}
-                        <div className="quiz-feedback-section">
-                            {submitted && userAnswer !== undefined ? (
-                                <div className={`quiz-result ${isCorrect ? 'correct' : 'incorrect'}`}>
-                                    {isCorrect ? '정답입니다!' : '오답입니다.'}
-                                </div>
-                            ) : (
-                                <div className="quiz-submit-section">
-                                    <button onClick={handleSubmit} className="submit-button">채점하기</button>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+                    />                    
                 </div>
                 <button onClick={handleNext} className="carousel-arrow next-arrow">&gt;</button>
+            </div>
+
+            {/* --- 사지선다 퀴즈 섹션 --- */}
+            <div className="mcq-container">
+                <h2 className="quiz-title">금융 상식 퀴즈</h2>
+                {/* O/X 퀴즈 */}
+                <div className="quiz-card">
+                    <p className="quiz-question">{currentQuizItem.quiz.question}</p>
+                    <div className="quiz-options">
+                        <button
+                            onClick={() => handleAnswer(currentQuizItem.id, true)}
+                            className={`quiz-button ${userAnswer === true ? 'selected' : ''}`}
+                        >
+                            O
+                        </button>
+                        <button
+                            onClick={() => handleAnswer(currentQuizItem.id, false)}
+                            className={`quiz-button ${userAnswer === false ? 'selected' : ''}`}
+                        >
+                            X
+                        </button>
+                    </div>
+                    {/* 피드백 영역: 버튼 또는 결과 메시지를 표시합니다. */}
+                    <div className="quiz-feedback-section">
+                        {submitted && userAnswer !== undefined ? (
+                            <div className={`quiz-result ${isCorrect ? 'correct' : 'incorrect'}`}>
+                                {isCorrect ? '정답입니다!' : '오답입니다.'}
+                            </div>
+                        ) : (
+                            <div className="quiz-submit-section">
+                                <button onClick={handleSubmit} className="submit-button">채점하기</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* 사지선다 퀴즈 */}
+                <div className="mcq-card">
+                    <p className="mcq-question">{currentQuizItem.mcq.question}</p>
+                    <div className="mcq-options">
+                        {currentQuizItem.mcq.options.map((option, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleOptionSelect(currentQuizItem.mcq.id, option)}
+                                className={`mcq-option-button ${currentMcqAnswer.selectedOption === option ? 'selected' : ''}`}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="mcq-feedback-section">
+                        {currentMcqAnswer.isSubmitted ? (
+                            <div className={`mcq-result ${currentMcqAnswer.selectedOption === currentQuizItem.mcq.answer ? 'correct' : 'incorrect'}`}>
+                                {currentMcqAnswer.selectedOption === currentQuizItem.mcq.answer ? '정답입니다!' : '오답입니다.'}
+                                <p className="mcq-explanation">{currentQuizItem.mcq.explanation}</p>
+                            </div>
+                        ) : (
+                            <button onClick={() => handleMcqSubmit(currentQuizItem.mcq.id)} className="submit-button" disabled={!currentMcqAnswer.selectedOption}>
+                                정답 확인
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

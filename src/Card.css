@@ -40,7 +40,8 @@
     min-height: 0; /* 콘텐츠가 할당된 공간을 넘어서 부모를 밀어내는 것을 방지합니다. */
 }
 
-.card-title {
+/* 기본 리포트 카드(.report-card) 내의 제목에만 스타일 적용 */
+.report-card .card-title {
     font-size: 1.25rem;
     font-weight: 600;
     padding: 20px;
@@ -63,4 +64,8 @@
     overflow-y: auto; /* 내용이 길어지면 스크롤됩니다. */
     height: 100%; /* 부모(.card-page)의 높이를 채웁니다. */
     box-sizing: border-box; /* padding이 높이에 포함되도록 설정합니다. */
+}
+
+.card-content {
+    overflow-y: scroll;
 }

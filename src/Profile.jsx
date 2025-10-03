@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.css';
 // 1. 사용자 이미지를 import 합니다. 이미지 경로가 올바른지 확인해주세요.
-import userAvatar from './assets/kiss.png';
+import userAvatar from './assets/seed.png';
 
 function Profile() {
     // 실제 애플리케이션에서는 사용자 데이터를 props나 context API로 받아옵니다.
+    // 이미지 확대를 위한 상태
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+
+    // 임시 경험치 데이터
+    const currentExp = 75;
+    const maxExp = 100;
+    const expPercentage = (currentExp / maxExp) * 100;
+
     const userData = {
         name: '최정우',
         email: 'jwooch@example.com',
@@ -27,11 +35,18 @@ function Profile() {
                         src={userData.avatar}
                         alt="사용자 프로필"
                         className="profile-image"
+                        onClick={() => setIsImageModalOpen(true)} // 이미지 클릭 시 모달 열기
                     />
                 </div>
-                <div>
+                <div className="profile-info">
                     <h2 className="section-title" style={{ marginBottom: '8px', borderBottom: 'none' }}>{userData.name}</h2>
-                    <p style={{ color: '#555', margin: 0 }}>{userData.email}</p>
+                    <p style={{ color: '#555', margin: '0 0 12px 0' }}>{userData.email}</p>
+                    <div className="exp-bar-container">
+                        <div 
+                            className="exp-bar-progress" 
+                            style={{ width: `${expPercentage}%` }}
+                        ></div>
+                    </div>
                 </div>
             </div>
 
@@ -69,6 +84,13 @@ function Profile() {
                 <p>계정을 삭제하면 모든 데이터가 영구적으로 제거됩니다.</p>
                 <button type="button" className="btn btn-danger">계정 삭제</button>
             </div>
+
+            {/* 이미지 확대 모달 */}
+            {isImageModalOpen && (
+                <div className="image-modal-overlay" onClick={() => setIsImageModalOpen(false)}>
+                    <img src={userData.avatar} alt="사용자 프로필 확대" className="enlarged-image" />
+                </div>
+            )}
         </div>
     );
 }
