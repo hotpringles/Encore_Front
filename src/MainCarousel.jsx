@@ -40,7 +40,6 @@ function MainCarousel() {
                         <div key={report.id} className={getCardClass(index)}>
                             <Card
                                 title={report.title}
-                                description={report.description}
                                 summary={report.summary}
                                 imageUrl={report.imageUrl}
                             />

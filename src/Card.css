@@ -59,13 +59,95 @@
     padding: 20px;
     font-size: 1rem;
     color: #555;
-    line-height: 1.6;
+    line-height: 2;
     /* 요약 내용이 길 경우를 대비해 내부 스크롤 허용 */
     overflow-y: auto; /* 내용이 길어지면 스크롤됩니다. */
     height: 100%; /* 부모(.card-page)의 높이를 채웁니다. */
     box-sizing: border-box; /* padding이 높이에 포함되도록 설정합니다. */
+    word-break: keep-all; /* 한글 단어 단위로 줄바꿈하여 가독성 향상 */
 }
 
 .card-content {
     overflow-y: scroll;
+}
+
+/* --- 툴팁(Tooltip) 스타일 --- */
+
+/* 툴팁을 감싸는 컨테이너 */
+.keyword-tooltip {
+    position: relative; /* 툴팁 텍스트의 위치 기준점 */
+    display: inline-block;
+    cursor: help; /* 마우스 커서를 도움말 모양으로 변경 */
+    border-bottom: 1px dotted #555; /* 키워드임을 알려주는 밑줄 */
+}
+
+/* 툴팁 텍스트 (기본적으로 숨김) */
+.keyword-tooltip .tooltip-text {
+    visibility: hidden;
+    width: 220px; /* 툴팁의 너비 */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 10; /* 다른 요소 위에 보이도록 설정 */
+    bottom: 125%; /* 키워드 위에 위치 */
+    left: 50%;
+    margin-left: -110px; /* 너비의 절반만큼 왼쪽으로 이동하여 중앙 정렬 */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    line-height: 1.5; /* 줄 간격 조정 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 키워드에 마우스를 올렸을 때 툴팁 텍스트를 보이게 함 */
+.keyword-tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- 퀴즈 페이지용 카드 스타일 --- */
+.quiz-card-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 100%;
+}
+
+.quiz-card-image {
+    width: 100%;
+    height: 180px; /* 이미지 높이 고정 */
+    object-fit: cover;
+}
+
+.quiz-card-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+    scrollbar-width: none; /* Firefox */
+}
+
+.quiz-card-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.quiz-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+
+.quiz-card-summary {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Override: render tooltips via body-level portal to avoid clipping */
+.keyword-tooltip .tooltip-text {
+    display: none !important;
 }

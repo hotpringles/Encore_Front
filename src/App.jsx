@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './tooltipGlobal';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Nav from './Nav';
