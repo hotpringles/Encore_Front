@@ -17,6 +17,9 @@ function MenuSidebar({ onClose }) {
                         <Link to={item.path} className="menu-sidebar-link" onClick={onClose}>{item.label}</Link>
                     </li>
                 ))}
+                <li className="menu-sidebar-item">
+                    <Link to="/test" className="menu-sidebar-link" onClick={onClose}>테스트</Link>
+                </li>
             </ul>
         </nav>
     );

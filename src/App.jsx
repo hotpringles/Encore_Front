@@ -5,9 +5,10 @@ import { Routes, Route } from 'react-router-dom';
 import Nav from './Nav';
 import ChatSidebar from './ChatSidebar';
 import MenuSidebar from './MenuSidebar';
-import Profile from './Profile'; // Profile 컴포넌트를 import 합니다.
-import Quiz from './Quiz'; // Quiz 컴포넌트를 import 합니다.
-import MainCarousel from './MainCarousel'; // MainCarousel 컴포넌트를 import 합니다.
+import Profile from './Profile'; // Profile 컴포넌트 import
+import Quiz from './Quiz'; // Quiz 컴포넌트 import
+import MainCarousel from './MainCarousel'; // MainCarousel 컴포넌트 import
+import TestCarousel from './TestCarousel'; // TestCarousel 추가
 
 function App() {
     const [isChatSidebarVisible, setIsChatSidebarVisible] = useState(true);
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/" element={<MainCarousel />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/quiz" element={<Quiz />} />
+                    <Route path="/test" element={<TestCarousel />} />
                 </Routes>
             </main>
             <aside className="app-sidebar">
@@ -48,3 +50,4 @@ function App() {
 }
 
 export default App;
+

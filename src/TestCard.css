@@ -1,0 +1,154 @@
+.test-card {
+  height: 100%;
+  width: 100%;
+  background-color: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  position: relative; /* for progress placement */
+}
+
+/* No inner scroll: content must fit the card height */
+.test-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding: 24px;
+  width: 100%;
+  overflow: hidden; /* prevent inner scrollbars */
+  box-sizing: border-box;
+}
+
+.test-card-question {
+  width: 100%;
+  max-width: 700px;
+  font-size: 1.05rem;
+  color: #333;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.test-card-question-line {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  font-size: 2rem;
+}
+.test-card-number-inline {
+  font-weight: 700;
+  color: #111;
+  margin-right: 8px;
+}
+.test-card-question-inline {
+  color: #333;
+  line-height: 1.8;
+}
+
+.test-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+
+/* Group OX and feedback, and separate from the question by 70px */
+.test-card-answer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 70px;
+}
+
+/* Reserve space for feedback so question/OX don't shift when it appears */
+.test-card-feedback-slot {
+  min-height: 60px; /* reserve about 1-2 lines height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.ox-btn {
+  background: transparent; /* show only the image */
+  border: none;
+  padding: 0;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: transform 0.05s ease, filter 0.2s ease;
+}
+.ox-btn:active {
+  transform: scale(0.98);
+}
+.o-btn {
+  background: transparent;
+}
+.x-btn {
+  background: transparent;
+}
+.correct {
+  filter: drop-shadow(0 0 6px rgba(88, 109, 245, 0.8));
+}
+.wrong {
+  filter: drop-shadow(0 0 6px rgba(255, 72, 72, 0.8));
+}
+
+.ox-img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+
+.test-card-feedback {
+  text-align: center;
+  font-weight: 600;
+}
+.test-card-feedback.ok {
+  color: #586df5;
+}
+.test-card-feedback.no {
+  color: #ff4848;
+}
+
+.test-card-progress {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 600;
+}
+
+/* Start / Submit / Result helpers */
+.test-start-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 16px;
+}
+/* Start screen description text size */
+.test-start-screen > div {
+  font-size: 22px;
+}
+.test-start-btn,
+.test-submit-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.test-result {
+  text-align: center;
+  font-weight: 700;
+}
