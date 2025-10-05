@@ -1,51 +1,65 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './tooltipGlobal';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Nav from './Nav';
 import ChatSidebar from './ChatSidebar';
 import MenuSidebar from './MenuSidebar';
 import Profile from './Profile';
-import MainCarousel from './MainCarousel';
 import History from './History';
+import MainCarousel from './MainCarousel';
 import TestCarousel from './TestCarousel';
+import LoginPage from './LoginPage';
+import WelcomePage from './WelcomePage';
+import SignupPage from './SignupPage';
 
 function App() {
-    const [isChatSidebarVisible, setIsChatSidebarVisible] = useState(true);
-    const [isMenuSidebarVisible, setIsMenuSidebarVisible] = useState(false);
+  const [isChatSidebarVisible, setIsChatSidebarVisible] = useState(true);
+  const [isMenuSidebarVisible, setIsMenuSidebarVisible] = useState(false);
 
-    const toggleChatSidebar = () => {
-        setIsChatSidebarVisible((prev) => !prev);
-    };
+  const location = useLocation();
+  const isAuthPage = ['/', '/login', '/signup'].includes(location.pathname);
 
-    const toggleMenuSidebar = () => {
-        setIsMenuSidebarVisible((prev) => !prev);
-    };
+  const toggleChatSidebar = () => {
+    setIsChatSidebarVisible((prev) => !prev);
+  };
 
-    return (
-        <div
-            className={`app-container ${isChatSidebarVisible ? 'chat-sidebar-visible' : 'chat-sidebar-hidden'} ${isMenuSidebarVisible ? 'menu-sidebar-visible' : ''}`}
-        >
-            {isMenuSidebarVisible && <div className="overlay" onClick={toggleMenuSidebar}></div>}
-            <MenuSidebar onClose={toggleMenuSidebar} />
+  const toggleMenuSidebar = () => {
+    setIsMenuSidebarVisible((prev) => !prev);
+  };
 
-            <header className="app-nav">
-                <Nav onToggleChatSidebar={toggleChatSidebar} onToggleMenuSidebar={toggleMenuSidebar} />
-            </header>
+  return (
+    <div
+      className={`app-container ${
+        isChatSidebarVisible ? 'chat-sidebar-visible' : 'chat-sidebar-hidden'
+      } ${isMenuSidebarVisible ? 'menu-sidebar-visible' : ''} ${isAuthPage ? 'auth-layout' : ''}`}
+    >
+      {!isAuthPage && (
+        <>
+          {isMenuSidebarVisible && <div className="overlay" onClick={toggleMenuSidebar}></div>}
+          <MenuSidebar onClose={toggleMenuSidebar} />
+          <header className="app-nav">
+            <Nav onToggleChatSidebar={toggleChatSidebar} onToggleMenuSidebar={toggleMenuSidebar} />
+          </header>
+          <aside className="app-sidebar">
+            <ChatSidebar />
+          </aside>
+        </>
+      )}
 
-            <main className="app-main">
-                <Routes>
-                    <Route path="/" element={<MainCarousel />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/history" element={<History />} />
-                    <Route path="/test" element={<TestCarousel />} />
-                </Routes>
-            </main>
-            <aside className="app-sidebar">
-                <ChatSidebar />
-            </aside>
-        </div>
-    );
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/main" element={<MainCarousel />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/test" element={<TestCarousel />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
 
 export default App;
