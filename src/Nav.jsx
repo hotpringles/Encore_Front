@@ -21,7 +21,7 @@ function Nav({ onToggleChatSidebar, onToggleMenuSidebar }) {
       </div>
       <div className="nav-center">
         <div className="nav-logo">
-          <Link to="/">
+          <Link to="/main">
             <img src={logo} alt="App Logo" />
             <span>FinanceForU</span>
           </Link>
