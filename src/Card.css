@@ -1,16 +1,15 @@
 .report-card {
-    flex-grow: 1; /* 캐러셀 내에서 남은 공간을 모두 차지하도록 설정 */
-    height: 100%; /* 부모(.card-carousel)의 높이를 채우도록 명시합니다. */
-    max-height: calc(100vh - 185px); /* 뷰포트 높이에서 상단 내비게이션, 패딩, 제목 높이를 제외한 최대 높이 */
+    flex-grow: 1;
+    height: 100%;
+    max-height: calc(100vh - 185px);
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    scrollbar-width: none; /* Firefox */
-    /* --- Scroll Snap 핵심 속성 --- */
-    scroll-snap-type: y mandatory; /* Y축으로 스크롤 시 페이지 단위로 강제 스냅 */
-    scroll-behavior: smooth;       /* 부드러운 스크롤 효과 */
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 
 .report-card:hover {
@@ -18,29 +17,26 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Chrome, Safari, Opera */
 .report-card::-webkit-scrollbar {
     display: none;
 }
 
 .card-page {
-    height: 100%; /* 각 페이지가 카드 높이를 꽉 채움 */
+    height: 100%;
     width: 100%;
-    scroll-snap-align: start; /* 페이지의 시작 부분이 컨테이너의 시작 부분에 스냅 */
-    scroll-snap-stop: always;  /* 빠른 스크롤에도 한 페이지씩 멈춤 */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
 }
 
 .card-image {
     width: 100%;
-    /* flex-basis를 사용하여 높이 비율을 3으로 설정합니다. */
     flex-basis: 75%;
     object-fit: cover;
-    min-height: 0; /* 콘텐츠가 할당된 공간을 넘어서 부모를 밀어내는 것을 방지합니다. */
+    min-height: 0;
 }
 
-/* 기본 리포트 카드(.report-card) 내의 제목에만 스타일 적용 */
 .report-card .card-title {
     font-size: 1.25rem;
     font-weight: 600;
@@ -50,9 +46,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* flex-basis를 사용하여 높이 비율을 1로 설정합니다. */
     flex-basis: 25%;
-    min-height: 0; /* 텍스트가 여러 줄이 되어도 할당된 공간을 넘지 않도록 합니다. */
+    min-height: 0;
 }
 
 .card-summary-content {
@@ -60,54 +55,185 @@
     font-size: 1rem;
     color: #555;
     line-height: 2;
-    /* 요약 내용이 길 경우를 대비해 내부 스크롤 허용 */
-    overflow-y: auto; /* 내용이 길어지면 스크롤됩니다. */
-    height: 100%; /* 부모(.card-page)의 높이를 채웁니다. */
-    box-sizing: border-box; /* padding이 높이에 포함되도록 설정합니다. */
-    word-break: keep-all; /* 한글 단어 단위로 줄바꿈하여 가독성 향상 */
+    overflow-y: auto;
+    flex: 1;
+    box-sizing: border-box;
+    word-break: keep-all;
+}
+
+.card-summary-content::-webkit-scrollbar {
+    display: none;
+}
+
+.generate-quiz-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #111;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.generate-quiz-button:hover {
+    background-color: #333;
+}
+
+.generate-quiz-button:disabled {
+    background-color: #7d7d7d;
+    cursor: default;
+}
+
+.quiz-page {
+    background-color: #f9fafc;
+}
+
+.card-quiz-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 28px 24px;
+    text-align: center;
+    box-sizing: border-box;
+    gap: 16px;
+}
+
+.card-quiz-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-quiz-question {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 12px 0;
+}
+
+.card-quiz-options {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.card-quiz-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    background-color: #f0f0f0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-quiz-option:hover {
+    background-color: #e3e3e3;
+    border-color: #bbb;
+}
+
+.card-quiz-option.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.card-quiz-feedback {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+.card-quiz-feedback.correct {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.card-quiz-feedback.incorrect {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.card-mcq-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+}
+
+.card-mcq-option {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.card-mcq-option:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.card-mcq-option.selected {
+    background-color: #007bff;
+    border-color: #0056b3;
+    color: #fff;
+}
+
+.card-quiz-explanation {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 .card-content {
     overflow-y: scroll;
 }
 
-/* --- 툴팁(Tooltip) 스타일 --- */
-
-/* 툴팁을 감싸는 컨테이너 */
 .keyword-tooltip {
-    position: relative; /* 툴팁 텍스트의 위치 기준점 */
+    position: relative;
     display: inline-block;
-    cursor: help; /* 마우스 커서를 도움말 모양으로 변경 */
-    border-bottom: 1px dotted #555; /* 키워드임을 알려주는 밑줄 */
+    cursor: help;
+    border-bottom: 1px dotted #555;
 }
 
-/* 툴팁 텍스트 (기본적으로 숨김) */
 .keyword-tooltip .tooltip-text {
     visibility: hidden;
-    width: 220px; /* 툴팁의 너비 */
+    width: 220px;
     background-color: #333;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 8px;
     position: absolute;
-    z-index: 10; /* 다른 요소 위에 보이도록 설정 */
-    bottom: 125%; /* 키워드 위에 위치 */
+    z-index: 10;
+    bottom: 125%;
     left: 50%;
-    margin-left: -110px; /* 너비의 절반만큼 왼쪽으로 이동하여 중앙 정렬 */
+    margin-left: -110px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    line-height: 1.5; /* 줄 간격 조정 */
+    line-height: 1.5;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* 키워드에 마우스를 올렸을 때 툴팁 텍스트를 보이게 함 */
 .keyword-tooltip:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
 
-/* --- 퀴즈 페이지용 카드 스타일 --- */
 .quiz-card-container {
     display: flex;
     flex-direction: column;
@@ -120,7 +246,7 @@
 
 .quiz-card-image {
     width: 100%;
-    height: 180px; /* 이미지 높이 고정 */
+    height: 180px;
     object-fit: cover;
 }
 
@@ -128,11 +254,11 @@
     padding: 15px;
     overflow-y: auto;
     flex-grow: 1;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
 }
 
 .quiz-card-content::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
 }
 
 .quiz-card-title {
@@ -147,7 +273,6 @@
     line-height: 1.6;
 }
 
-/* Override: render tooltips via body-level portal to avoid clipping */
 .keyword-tooltip .tooltip-text {
     display: none !important;
 }

@@ -1,94 +1,174 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Profile.css';
-// 1. 사용자 이미지를 import 합니다. 이미지 경로가 올바른지 확인해주세요.
 import userAvatar from './assets/seed.png';
 
+const INITIAL_PROFILE = {
+    name: '홍길동',
+    email: 'finance4u@example.com',
+};
+
 function Profile() {
-    // 실제 애플리케이션에서는 사용자 데이터를 props나 context API로 받아옵니다.
-    // 이미지 확대를 위한 상태
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [profileValues, setProfileValues] = useState(INITIAL_PROFILE);
+    const [passwordValues, setPasswordValues] = useState({
+        currentPassword: '',
+        newPassword: '',
+    });
 
-    // 임시 경험치 데이터
-    const currentExp = 75;
-    const maxExp = 100;
-    const expPercentage = (currentExp / maxExp) * 100;
+    const level = 7;
+    const progress = 62;
 
-    const userData = {
-        name: '최정우',
-        email: 'jwooch@example.com',
-        avatar: userAvatar // import한 이미지 변수를 사용합니다.
+    const handleProfileChange = (field) => (event) => {
+        setProfileValues((prev) => ({
+            ...prev,
+            [field]: event.target.value,
+        }));
     };
 
-    const handlePasswordChange = (event) => {
-        event.preventDefault(); // 폼 제출 시 페이지가 새로고침되는 것을 방지합니다.
-        console.log('비밀번호 변경 로직을 여기에 구현합니다.');
+    const handlePasswordChange = (field) => (event) => {
+        setPasswordValues((prev) => ({
+            ...prev,
+            [field]: event.target.value,
+        }));
+    };
+
+    const hasProfileChanges = useMemo(() => (
+        profileValues.name !== INITIAL_PROFILE.name ||
+        profileValues.email !== INITIAL_PROFILE.email
+    ), [profileValues]);
+
+    const handleProfileSubmit = (event) => {
+        event.preventDefault();
+        console.log('프로필 정보 저장', profileValues);
+    };
+
+    const handlePasswordSubmit = (event) => {
+        event.preventDefault();
+        console.log('비밀번호 변경 요청', passwordValues);
+    };
+
+    const handleLogout = () => {
+        console.log('로그아웃 클릭');
+    };
+
+    const handleAvatarKeyDown = (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            setIsImageModalOpen(true);
+        }
     };
 
     return (
-        <div className="profile-container">
-            <h1 className="profile-title">프로필 설정</h1>
-
-            {/* 2. 사용자 이미지와 정보를 표시하는 섹션을 추가합니다. */}
+        <div className="profile-wrapper">
             <div className="profile-header">
-                <div className="profile-image-container">
-                    <img
-                        src={userData.avatar}
-                        alt="사용자 프로필"
-                        className="profile-image"
-                        onClick={() => setIsImageModalOpen(true)} // 이미지 클릭 시 모달 열기
-                    />
+                <h1 className="profile-title">프로필 설정</h1>
+                <div className="profile-title-separator" />
+            </div>
+
+            <div className="profile-content">
+                <aside className="profile-card">
+                    <div
+                        className="profile-avatar"
+                        onClick={() => setIsImageModalOpen(true)}
+                        onKeyDown={handleAvatarKeyDown}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="아바타 크게 보기"
+                    >
+                        <img src={userAvatar} alt="사용자 아바타" />
+                    </div>
+                    <p className="profile-name">{profileValues.name}</p>
+                    <p className="profile-rank">등급 · 🐣</p>
+
+                    <div className="profile-progress">
+                        <div className="profile-progress-track">
+                            <div className="profile-progress-fill" style={{ width: `${progress}%` }}>
+                                <span>LV {level} · {progress}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" className="profile-logout" onClick={handleLogout}>
+                        로그아웃
+                    </button>
+                </aside>
+
+                <div className="profile-panels">
+                    <section className="profile-panel">
+                        <h2 className="panel-title">기본 정보</h2>
+                        <form className="profile-form" onSubmit={handleProfileSubmit}>
+                            <div className="profile-form-row">
+                                <label className="profile-label" htmlFor="profile-name">이름</label>
+                                <input
+                                    id="profile-name"
+                                    type="text"
+                                    className="profile-input"
+                                    value={profileValues.name}
+                                    onChange={handleProfileChange('name')}
+                                />
+                            </div>
+                            <div className="profile-form-row">
+                                <label className="profile-label" htmlFor="profile-email">이메일</label>
+                                <input
+                                    id="profile-email"
+                                    type="email"
+                                    className="profile-input"
+                                    value={profileValues.email}
+                                    onChange={handleProfileChange('email')}
+                                />
+                            </div>
+                            <div className="profile-form-actions">
+                                <button
+                                    type="submit"
+                                    className="profile-save"
+                                    disabled={!hasProfileChanges}
+                                >
+                                    정보 저장
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section className="profile-panel">
+                        <h2 className="panel-title">비밀번호 변경</h2>
+                        <form className="profile-form" onSubmit={handlePasswordSubmit}>
+                            <div className="profile-form-row">
+                                <label className="profile-label" htmlFor="current-password">현재 비밀번호</label>
+                                <input
+                                    id="current-password"
+                                    type="password"
+                                    className="profile-input"
+                                    placeholder="현재 비밀번호를 입력하세요"
+                                    value={passwordValues.currentPassword}
+                                    onChange={handlePasswordChange('currentPassword')}
+                                />
+                            </div>
+                            <div className="profile-form-row">
+                                <label className="profile-label" htmlFor="new-password">새 비밀번호</label>
+                                <input
+                                    id="new-password"
+                                    type="password"
+                                    className="profile-input"
+                                    placeholder="새 비밀번호를 입력하세요"
+                                    value={passwordValues.newPassword}
+                                    onChange={handlePasswordChange('newPassword')}
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="profile-submit"
+                                disabled={!passwordValues.currentPassword || !passwordValues.newPassword}
+                            >
+                                비밀번호 변경
+                            </button>
+                        </form>
+                    </section>
                 </div>
-                <div className="profile-info">
-                    <h2 className="section-title" style={{ marginBottom: '8px', borderBottom: 'none' }}>{userData.name}</h2>
-                    <p style={{ color: '#555', margin: '0 0 12px 0' }}>{userData.email}</p>
-                    <div className="exp-bar-container">
-                        <div 
-                            className="exp-bar-progress" 
-                            style={{ width: `${expPercentage}%` }}
-                        ></div>
-                    </div>
-                </div>
             </div>
 
-            <div className="profile-section">
-                <h3 className="section-title">기본 정보</h3>
-                <form className="profile-form">
-                    <div className="form-group">
-                        <label htmlFor="name">이름</label>
-                        <input type="text" id="name" defaultValue={userData.name} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">이메일</label>
-                        <input type="email" id="email" defaultValue={userData.email} readOnly />
-                    </div>
-                </form>
-            </div>
-
-            <div className="profile-section">
-                <h3 className="section-title">비밀번호 변경</h3>
-                <form className="profile-form" onSubmit={handlePasswordChange}>
-                    <div className="form-group">
-                        <label htmlFor="current-password">현재 비밀번호</label>
-                        <input type="password" id="current-password" placeholder="••••••••" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="new-password">새 비밀번호</label>
-                        <input type="password" id="new-password" placeholder="새 비밀번호 입력" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">비밀번호 변경</button>
-                </form>
-            </div>
-
-            <div className="profile-section danger-zone">
-                <h3 className="section-title">계정 관리</h3>
-                <p>계정을 삭제하면 모든 데이터가 영구적으로 제거됩니다.</p>
-                <button type="button" className="btn btn-danger">계정 삭제</button>
-            </div>
-
-            {/* 이미지 확대 모달 */}
             {isImageModalOpen && (
                 <div className="image-modal-overlay" onClick={() => setIsImageModalOpen(false)}>
-                    <img src={userData.avatar} alt="사용자 프로필 확대" className="enlarged-image" />
+                    <img src={userAvatar} alt="아바타 확대" className="enlarged-image" />
                 </div>
             )}
         </div>
@@ -96,3 +176,4 @@ function Profile() {
 }
 
 export default Profile;
+

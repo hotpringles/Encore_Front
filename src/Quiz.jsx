@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { reportData } from './data';
 import './Quiz.css';
-import Card from './Card'; // Card 컴포넌트를 import 합니다.
+import Card from './Card'; // Card 컴포?�트�?import ?�니??
 
 function Quiz() {
     const [userAnswers, setUserAnswers] = useState({});
     const [currentIndex, setCurrentIndex] = useState(0);
     const [submitted, setSubmitted] = useState(false);
 
-    // 여러 사지선다 퀴즈의 답변과 제출 상태를 관리하는 상태
+    // ?�러 ?��??�다 ?�즈???��?�??�출 ?�태�?관리하???�태
     const [mcqAnswers, setMcqAnswers] = useState({});
 
     const handleAnswer = (questionId, answer) => {
@@ -16,7 +16,7 @@ function Quiz() {
             ...userAnswers,
             [questionId]: answer,
         });
-        setSubmitted(false); // 새로운 답변을 선택하면 채점 결과 숨기기
+        setSubmitted(false); // ?�로???��????�택?�면 채점 결과 ?�기�?
     };
 
     const handleSubmit = () => {
@@ -25,22 +25,22 @@ function Quiz() {
 
     const handlePrev = () => {
         setCurrentIndex(prevIndex => (prevIndex === 0 ? reportData.length - 1 : prevIndex - 1));
-        setSubmitted(false); // 퀴즈를 넘기면 채점 결과 숨기기
+        setSubmitted(false); // ?�즈�??�기�?채점 결과 ?�기�?
     };
 
     const handleNext = () => {
         setCurrentIndex(prevIndex => (prevIndex === reportData.length - 1 ? 0 : prevIndex + 1));
-        setSubmitted(false); // 퀴즈를 넘기면 채점 결과 숨기기
+        setSubmitted(false); // ?�즈�??�기�?채점 결과 ?�기�?
     };
 
-    // --- 사지선다 퀴즈 핸들러 ---
+    // --- ?��??�다 ?�즈 ?�들??---
     const handleOptionSelect = (questionId, option) => {
         setMcqAnswers(prev => ({
             ...prev,
             [questionId]: {
                 ...prev[questionId],
                 selectedOption: option,
-                isSubmitted: false, // 새로운 선택 시 피드백 숨김
+                isSubmitted: false, // ?�로???�택 ???�드�??��?
             }
         }));
     };
@@ -60,27 +60,27 @@ function Quiz() {
 
     return (
         <div className="quiz-container">
-            <h2 className="quiz-title">경제 리포트 OX 퀴즈</h2>
+            <h2 className="quiz-title">경제 리포??OX ?�즈</h2>
             <div className="quiz-carousel">
                 <button onClick={handlePrev} className="carousel-arrow prev-arrow">&lt;</button>
                 <div className="quiz-content-area">
-                    {/* 상단: 뉴스 리포트 카드 */}
+                    {/* ?�단: ?�스 리포??카드 */}
                     <Card
                         key={currentQuizItem.id}
                         title={currentQuizItem.title}
                         description={currentQuizItem.description}
                         summary={currentQuizItem.summary}
                         imageUrl={currentQuizItem.imageUrl}
-                        variant="quiz" // 퀴즈 페이지용 variant 전달
+                        viewType="quiz" // ?�즈 ?�이지??variant ?�달
                     />                    
                 </div>
                 <button onClick={handleNext} className="carousel-arrow next-arrow">&gt;</button>
             </div>
 
-            {/* --- 사지선다 퀴즈 섹션 --- */}
+            {/* --- ?��??�다 ?�즈 ?�션 --- */}
             <div className="mcq-container">
-                <h2 className="quiz-title">금융 상식 퀴즈</h2>
-                {/* O/X 퀴즈 */}
+                <h2 className="quiz-title">금융 ?�식 ?�즈</h2>
+                {/* O/X ?�즈 */}
                 <div className="quiz-card">
                     <p className="quiz-question">{currentQuizItem.quiz.question}</p>
                     <div className="quiz-options">
@@ -97,21 +97,21 @@ function Quiz() {
                             X
                         </button>
                     </div>
-                    {/* 피드백 영역: 버튼 또는 결과 메시지를 표시합니다. */}
+                    {/* ?�드�??�역: 버튼 ?�는 결과 메시지�??�시?�니?? */}
                     <div className="quiz-feedback-section">
                         {submitted && userAnswer !== undefined ? (
                             <div className={`quiz-result ${isCorrect ? 'correct' : 'incorrect'}`}>
-                                {isCorrect ? '정답입니다!' : '오답입니다.'}
+                                {isCorrect ? '?�답?�니??' : '?�답?�니??'}
                             </div>
                         ) : (
                             <div className="quiz-submit-section">
-                                <button onClick={handleSubmit} className="submit-button">채점하기</button>
+                                <button onClick={handleSubmit} className="submit-button">채점?�기</button>
                             </div>
                         )}
                     </div>
                 </div>
 
-                {/* 사지선다 퀴즈 */}
+                {/* ?��??�다 ?�즈 */}
                 <div className="mcq-card">
                     <p className="mcq-question">{currentQuizItem.mcq.question}</p>
                     <div className="mcq-options">
@@ -128,12 +128,12 @@ function Quiz() {
                     <div className="mcq-feedback-section">
                         {currentMcqAnswer.isSubmitted ? (
                             <div className={`mcq-result ${currentMcqAnswer.selectedOption === currentQuizItem.mcq.answer ? 'correct' : 'incorrect'}`}>
-                                {currentMcqAnswer.selectedOption === currentQuizItem.mcq.answer ? '정답입니다!' : '오답입니다.'}
+                                {currentMcqAnswer.selectedOption === currentQuizItem.mcq.answer ? '?�답?�니??' : '?�답?�니??'}
                                 <p className="mcq-explanation">{currentQuizItem.mcq.explanation}</p>
                             </div>
                         ) : (
                             <button onClick={() => handleMcqSubmit(currentQuizItem.mcq.id)} className="submit-button" disabled={!currentMcqAnswer.selectedOption}>
-                                정답 확인
+                                ?�답 ?�인
                             </button>
                         )}
                     </div>

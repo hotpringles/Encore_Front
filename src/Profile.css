@@ -1,163 +1,281 @@
-.profile-container {
-    padding: 36px 24px;
-    /* 최대 너비를 설정하고 margin을 이용해 중앙에 배치합니다. */
-    width: 85%;
-    max-width: 960px;
-    height: fit-content;
-    margin: 0 auto;
-    overflow: auto;
+.profile-wrapper {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+  box-sizing: border-box;
+  color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+}
 
+.profile-header {
+  margin-bottom: 32px;
 }
 
 .profile-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #213547;
-    margin-top: 0;
-    margin-bottom: 24px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 12px;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
 }
 
-/* 사용자 이미지 섹션 */
-.profile-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 32px;
+.profile-title-separator {
+  height: 2px;
+  width: 100%;
+  background-color: #1f1f1f;
+  opacity: 0.15;
 }
 
-.profile-image-container {
-    margin-right: 24px;
+.profile-content {
+  flex: 1;
+  display: flex;
+  gap: 36px;
+  align-items: stretch;
 }
 
-.profile-info {
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+.profile-card {
+  flex: 0 0 320px;
+  background: #f5f5f7;
+  border-radius: 32px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
 }
 
-.profile-image {
-    width: 100px;
-    height: 100px;
+.profile-avatar {
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #f0f0f0;
-    cursor: pointer; /* 클릭 가능함을 나타내는 커서 모양 */
-}
-
-.profile-section {
-    margin-bottom: 32px;
-}
-
-.profile-section:last-child {
-    margin-bottom: 0;
-}
-
-.section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 16px;
-}
-
-.profile-form .form-group {
-    margin-bottom: 16px;
-}
-
-.profile-form label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 6px;
-    color: #555;
-}
-
-.profile-form input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box; /* padding과 border를 너비에 포함시켜 오버플로우를 방지합니다. */
-}
-
-.profile-form input:read-only {
-    background-color: #f1f1f1;
-    cursor: not-allowed;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.danger-zone {
-    border-top: 2px solid #f8d7da;
-    padding-top: 24px;
-}
-
-.danger-zone .section-title {
-    color: #721c24;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-/* --- 이미지 확대 모달 스타일 --- */
-.image-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 블러 효과를 위해 투명도 조절 */
-    backdrop-filter: blur(5px); /* 뒷배경 블러 효과 추가 */
+    background: #f5f5f7;
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 1000; /* 다른 요소들 위에 오도록 */
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.65), 0 12px 18px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+}
+
+.profile-avatar:focus {
+  outline: 3px solid rgba(79, 155, 255, 0.6);
+  outline-offset: 4px;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.profile-rank {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+}
+
+.profile-progress {
+  width: 100%;
+}
+
+.profile-progress-track {
+  width: 100%;
+  height: 22px;
+  background: #e3e9ff;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.profile-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4d63ff, #5877ff);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  min-width: 96px;
+}
+
+.profile-progress-fill span {
+  padding: 0 12px;
+}
+
+.profile-logout {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #1f1f1f;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.profile-logout:hover {
+  color: #4f9bff;
+}
+
+.profile-panels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.profile-panel {
+  background: #dedede;
+  border-radius: 28px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
+  padding: 28px 32px 32px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 18px 0;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-save {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #5877ff, #3f5bff);
+    cursor: pointer;
+    box-shadow: 0 12px 18px rgba(74, 92, 255, 0.32);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 24px rgba(74, 92, 255, 0.35);
+}
+
+.profile-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.profile-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.profile-input {
+  height: 48px;
+  border-radius: 999px;
+  border: none;
+  padding: 0 20px;
+  font-size: 16px;
+  background: #fdfdfd;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.profile-input:focus {
+  outline: 2px solid #4f9bff;
+  outline-offset: 2px;
+}
+
+.profile-input[readonly] {
+  background: #f3f3f3;
+  color: #777;
+}
+
+.profile-submit {
+  align-self: flex-end;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #5877ff, #3f5bff);
+  cursor: pointer;
+  box-shadow: 0 12px 18px rgba(74, 92, 255, 0.32);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 24px rgba(74, 92, 255, 0.35);
+}
+
+.profile-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.image-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
 .enlarged-image {
-    /* 뷰포트 크기에 따라 유동적으로 조절되는 원형 크기 */
-    width: clamp(300px, 60vmin, 600px);
-    height: clamp(300px, 60vmin, 600px);
-    border-radius: 50%; /* 원 형태로 변경 */
-    object-fit: cover; /* 이미지가 원을 꽉 채우도록 변경 */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    border: 4px solid white; /* 흰색 테두리 추가 */
+  width: clamp(260px, 45vmin, 520px);
+  height: clamp(260px, 45vmin, 520px);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 24px 45px rgba(0, 0, 0, 0.45);
+  border: 6px solid #fff;
 }
 
-/* --- 경험치 바 스타일 (Nav.css와 동일) --- */
-.exp-bar-container {
-    width: 100px; /* 프로필 정보 영역 너비에 맞춤 */
-    height: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    overflow: hidden;
-}
+@media (max-width: 1024px) {
+  .profile-wrapper {
+    padding: 32px 20px 60px;
+  }
 
-.exp-bar-progress {
-    height: 100%;
-    background-color: #007bff;
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out;
+  .profile-content {
+    flex-direction: column;
+  }
+
+  .profile-card {
+    flex: unset;
+    width: 100%;
+    align-items: center;
+  }
 }

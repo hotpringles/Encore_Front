@@ -42,6 +42,8 @@ function MainCarousel() {
                                 title={report.title}
                                 summary={report.summary}
                                 imageUrl={report.imageUrl}
+                                quiz={report.quiz}
+                                mcq={report.mcq}
                             />
                         </div>
                     ))}
