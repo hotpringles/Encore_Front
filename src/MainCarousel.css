@@ -86,3 +86,33 @@
 .main-carousel-arrow:hover {
   background-color: #fff;
 }
+.main-carousel-heading {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 10px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.main-carousel-heading-date {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1f3c88;
+}
+
+.main-carousel-heading-day {
+  font-size: 0.9rem;
+  color: #5f6f8c;
+}
+
+.main-carousel-empty {
+  padding: 3rem 2rem;
+  font-size: 1rem;
+  color: #666;
+}

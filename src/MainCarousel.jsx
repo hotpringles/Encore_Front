@@ -1,42 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { reportData } from './data';
 import Card from './Card';
 import './MainCarousel.css';
 
-function MainCarousel() {
+function MainCarousel({ reports, activeGroup }) {
+    const carouselData = useMemo(() => {
+        if (Array.isArray(reports) && reports.length > 0) {
+            return reports;
+        }
+        return reportData;
+    }, [reports]);
+
     const [currentIndex, setCurrentIndex] = useState(0);
-    const totalCards = reportData.length;
+    const totalCards = carouselData.length;
+
+    useEffect(() => {
+        setCurrentIndex(0);
+    }, [carouselData]);
 
     const handlePrev = () => {
-        setCurrentIndex(prevIndex => (prevIndex - 1 + totalCards) % totalCards);
+        if (totalCards === 0) return;
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + totalCards) % totalCards);
     };
 
     const handleNext = () => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % totalCards);
+        if (totalCards === 0) return;
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % totalCards);
     };
 
     const getCardClass = (index) => {
+        if (totalCards <= 1) {
+            return 'card-item active';
+        }
+
         const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
         const nextIndex = (currentIndex + 1) % totalCards;
 
         if (index === currentIndex) {
             return 'card-item active';
-        } else if (index === prevIndex) {
+        }
+        if (index === prevIndex) {
             return 'card-item prev';
-        } else if (index === nextIndex) {
+        }
+        if (index === nextIndex) {
             return 'card-item next';
         }
-        return 'card-item'; // 나머지 카드는 기본 클래스
+        return 'card-item';
     };
+
+    if (totalCards === 0) {
+        return (
+            <div className="main-carousel-container">
+                <div className="main-carousel-empty">표시할 카드가 없습니다.</div>
+            </div>
+        );
+    }
 
     return (
         <div className="main-carousel-container">
-            <button onClick={handlePrev} className="main-carousel-arrow prev">&lt;</button>
+            {activeGroup && (
+                <div className="main-carousel-heading">
+                    <span className="main-carousel-heading-date">{activeGroup.dateLabel}</span>
+                    <span className="main-carousel-heading-day">{activeGroup.dayLabel}</span>
+                </div>
+            )}
+            {totalCards > 1 && (
+                <button onClick={handlePrev} className="main-carousel-arrow prev" aria-label="이전 카드">
+                    &lt;
+                </button>
+            )}
             <div className="carousel-viewport">
-                <div 
-                    className="cards-wrapper"
-                >
-                    {reportData.map((report, index) => (
+                <div className="cards-wrapper">
+                    {carouselData.map((report, index) => (
                         <div key={report.id} className={getCardClass(index)}>
                             <Card
                                 title={report.title}
@@ -49,7 +84,11 @@ function MainCarousel() {
                     ))}
                 </div>
             </div>
-            <button onClick={handleNext} className="main-carousel-arrow next">&gt;</button>
+            {totalCards > 1 && (
+                <button onClick={handleNext} className="main-carousel-arrow next" aria-label="다음 카드">
+                    &gt;
+                </button>
+            )}
         </div>
     );
 }

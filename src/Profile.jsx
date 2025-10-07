@@ -51,6 +51,10 @@ function Profile() {
         console.log('로그아웃 클릭');
     };
 
+    const handleDeleteAccount = () => {
+        console.log('계정 삭제 요청');
+    };
+
     const handleAvatarKeyDown = (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -163,6 +167,14 @@ function Profile() {
                             </button>
                         </form>
                     </section>
+
+                    <button
+                        type="button"
+                        className="profile-delete-account"
+                        onClick={handleDeleteAccount}
+                    >
+                        계정 삭제
+                    </button>
                 </div>
             </div>
 

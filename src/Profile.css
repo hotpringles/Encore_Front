@@ -2,11 +2,13 @@
   width: 100%;
   min-height: calc(100vh - 60px);
   margin: 0 auto;
-  padding: 48px 32px 80px;
+  padding: 48px 32px 120px;
   box-sizing: border-box;
   color: #1f1f1f;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-y: auto;
 }
 
 .profile-header {
@@ -31,6 +33,7 @@
   display: flex;
   gap: 36px;
   align-items: stretch;
+  align-items: flex-start;
 }
 
 .profile-card {
@@ -44,6 +47,9 @@
   align-items: center;
   text-align: center;
   gap: 18px;
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
 }
 
 .profile-avatar {
@@ -277,5 +283,45 @@
     flex: unset;
     width: 100%;
     align-items: center;
+  }
+}
+
+
+.profile-delete-account {
+  align-self: flex-end;
+  margin-top: 16px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5858, #ff3d7f);
+  box-shadow: 0 12px 20px rgba(255, 71, 102, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-delete-account:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 26px rgba(255, 71, 102, 0.35);
+}
+
+.profile-delete-account:focus {
+  outline: 3px solid rgba(255, 90, 120, 0.5);
+  outline-offset: 4px;
+}
+
+.profile-delete-account:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 16px rgba(255, 71, 102, 0.26);
+}
+
+@media (max-width: 768px) {
+  .profile-delete-account {
+    width: 100%;
+    margin-top: 12px;
+    align-self: stretch;
+    text-align: center;
   }
 }

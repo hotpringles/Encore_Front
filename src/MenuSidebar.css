@@ -30,3 +30,78 @@
 .menu-sidebar-link:hover {
   background-color: #f0f0f0;
 }
+.menu-sidebar-section {
+  margin-top: 24px;
+  padding: 0 20px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.menu-sidebar-section-title {
+  margin: 0;
+  padding: 16px 0 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.menu-sidebar-history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-sidebar-history-button {
+  width: 100%;
+  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  color: #222;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.menu-sidebar-history-button:hover {
+  background-color: rgba(255, 255, 255, 0.85);
+  transform: translateX(2px);
+}
+
+.menu-sidebar-history-button.active {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.menu-sidebar-history-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: inherit;
+}
+
+.menu-sidebar-history-date {
+  display: inline;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.menu-sidebar-history-day {
+  display: inline;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.menu-sidebar-history-button.active .menu-sidebar-history-day {
+  color: rgba(255, 255, 255, 0.85);
+}

@@ -1,21 +1,6 @@
 import React from 'react';
 import './History.css';
-import { reportData } from './data';
-
-const historyGroups = [
-    {
-        id: 'fri',
-        dayLabel: '금요일',
-        dateLabel: '2024.10.18',
-        items: [reportData[0], reportData[1]],
-    },
-    {
-        id: 'thu',
-        dayLabel: '목요일',
-        dateLabel: '2024.10.17',
-        items: [reportData[2]],
-    },
-];
+import { historyGroups } from './historyGroups';
 
 const stripHtml = (html) => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -23,8 +8,8 @@ function History() {
     return (
         <div className="history-wrapper">
             <header className="history-header">
-                <h1>히스토리</h1>
-                <p>요일별로 저장한 뉴스 카드를 모아볼 수 있어요.</p>
+                <h1>뉴스 히스토리</h1>
+                <p>요일별로 정리한 뉴스 카드를 살펴보세요.</p>
             </header>
 
             <div className="history-content">
@@ -41,7 +26,10 @@ function History() {
                                         <h3>{item.title}</h3>
                                     </div>
                                     <div className="history-card-body">
-                                        <p>{stripHtml(item.summary).slice(0, 140)}{stripHtml(item.summary).length > 140 ? '…' : ''}</p>
+                                        <p>
+                                            {stripHtml(item.summary).slice(0, 140)}
+                                            {stripHtml(item.summary).length > 140 ? '…' : ''}
+                                        </p>
                                     </div>
                                     <footer className="history-card-footer">
                                         <button type="button">자세히 보기</button>
@@ -57,4 +45,3 @@ function History() {
 }
 
 export default History;
-
