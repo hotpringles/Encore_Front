@@ -12,8 +12,8 @@ const createHistoryItems = (dateKey, entries) =>
     title: entry.title,
     summary: baseSummary(entry.highlight),
     imageUrl: placeholderImage(`${dateKey}-${index + 1}`),
-    quiz: null,
-    mcq: null,
+    quiz: entry.quiz ?? null,
+    mcq: entry.mcq ?? null,
   }));
 
 export const historyGroups = [
@@ -30,15 +30,53 @@ export const historyGroups = [
     items: createHistoryItems("2024-10-18", [
       {
         title: "미국 국채 금리 하락",
-        highlight: "연준 위원 발언 이후 국채 금리가 하루 만에 10bp 하락했습니다.",
+        highlight:
+          "연준 위원 발언 이후 국채 금리가 하루 만에 10bp 하락했습니다.",
+        quiz: {
+          question: "연준 위원 발언 이후 미국 국채 금리는 상승했다.",
+          answer: false,
+        },
+        mcq: {
+          id: "mcq-2024-10-18-1",
+          question: "기사에서 언급된 미국 국채 금리 움직임은?",
+          options: ["10bp 하락", "변동 없음", "30bp 급등", "연중 최고치 경신"],
+          answer: "10bp 하락",
+          explanation:
+            "본문에 하루 만에 10bp 하락했다고 명시되어 있습니다.",
+        },
       },
       {
         title: "AI 섹터 자금 유입 확대",
-        highlight: "메가캡 AI 기업 실적 호조로 관련 ETF에 자금이 유입됐습니다.",
+        highlight:
+          "메가캡 AI 기업 실적 호조로 관련 ETF에 자금이 유입됐습니다.",
+        quiz: {
+          question:
+            "메가캡 AI 기업 실적 호조는 관련 ETF 자금 유입과 무관했다.",
+          answer: false,
+        },
+        mcq: {
+          id: "mcq-2024-10-18-2",
+          question: "자금 유입이 확대된 분야는?",
+          options: ["AI 섹터", "전통 에너지", "항공", "소매"],
+          answer: "AI 섹터",
+          explanation: "관련 ETF로 자금이 유입됐다는 내용입니다.",
+        },
       },
       {
         title: "원자재 가격 진정세",
-        highlight: "브렌트유가 배럴당 80달러 아래로 내려가며 인플레이션 우려가 완화됐습니다.",
+        highlight:
+          "브렌트유가 배럴당 80달러 아래로 내려가며 인플레이션 우려가 완화됐습니다.",
+        quiz: {
+          question: "브렌트유 가격이 배럴당 80달러를 상회하며 급등했다.",
+          answer: false,
+        },
+        mcq: {
+          id: "mcq-2024-10-18-3",
+          question: "기사 속 브렌트유 수준에 대한 설명으로 맞는 것은?",
+          options: ["80달러 아래", "120달러 돌파", "100달러 근처", "60달러 아래"],
+          answer: "80달러 아래",
+          explanation: "본문에 80달러 아래로 내려갔다고 되어 있습니다.",
+        },
       },
     ]),
   },

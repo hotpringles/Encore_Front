@@ -3,6 +3,20 @@ import { reportData } from './data';
 import Card from './Card';
 import './MainCarousel.css';
 
+function DotIndicator ({totalCards, currentIndex}) {
+        const dots = Array.from({length: totalCards}, (_, index) => index);
+    
+        return (<div className='page-indicator'>
+                <div className='dot-container' aria-hidden="true">
+                    {dots.map((dotIndex) => (
+                        <span key={dotIndex}
+                        className={`dot ${currentIndex === dotIndex ? 'active' : ''}`}
+                        />
+                    ))}
+                </div>
+            </div>)
+    }
+
 function MainCarousel({ reports, activeGroup }) {
     const carouselData = useMemo(() => {
         if (Array.isArray(reports) && reports.length > 0) {
@@ -56,6 +70,8 @@ function MainCarousel({ reports, activeGroup }) {
         );
     }
 
+    
+
     return (
         <div className="main-carousel-container">
             {activeGroup && (
@@ -84,6 +100,7 @@ function MainCarousel({ reports, activeGroup }) {
                     ))}
                 </div>
             </div>
+            <DotIndicator totalCards={totalCards} currentIndex={currentIndex} />
             {totalCards > 1 && (
                 <button onClick={handleNext} className="main-carousel-arrow next" aria-label="다음 카드">
                     &gt;

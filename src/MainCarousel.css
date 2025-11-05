@@ -11,7 +11,7 @@
 .carousel-viewport {
   position: relative;
   width: 70%; /* 중앙 카드 너비 기준 */
-  height: 600px; /* 카드 높이 */
+  height: 75%; /* 카드 높이 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,3 +116,43 @@
   font-size: 1rem;
   color: #666;
 }
+
+
+/* 2. 페이지 표시기 (하단에 고정) */
+.page-indicator {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: baseline;
+    /* gap: 12px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    padding: 10px 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); */
+}
+/* 2. 점들을 감싸는 컨테이너 (Flex로 중앙 정렬) */
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* 점들 사이의 간격 */
+  padding: 10px 0;
+}
+
+/* 3. 기본 점 스타일 (비활성화 상태) */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%; /* 원 모양 */
+  background-color: #ccc; /* 비활성 색상 (예: 회색) */
+  transition: background-color 1s ease; /* 부드러운 전환 효과 */
+}
+
+/* 4. 활성화된 점 스타일 */
+.dot.active {
+  background-color: #000; /* 활성 색상 (예: 검은색) */
+}
+
+
