@@ -13,6 +13,7 @@ import LoginPage from './LoginPage';
 import WelcomePage from './WelcomePage';
 import SignupPage from './SignupPage';
 import { historyGroups } from './historyGroups';
+import LevelTest from './LevelTest'; 
 
 // 2. "메인 앱 레이아웃"을 위한 새 컴포넌트를 만듭니다.
 // 사이드바, 헤더, <main> 태그를 포함합니다.
@@ -96,6 +97,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/welcome" element={<WelcomePage />} /> 
+        <Route path="/level-test" element={<LevelTest />} />
 
         {/* --- 요청 2: 레이아웃 비율 수정 --- */}
         {/* "메인 앱" 페이지들 (MainLayout 컴포넌트를 사용) */}

@@ -15,26 +15,30 @@
 
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#0D47A1",
-              "background-light": "#F8F9FA",
-              "background-dark": "#101822",
-            },
-            fontFamily: {
-              display: ["Inter", "Noto Sans KR", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px",
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                // --- 퀴즈 테마의 색상으로 변경 ---
+                "primary": "#1b73ee",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101822",
+                "accent": "#46B5A8" // 퀴즈 테마의 'accent' 색상 추가
+              },
+              fontFamily: {
+                // --- 한글을 위해 기존 폰트 설정 유지 ---
+                "display": ["Inter", "Noto Sans KR", "sans-serif"]
+              },
+              borderRadius: {
+                // --- 퀴즈 테마의 둥근 모서리 값으로 변경 ---
+                "DEFAULT": "0.5rem",
+                "lg": "1rem",
+                "xl": "1.5rem",
+                "full": "9999px"
+              },
             },
           },
-        },
-      };
+        };
     </script>
 
     <style>
