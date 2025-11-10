@@ -143,10 +143,10 @@ const QuizStart = ({ onStartQuiz }) => (
           경제 상식 퀴즈
         </h1>
         <h2 className="text-gray-700 dark:text-gray-300 text-lg font-medium leading-tight tracking-[-0.015em] pb-4">
-          사용자님, 환영합니다!
+          OOO님, 환영합니다!
         </h2>
         <p className="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed max-w-xl mx-auto">
-          이 퀴즈는 개인의 경제 지식을 테스트하고 향상시키기 위해 만들어졌습니다.
+          이 퀴즈는 개인의 경제 지식을 테스트하기 위해 만들어졌습니다.
         </p>
         <div className="mt-8 mb-10 p-6 bg-gray-50 dark:bg-gray-800/60 rounded-lg border border-gray-200/80 dark:border-white/10">
           <ul className="flex flex-col sm:flex-row justify-center items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-left">
