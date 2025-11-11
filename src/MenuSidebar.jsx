@@ -6,9 +6,11 @@ import { historyGroups } from './historyGroups';
 function MenuSidebar({ onClose, onSelectHistoryGroup, selectedHistoryGroupId }) {
     const navigate = useNavigate();
 
+    // 소개페이지 링크 추가
     const menuItems = [
         { path: '/main', label: 'Home' },
         { path: '/profile', label: '프로필' },
+        { path: '/description', label: '서비스 소개'},
     ];
 
     const handleHistorySelect = (group) => {
