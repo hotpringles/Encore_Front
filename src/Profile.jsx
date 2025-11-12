@@ -34,8 +34,8 @@ const Profile = () => {
   };
 
   return (
-    // [수정] Profile 전용 클래스들을 기본 Tailwind 클래스로 변경
-    <div className="max-w-4xl mx-auto">
+    // [수정] 여기에 'pt' 클래스를 추가해 여백의 미
+    <div className="max-w-4xl mx-auto pt-12">
       <header className="flex flex-wrap justify-between gap-3 mb-8">
         <p className="text-gray-900 text-4xl font-black leading-tight tracking-[-0.033em]">
           마이페이지
@@ -87,11 +87,9 @@ const Profile = () => {
                   <span className="text-gray-600 text-sm font-medium">
                     경험치
                   </span>
-                  {/* [수정] text-primary는 로그인 페이지의 파란색이 됩니다. (통일성) */}
                   <span className="text-primary text-sm font-bold">45%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  {/* [수정] bg-primary는 로그인 페이지의 파란색이 됩니다. (통일성) */}
                   <div
                     className="bg-primary h-2.5 rounded-full"
                     style={{ width: '45%' }}
@@ -163,8 +161,7 @@ const Profile = () => {
           </form>
         </section>
 
-        {/* --- 계정 삭s제 섹션 --- */}
-        {/* [수정] destructive 클래스 대신 기본 red 색상 사용 */}
+        {/* --- 계정 삭제 섹션 --- */}
         <section className="bg-white rounded-lg border border-red-300">
           <div className="p-6 border-b border-red-300">
             <h2 className="text-gray-900 text-[22px] font-bold leading-tight tracking-[-0.015em]">
