@@ -1,43 +1,38 @@
-.card-page {
-  height: 100%;
-  width: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  display: flex;
-  flex-direction: column;
+.quiz-page {
+  background-color: #f6f7f8; /* 템플릿의 background-light */
 }
 
-.card-image {
-  width: 100%;
-  flex-basis: 75%;
-  object-fit: cover;
-  min-height: 0;
+/* 다크 모드 배경색 */
+@media (prefers-color-scheme: dark) {
+  .quiz-page {
+    background-color: #101822; /* 템플릿의 background-dark */
+  }
 }
 
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  padding: 20px;
-  background-color: #fff;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-basis: 25%;
-  min-height: 0;
+/*
+  [추가] 4지선다형 UI (source 1) 템플릿에서 가져온 CSS
+  라디오 버튼 커스텀 스타일
+*/
+.custom-radio:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27%23ffffff%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e");
+  background-color: #1b73ee; /* primary color */
+  border-color: #1b73ee; /* primary color */
+}
+.custom-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 9999px; /* full */
 }
 
-.card-summary {
-  padding: 20px;
-  font-size: 1rem;
-  color: #555;
-  line-height: 2;
-  overflow-y: auto;
-  flex: 1;
-  box-sizing: border-box;
-  word-break: keep-all;
+/* [추가] peer(input)가 체크되었을 때 label(sibling)의 스타일 변경 */
+.peer:checked ~ label {
+  border-color: #1b73ee; /* primary color */
+  background-color: rgba(27, 115, 238, 0.1); /* primary/10 */
 }
-
-.card-summary::-webkit-scrollbar {
-  display: none;
+.peer:hover ~ label {
+  border-color: #a0aec0; /* slate-400 */
+}
+.peer:checked:hover ~ label {
+  border-color: #1b73ee; /* primary color */
 }
