@@ -6,14 +6,14 @@ import api from "./client";
  * - 뉴스 요약 전체 목록을 가져오는 함수
  * - 예: 요약 리스트 페이지, 대시보드 등에서 사용
  */
-export const fetchSummaries = () =>
-  api
-    .get("/summary-group/", {
-      params: {
-        ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
-      },
-    })
-    .then((res) => res.data);
+export const fetchSummaries = async () => {
+  const res = await api.get("/summary/", {
+    params: {
+      ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
+    },
+  });
+  return res.data;
+};
 
 /**
  * [GET] /summary-group/{id}/
@@ -22,8 +22,10 @@ export const fetchSummaries = () =>
  *
  * @param {number|string} id - 조회할 요약의 ID
  */
-export const fetchSummaryDetail = (id) =>
-  api.get(`/summary-group/${id}/`).then((res) => res.data);
+export const fetchSummaryDetail = async (id) => {
+  const res = await api.get(`/summary/${id}/`);
+  return res.data;
+};
 
 /**
  * [POST] /summary-group/
@@ -32,8 +34,10 @@ export const fetchSummaryDetail = (id) =>
  *
  * @param {Object} data - 생성할 요약 데이터
  */
-export const createSummary = (data) =>
-  api.post("/summary-group/", data).then((res) => res.data);
+export const createSummary = async (data) => {
+  const res = await api.post("/summary/", data);
+  return res.data;
+};
 
 /**
  * [PUT] /summary-group/{id}/
@@ -43,8 +47,10 @@ export const createSummary = (data) =>
  * @param {number|string} id - 수정할 요약의 ID
  * @param {Object} data - 수정할 필드를 포함한 데이터
  */
-export const updateSummary = (id, data) =>
-  api.put(`/summary-group/${id}/`, data).then((res) => res.data);
+export const updateSummary = async (id, data) => {
+  const res = await api.put(`/summary/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /summary-group/{id}/
@@ -52,5 +58,7 @@ export const updateSummary = (id, data) =>
  *
  * @param {number|string} id - 삭제할 요약의 ID
  */
-export const deleteSummary = (id) =>
-  api.delete(`/summary-group/${id}/`).then((res) => res.data);
+export const deleteSummary = async (id) => {
+  const res = await api.delete(`/summary/${id}/`);
+  return res.data;
+};

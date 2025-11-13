@@ -6,7 +6,10 @@ import api from "./client";
  * - 모든 경제용어(용어 사전) 목록을 가져오는 함수
  * - 예: 용어 리스트 페이지, 검색 기능 등에 사용
  */
-export const fetchTerms = () => api.get("/term/").then((res) => res.data);
+export const fetchTerms = async () => {
+  const res = await api.get("/term/");
+  return res.data;
+};
 
 /**
  * [GET] /term/{id}/
@@ -14,8 +17,10 @@ export const fetchTerms = () => api.get("/term/").then((res) => res.data);
  *
  * @param {number|string} id - 조회할 용어의 ID
  */
-export const fetchTermDetail = (id) =>
-  api.get(`/term/${id}/`).then((res) => res.data);
+export const fetchTermDetail = async (id) => {
+  const res = await api.get(`/term/${id}/`);
+  return res.data;
+};
 
 /**
  * [POST] /term/
@@ -24,8 +29,10 @@ export const fetchTermDetail = (id) =>
  *
  * @param {Object} data - 생성할 용어 데이터 (term, definition, level 등)
  */
-export const createTerm = (data) =>
-  api.post("/term/", data).then((res) => res.data);
+export const createTerm = async (data) => {
+  const res = await api.post("/term/", data);
+  return res.data;
+};
 
 /**
  * [PUT] /term/{id}/
@@ -35,8 +42,10 @@ export const createTerm = (data) =>
  * @param {number|string} id - 수정할 용어의 ID
  * @param {Object} data - 수정할 내용이 담긴 데이터
  */
-export const updateTerm = (id, data) =>
-  api.put(`/term/${id}/`, data).then((res) => res.data);
+export const updateTerm = async (id, data) => {
+  const res = await api.put(`/term/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /term/{id}/
@@ -44,5 +53,7 @@ export const updateTerm = (id, data) =>
  *
  * @param {number|string} id - 삭제할 용어의 ID
  */
-export const deleteTerm = (id) =>
-  api.delete(`/term/${id}/`).then((res) => res.data);
+export const deleteTerm = async (id) => {
+  const res = await api.delete(`/term/${id}/`);
+  return res.data;
+};

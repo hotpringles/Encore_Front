@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // [수정] react-router-dom에서 Link 외에 useNavigate도 가져옵니다.
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 login 함수를 가져옵니다.
-import { login } from "./api/accountApi";
+import { login } from "./api/userApi";
 
 const SignIn = ({ hasTested }) => {
   // [수정] API 명세에 맞춰 'username'으로 상태 이름을 변경합니다.

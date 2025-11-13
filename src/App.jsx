@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import "./tooltipGlobal";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { fetchSummaries } from "../api/summaryApi.js";
+import { fetchSummaries } from "./api/summaryApi.js";
 import Nav from "./Nav";
 import Profile from "./Profile";
 import SignIn from "./SignIn";
@@ -13,7 +13,6 @@ import Description from "./Description";
 import LevelTest from "./LevelTest";
 import quizQuestions from "./quizQuestions.json";
 import "./App.css";
-import { fetchSummaries } from "./api/summaryApi";
 
 function App() {
   const [isChatBotVisible, setIsChatBotVisible] = useState(false);

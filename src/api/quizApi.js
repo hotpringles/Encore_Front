@@ -12,7 +12,10 @@ import api from "./client";
  * - OX 퀴즈 전체 목록을 가져오는 함수
  * - 예: OX 퀴즈 리스트 페이지, 레벨 테스트 문제 로딩 등
  */
-export const fetchOxQuizzes = () => api.get("/ox-quiz/").then((r) => r.data);
+export const fetchOxQuizzes = async () => {
+  const res = await api.get("/ox-quiz/");
+  return res.data;
+};
 
 /**
  * [GET] /ox-quiz/{id}/
@@ -20,8 +23,10 @@ export const fetchOxQuizzes = () => api.get("/ox-quiz/").then((r) => r.data);
  *
  * @param {number|string} id - 조회할 OX 퀴즈 ID
  */
-export const fetchOxQuizDetail = (id) =>
-  api.get(`/ox-quiz/${id}/`).then((r) => r.data);
+export const fetchOxQuizDetail = async (id) => {
+  const res = await api.get(`/ox-quiz/${id}/`);
+  return res.data;
+};
 
 /**
  * [PUT] /ox-quiz/{id}/
@@ -30,8 +35,10 @@ export const fetchOxQuizDetail = (id) =>
  * @param {number|string} id - 수정할 OX 퀴즈 ID
  * @param {Object} data - 수정할 퀴즈 데이터 (질문, 정답, 해설 등)
  */
-export const updateOxQuiz = (id, data) =>
-  api.put(`/ox-quiz/${id}/`, data).then((r) => r.data);
+export const updateOxQuiz = async (id, data) => {
+  const res = await api.put(`/ox-quiz/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /ox-quiz/{id}/
@@ -39,7 +46,10 @@ export const updateOxQuiz = (id, data) =>
  *
  * @param {number|string} id - 삭제할 OX 퀴즈 ID
  */
-export const deleteOxQuiz = (id) => api.delete(`/ox-quiz/${id}/`); // 보통 삭제는 body 없이 상태코드만 돌려줌
+export const deleteOxQuiz = async (id) => {
+  const res = await api.delete(`/ox-quiz/${id}/`);
+  return res.data; // 삭제 성공 시 응답 데이터를 반환 (보통은 비어있음)
+};
 
 /**
  * ==========================
@@ -51,7 +61,10 @@ export const deleteOxQuiz = (id) => api.delete(`/ox-quiz/${id}/`); // 보통 삭
  * [GET] /mc-quiz/
  * - 객관식 퀴즈 전체 목록을 가져오는 함수
  */
-export const fetchMcQuizzes = () => api.get("/mc-quiz/").then((r) => r.data);
+export const fetchMcQuizzes = async () => {
+  const res = await api.get("/mc-quiz/");
+  return res.data;
+};
 
 /**
  * [GET] /mc-quiz/{id}/
@@ -59,8 +72,10 @@ export const fetchMcQuizzes = () => api.get("/mc-quiz/").then((r) => r.data);
  *
  * @param {number|string} id - 조회할 객관식 퀴즈 ID
  */
-export const fetchMcQuizDetail = (id) =>
-  api.get(`/mc-quiz/${id}/`).then((r) => r.data);
+export const fetchMcQuizDetail = async (id) => {
+  const res = await api.get(`/mc-quiz/${id}/`);
+  return res.data;
+};
 
 /**
  * [PUT] /mc-quiz/{id}/
@@ -69,8 +84,10 @@ export const fetchMcQuizDetail = (id) =>
  * @param {number|string} id - 수정할 객관식 퀴즈 ID
  * @param {Object} data - 수정할 데이터 (보기, 정답, 난이도 등)
  */
-export const updateMcQuiz = (id, data) =>
-  api.put(`/mc-quiz/${id}/`, data).then((r) => r.data);
+export const updateMcQuiz = async (id, data) => {
+  const res = await api.put(`/mc-quiz/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /mc-quiz/{id}/
@@ -78,7 +95,10 @@ export const updateMcQuiz = (id, data) =>
  *
  * @param {number|string} id - 삭제할 객관식 퀴즈 ID
  */
-export const deleteMcQuiz = (id) => api.delete(`/mc-quiz/${id}/`);
+export const deleteMcQuiz = async (id) => {
+  const res = await api.delete(`/mc-quiz/${id}/`);
+  return res.data;
+};
 
 /**
  * ==========================
@@ -90,7 +110,10 @@ export const deleteMcQuiz = (id) => api.delete(`/mc-quiz/${id}/`);
  * [GET] /sc-quiz/
  * - 단답형 퀴즈 전체 목록을 가져오는 함수
  */
-export const fetchScQuizzes = () => api.get("/sc-quiz/").then((r) => r.data);
+export const fetchScQuizzes = async () => {
+  const res = await api.get("/sc-quiz/");
+  return res.data;
+};
 
 /**
  * [GET] /sc-quiz/{id}/
@@ -98,8 +121,10 @@ export const fetchScQuizzes = () => api.get("/sc-quiz/").then((r) => r.data);
  *
  * @param {number|string} id - 조회할 단답형 퀴즈 ID
  */
-export const fetchScQuizDetail = (id) =>
-  api.get(`/sc-quiz/${id}/`).then((r) => r.data);
+export const fetchScQuizDetail = async (id) => {
+  const res = await api.get(`/sc-quiz/${id}/`);
+  return res.data;
+};
 
 /**
  * [PUT] /sc-quiz/{id}/
@@ -108,8 +133,10 @@ export const fetchScQuizDetail = (id) =>
  * @param {number|string} id - 수정할 단답형 퀴즈 ID
  * @param {Object} data - 수정 내용 (문제, 정답, 해설 등)
  */
-export const updateScQuiz = (id, data) =>
-  api.put(`/sc-quiz/${id}/`, data).then((r) => r.data);
+export const updateScQuiz = async (id, data) => {
+  const res = await api.put(`/sc-quiz/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /sc-quiz/{id}/
@@ -117,7 +144,10 @@ export const updateScQuiz = (id, data) =>
  *
  * @param {number|string} id - 삭제할 단답형 퀴즈 ID
  */
-export const deleteScQuiz = (id) => api.delete(`/sc-quiz/${id}/`);
+export const deleteScQuiz = async (id) => {
+  const res = await api.delete(`/sc-quiz/${id}/`);
+  return res.data;
+};
 
 /**
  * ==========================
@@ -132,5 +162,7 @@ export const deleteScQuiz = (id) => api.delete(`/sc-quiz/${id}/`);
  *
  * @param {Object} data - 생성할 퀴즈 데이터
  */
-export const createQuiz = (data) =>
-  api.post("/quiz/", data).then((r) => r.data);
+export const createQuiz = async (data) => {
+  const res = await api.post("/quiz/", data);
+  return res.data;
+};

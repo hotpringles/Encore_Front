@@ -6,22 +6,24 @@ import api from "./client";
  * - 뉴스(기사) 전체 목록을 가져오는 함수
  * - 예: 메인 페이지, 카드/캐러셀용 리스트 데이터
  */
-export const fetchArticles = () =>
-  api
-    .get("/article/", {
-      params: {
-        ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
-      },
-    })
-    .then((res) => res.data);
+export const fetchArticles = async () => {
+  const res = await api.get("/article/", {
+    params: {
+      ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
+    },
+  });
+  return res.data;
+};
 /**
  * [GET] /article/{id}/
  * - 특정 기사 하나의 상세 정보를 가져오는 함수
  *
  * @param {number|string} id - 조회할 기사 ID
  */
-export const fetchArticleDetail = (id) =>
-  api.get(`/article/${id}/`).then((res) => res.data);
+export const fetchArticleDetail = async (id) => {
+  const res = await api.get(`/article/${id}/`);
+  return res.data;
+};
 
 /**
  * [POST] /article/
@@ -30,8 +32,10 @@ export const fetchArticleDetail = (id) =>
  *
  * @param {Object} data - 생성할 기사 데이터 (title, content, url 등)
  */
-export const createArticle = (data) =>
-  api.post("/article/", data).then((res) => res.data);
+export const createArticle = async (data) => {
+  const res = await api.post("/article/", data);
+  return res.data;
+};
 
 /**
  * [PUT] /article/{id}/
@@ -41,8 +45,10 @@ export const createArticle = (data) =>
  * @param {number|string} id - 수정할 기사 ID
  * @param {Object} data - 수정할 내용이 담긴 데이터
  */
-export const updateArticle = (id, data) =>
-  api.put(`/article/${id}/`, data).then((res) => res.data);
+export const updateArticle = async (id, data) => {
+  const res = await api.put(`/article/${id}/`, data);
+  return res.data;
+};
 
 /**
  * [DELETE] /article/{id}/
@@ -50,5 +56,7 @@ export const updateArticle = (id, data) =>
  *
  * @param {number|string} id - 삭제할 기사 ID
  */
-export const deleteArticle = (id) =>
-  api.delete(`/article/${id}/`).then((res) => res.data);
+export const deleteArticle = async (id) => {
+  const res = await api.delete(`/article/${id}/`);
+  return res.data;
+};
