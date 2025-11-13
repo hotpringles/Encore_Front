@@ -33,8 +33,10 @@ const submitButtonStyles =
 const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
 function CardForQuiz({
-  quiz,
   hasQuiz,
+  oxQuiz,
+  mcQuiz,
+  saQuiz,
   oxAnswer,
   mcAnswer,
   quizReady,
@@ -46,10 +48,9 @@ function CardForQuiz({
   handleSaInputChange,
   handleSaSubmit,
 }) {
-  const oxIsCorrect = oxAnswer !== null && quiz.ox.answer === oxAnswer;
-  const mcIsCorrect = mcAnswer !== null && quiz.mc.answer === mcAnswer;
-  const saIsCorrect =
-    saSubmittedAnswer !== null && saSubmittedAnswer.isCorrect;
+  const oxIsCorrect = oxAnswer !== null && oxQuiz.answer === oxAnswer;
+  const mcIsCorrect = mcAnswer !== null && mcQuiz.answer === mcAnswer;
+  const saIsCorrect = saSubmittedAnswer !== null && saSubmittedAnswer.isCorrect;
 
   // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
   const quizInstanceId = quiz.mc.id || new Date().getTime();
@@ -94,7 +95,8 @@ function CardForQuiz({
                 </p>
                 <div className="mt-4 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/40 border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300 leading-relaxed">
-                    <span className="font-bold">주의:</span> 퀴즈 결과는 즉시 경험치에 반영되며,
+                    <span className="font-bold">주의:</span> 퀴즈 결과는 즉시
+                    경험치에 반영되며,
                     <br />
                     제출한 답은 수정할 수 없습니다.
                   </p>
@@ -102,7 +104,6 @@ function CardForQuiz({
               </div>
             )}
             {/* === [수정] 끝 === */}
-            
           </div>
         </div>
       )}
@@ -117,7 +118,7 @@ function CardForQuiz({
               <div className="w-full">
                 <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
                   <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-                    (OX) {quiz.ox.question}
+                    (OX) {oxQuiz.question}
                   </p>
                 </div>
               </div>
@@ -167,7 +168,7 @@ function CardForQuiz({
                 {/* 제출하기 버튼 */}
                 <button
                   type="submit"
-                  disabled={oxAnswer !== null || localOxSelection === null} 
+                  disabled={oxAnswer !== null || localOxSelection === null}
                   className={submitButtonStyles}
                   style={primaryColorStyle}
                 >
@@ -192,7 +193,7 @@ function CardForQuiz({
               <div className="w-full">
                 <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
                   <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-                    {quiz.mc.question}
+                    {mcQuiz.question}
                   </p>
                 </div>
               </div>
@@ -208,7 +209,7 @@ function CardForQuiz({
               >
                 {/* Options */}
                 <div className="flex flex-col gap-3">
-                  {quiz.mc.options.map((option, index) => (
+                  {mcQuiz.options.map((option, index) => (
                     <div className="relative" key={index}>
                       <input
                         className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
@@ -240,7 +241,7 @@ function CardForQuiz({
                 {/* 제출하기 버튼 */}
                 <button
                   type="submit"
-                  disabled={mcAnswer !== null || localMcSelection === null} 
+                  disabled={mcAnswer !== null || localMcSelection === null}
                   className={submitButtonStyles}
                   style={primaryColorStyle}
                 >
@@ -253,20 +254,20 @@ function CardForQuiz({
                 <FeedbackBlock
                   isCorrect={mcIsCorrect}
                   message={mcIsCorrect ? "정답입니다!" : "오답입니다!"}
-                  explanation={quiz.mc.explanation}
+                  explanation={mcQuiz.explanation}
                 />
               )}
             </div>
           </div>
 
           {/* === 단답형 퀴즈 페이지 === */}
-          {quiz.sa && (
+          {saQuiz && (
             <div className="card-page quiz-page">
               <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-8">
                 {/* Question Box */}
                 <div className="flex flex-col gap-8 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm p-6 sm:p-10">
                   <h1 className="text-[#111418] dark:text-white tracking-tight text-[22px] sm:text-[28px] font-bold leading-tight text-center">
-                    {quiz.sa.question}
+                    {saQuiz.question}
                   </h1>
                   {/* Answer Form */}
                   <form
@@ -297,7 +298,7 @@ function CardForQuiz({
                     ></textarea>
                     <button
                       type="submit"
-                      disabled={saSubmittedAnswer !== null || !saInput.trim()} 
+                      disabled={saSubmittedAnswer !== null || !saInput.trim()}
                       className={submitButtonStyles}
                       style={primaryColorStyle}
                     >
@@ -312,9 +313,9 @@ function CardForQuiz({
                     message={
                       saIsCorrect
                         ? "정답입니다!"
-                        : `오답입니다! (정답: ${quiz.sa.answer})`
+                        : `오답입니다! (정답: ${saQuiz.answer})`
                     }
-                    explanation={quiz.sa.explanation}
+                    explanation={saQuiz.explanation}
                   />
                 )}
               </div>
@@ -327,5 +328,3 @@ function CardForQuiz({
 }
 
 export default CardForQuiz;
-
-

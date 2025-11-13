@@ -24,7 +24,7 @@ export const fetchOxQuizzes = async () => {
  * @param {number|string} id - 조회할 OX 퀴즈 ID
  */
 export const fetchOxQuizDetail = async (id) => {
-  const res = await api.get(`/ox-quiz/${id}/`);
+  const res = await api.get(`/ox-quiz/?summary=${id}`);
   return res.data;
 };
 
@@ -36,7 +36,7 @@ export const fetchOxQuizDetail = async (id) => {
  * @param {Object} data - 수정할 퀴즈 데이터 (질문, 정답, 해설 등)
  */
 export const updateOxQuiz = async (id, data) => {
-  const res = await api.put(`/ox-quiz/${id}/`, data);
+  const res = await api.put(`/ox-quiz/${id}`, data);
   return res.data;
 };
 
@@ -47,7 +47,7 @@ export const updateOxQuiz = async (id, data) => {
  * @param {number|string} id - 삭제할 OX 퀴즈 ID
  */
 export const deleteOxQuiz = async (id) => {
-  const res = await api.delete(`/ox-quiz/${id}/`);
+  const res = await api.delete(`/ox-quiz/${id}`);
   return res.data; // 삭제 성공 시 응답 데이터를 반환 (보통은 비어있음)
 };
 
@@ -73,7 +73,7 @@ export const fetchMcQuizzes = async () => {
  * @param {number|string} id - 조회할 객관식 퀴즈 ID
  */
 export const fetchMcQuizDetail = async (id) => {
-  const res = await api.get(`/mc-quiz/${id}/`);
+  const res = await api.get(`/mc-quiz/?summary=${id}`);
   return res.data;
 };
 
@@ -122,7 +122,7 @@ export const fetchScQuizzes = async () => {
  * @param {number|string} id - 조회할 단답형 퀴즈 ID
  */
 export const fetchScQuizDetail = async (id) => {
-  const res = await api.get(`/sc-quiz/${id}/`);
+  const res = await api.get(`/sc-quiz/?summary=${id}`);
   return res.data;
 };
 

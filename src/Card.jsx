@@ -1,13 +1,34 @@
-import { useState, useRef, useEffect } from "react"; // [추가] useRef, useEffect
+import { useState, useRef, useEffect, useCallback } from "react"; // [추가] useRef, useEffect
 import CardForNews from "./CardForNews.jsx";
 import CardForQuiz from "./CardForQuiz.jsx";
 import "./Card.css";
+import { fetchOxQuizDetail, fetchMcQuizDetail } from "./api/quizApi.js";
 
-function Card({ title, imageUrl, summary, originalUrl, quiz }) {
+function Card({ title, imageUrl, summary, originalUrl, terms, quizId }) {
   const hasQuiz = Boolean(quiz);
   const [quizReady, setQuizReady] = useState(false);
   const scrollContainerRef = useRef(null); // [추가] 스크롤 컨테이너 Ref
+  const [oxQuiz, setOxQuiz] = useState(null);
+  const [mcQuiz, setMcQuiz] = useState(null);
+  const [scQuiz, setScQuiz] = useState(null);
 
+  const loadQuiz = useCallback(async (id) => {
+    try {
+      const ox = await fetchOxQuizDetail(id);
+      const mc = await fetchMcQuizDetail(id);
+      const sc = await fetchScQuizDetail(id);
+      setOxQuiz(ox);
+      setMcQuiz(mc);
+      setScQuiz(sc);
+    } catch (err) {
+      console.error(err);
+      setError("퀴즈를 불러오는 데 실패했습니다.");
+    }
+  }, []);
+
+  useEffect(() => {
+    loadQuiz(quizId);
+  }, [quizId, loadQuiz]);
   // ox 선택 답
   const [oxAnswer, setOxAnswer] = useState(null);
   // 4지선다 선택 답
@@ -15,28 +36,6 @@ function Card({ title, imageUrl, summary, originalUrl, quiz }) {
   // [추가] 단답형 입력 값 및 제출 답
   const [saInput, setSaInput] = useState("");
   const [saSubmittedAnswer, setSaSubmittedAnswer] = useState(null); // { text: string, isCorrect: bool }
-
-  // [추가] quizReady가 true로 변경되면 스크롤 실행
-  /*useEffect(() => {
-    if (quizReady && scrollContainerRef.current) {
-      // 퀴즈 인트로 페이지(2번째) 다음 페이지(OX 퀴즈)로 스크롤
-      // CardForNews 2페이지 + 퀴즈 인트로 1페이지 = 총 3페이지
-      // 3번째 페이지(index 2)의 높이만큼 스크롤합니다.
-      const pageHeight = scrollContainerRef.current.clientHeight;
-      scrollContainerRef.current.scrollTo({
-        top: pageHeight * 2, // 3번째 페이지(퀴즈 인트로)로 먼저 이동
-        behavior: "smooth",
-      });
-
-      // 퀴즈 인트로 스크롤 후, 잠시 뒤 퀴즈 첫 페이지로 스크롤
-      setTimeout(() => {
-        scrollContainerRef.current.scrollTo({
-          top: pageHeight * 3, // 4번째 페이지(OX 퀴즈)로 이동
-          behavior: "smooth",
-        });
-      }, 300); // 0.3초 대기
-    }
-  }, [quizReady]);*/
 
   const handleGenerateQuiz = () => {
     if (!hasQuiz) return;
@@ -79,10 +78,13 @@ function Card({ title, imageUrl, summary, originalUrl, quiz }) {
         imageUrl={imageUrl}
         summary={summary}
         originalUrl={originalUrl}
+        terms={terms}
       />
       {hasQuiz && (
         <CardForQuiz
-          quiz={quiz}
+          oxQuiz={oxQuiz}
+          mcQuiz={mcQuiz}
+          scQuiz={scQuiz}
           hasQuiz={hasQuiz}
           quizReady={quizReady}
           oxAnswer={oxAnswer}

@@ -85,9 +85,10 @@ function AppMain({ reports }) {
                     title={report.summaries.title}
                     imageUrl={report.summaries.article.imageUrl}
                     summary={report.summaries.content}
+                    terms={report.summaries.terms}
                     originalUrl={report.summaries.article.url}
                     author={report.summaries.article.author}
-                    quiz={report.quiz}
+                    quizId={report.summaries.id}
                   />
                 </div>
               );
