@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="light" lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EconoLearn 퀴즈</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1b73ee",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101822",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="font-display">
+    <div
+      class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <main class="flex flex-1 justify-center py-5 sm:py-10 px-4">
+          <div
+            class="layout-content-container flex flex-col max-w-[768px] flex-1"
+          >
+            <div class="px-4 text-center">
+              <h1
+                class="text-gray-900 dark:text-gray-50 tracking-tight text-[32px] font-bold leading-tight pt-6 pb-2"
+              >
+                예산 기초 퀴즈
+              </h1>
+              <p
+                class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pb-3"
+              >
+                1/12 문제
+              </p>
+            </div>
+            <div class="flex flex-col gap-3 p-4">
+              <div class="rounded-full bg-gray-200 dark:bg-gray-700">
+                <div
+                  class="h-2 rounded-full bg-primary"
+                  style="width: 8.33%"
+                ></div>
+              </div>
+            </div>
+            <div
+              class="flex flex-col gap-8 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-6 sm:p-8 mt-6"
+            >
+              <div class="flex flex-wrap justify-between gap-3">
+                <p
+                  class="text-gray-900 dark:text-gray-50 text-3xl font-bold leading-tight tracking-[-0.03em] min-w-72"
+                >
+                  성공적인 예산을 세우기 위한 첫 번째 단계는 무엇인가요?
+                </p>
+              </div>
+              <div class="flex flex-col gap-4">
+                <button
+                  class="flex w-full cursor-pointer items-center gap-4 rounded-lg border-2 border-primary bg-primary/10 p-4 text-left transition-all hover:bg-primary/20"
+                >
+                  <span
+                    class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 border-primary bg-primary text-white"
+                  >
+                    <span class="material-symbols-outlined text-sm">check</span>
+                  </span>
+                  <span
+                    class="text-base font-medium text-gray-800 dark:text-gray-200"
+                    >수입과 지출 추적하기</span
+                  >
+                </button>
+                <button
+                  class="flex w-full cursor-pointer items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent p-4 text-left transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <span
+                    class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 dark:border-gray-600"
+                  ></span>
+                  <span
+                    class="text-base font-medium text-gray-800 dark:text-gray-200"
+                    >재정 목표 설정하기</span
+                  >
+                </button>
+                <button
+                  class="flex w-full cursor-pointer items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent p-4 text-left transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <span
+                    class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 dark:border-gray-600"
+                  ></span>
+                  <span
+                    class="text-base font-medium text-gray-800 dark:text-gray-200"
+                    >모든 불필요한 지출 줄이기</span
+                  >
+                </button>
+                <button
+                  class="flex w-full cursor-pointer items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent p-4 text-left transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <span
+                    class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 dark:border-gray-600"
+                  ></span>
+                  <span
+                    class="text-base font-medium text-gray-800 dark:text-gray-200"
+                    >주식 시장에 투자하기</span
+                  >
+                </button>
+              </div>
+              <div class="mt-4">
+                <button
+                  class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-600"
+                >
+                  <span>다음</span>
+                  <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

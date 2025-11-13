@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // Link 컴포넌트는 "무료로 시작하기" 버튼을 제거하면서 필요 없어졌습니다.
 // (만약 다른 링크를 추가하고 싶다면, import { Link } from 'react-router-dom';을 다시 추가하세요.)
 
@@ -11,8 +11,8 @@ const HeroSection = () => (
         EconoLearn AI 작동 방식
       </h1>
       <p className="max-w-3xl text-base font-normal leading-normal text-text-secondary dark:text-gray-300 md:text-lg">
-        EconoLearn AI에 오신 것을 환영합니다! 저희 AI 에이전트가 어떻게
-        당신의 맞춤형 경제 학습을 돕는지 자세히 알아보세요.
+        EconoLearn AI에 오신 것을 환영합니다! 저희 AI 에이전트가 어떻게 당신의
+        맞춤형 경제 학습을 돕는지 자세히 알아보세요.
       </p>
       {/* "무료로 시작하기" 버튼 제거 */}
     </div>
@@ -79,7 +79,7 @@ const FeatureSplitSection = ({
 }) => (
   <section className="w-full py-16 sm:py-20 md:py-24">
     <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
-      <div className={`flex flex-col gap-4 ${reverse ? 'md:order-1' : ''}`}>
+      <div className={`flex flex-col gap-4 ${reverse ? "md:order-1" : ""}`}>
         <h2 className="text-3xl font-bold leading-tight tracking-tight text-text-primary dark:text-white md:text-4xl">
           {title}
         </h2>
@@ -89,7 +89,7 @@ const FeatureSplitSection = ({
       </div>
       <div
         className={`aspect-[4/3] w-full rounded-xl bg-gray-100 bg-cover bg-center bg-no-repeat dark:bg-gray-800/50 ${
-          reverse ? 'md:order-2' : ''
+          reverse ? "md:order-2" : ""
         }`}
         data-alt={alt}
         style={{ backgroundImage: `url("${imageUrl}")` }}
@@ -106,9 +106,9 @@ const MissionSection = () => (
       </h3>
       <blockquote className="max-w-3xl">
         <p className="text-xl italic leading-relaxed text-text-secondary dark:text-gray-300">
-          "모두를 위해 경제의 신비를 벗기는 것. 경제 지식을 접근하기 쉽고 매력적으로
-          만듦으로써, 개인이 자신의 삶과 주변 세계에 대해 더 나은 정보에 입각한
-          결정을 내릴 수 있도록 힘을 실어줄 수 있다고 믿습니다."
+          "모두를 위해 경제의 신비를 벗기는 것. 경제 지식을 접근하기 쉽고
+          매력적으로 만듦으로써, 개인이 자신의 삶과 주변 세계에 대해 더 나은
+          정보에 입각한 결정을 내릴 수 있도록 힘을 실어줄 수 있다고 믿습니다."
         </p>
       </blockquote>
     </div>

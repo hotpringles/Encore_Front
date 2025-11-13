@@ -1,41 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Nav.css';
-import logo from './assets/logo.png';
-import menuIcon from './assets/menuIcon.png';
-import chatIcon from './assets/chatIcon.png';
-import userAvatar from './assets/seed.png';
+import { Link } from "react-router-dom";
 
-function Nav({ onToggleChatSidebar, onToggleMenuSidebar, onNavigateHome }) {
+function Nav({ onToggleChatBot }) {
   return (
-    <nav className="navbar">
-      <div className="nav-left">
-        <button onClick={onToggleMenuSidebar} className="nav-button" aria-label='Open menu'>
-          <img src={menuIcon} alt='Menu' className="menu-icon" />
-        </button>
-      </div>
-      <div className="nav-center">
-        <div className="nav-logo">
-          <Link
-            to="/main"
-            onClick={() => {
-              if (onNavigateHome) {
-                onNavigateHome();
-              }
-            }}
+    <nav className="flex justify-between items-center px-4 h-[60px] bg-white border-b border-gray-200 shadow-sm z-50">
+      <div className="flex items-center">
+        <Link
+          to="/main"
+          className="flex items-center text-gray-800 no-underline font-bold text-2xl font-['Pretendard','Noto_Sans_KR',sans-serif]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            aria-hidden
+            className="w-8 h-8 mr-2 text-blue-600"
           >
-            <img src={logo} alt='FinanceForU logo' />
-            <span>FinanceForU</span>
-          </Link>
-        </div>
-      </div>
-      <div className="nav-right">
-        <Link to="/profile" className="nav-user-profile">
-          <img src={userAvatar} alt='User avatar' className="user-avatar-img" />
-          <span className="user-name">User</span>
+            <path
+              d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>FinanceForU</span>
         </Link>
-        <button onClick={onToggleChatSidebar} className="nav-button" aria-label='Toggle chat sidebar'>
-          <img src={chatIcon} alt='Chat' className="chat-icon" />
+      </div>
+      <div>
+        <button
+          className="w-[45px] h-[45px] flex items-center justify-center bg-white hover:bg-gray-100 text-gray-700 hover:text-blue-600 rounded-lg focus:outline-none
+          transition-colors no-underline font-['Pretendard','Noto_Sans_KR',sans-serif] border-0 outline-none ring-0 focus-visible:outline-black"
+          onClick={onToggleChatBot}
+          title="챗봇"
+        >
+          <span className="material-symbols-outlined text-2xl">
+            chat_bubble
+          </span>
         </button>
       </div>
     </nav>
@@ -43,4 +39,3 @@ function Nav({ onToggleChatSidebar, onToggleMenuSidebar, onNavigateHome }) {
 }
 
 export default Nav;
-

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Profile = () => {
   // 비밀번호 변경 폼을 위한 state
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   // 프로필 사진 변경 핸들러
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      console.log('선택된 파일:', e.target.files[0].name);
+      console.log("선택된 파일:", e.target.files[0].name);
       // TODO: 이미지 업로드 및 미리보기 로직 구현
     }
   };
@@ -18,24 +18,28 @@ const Profile = () => {
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      alert('새 비밀번호가 일치하지 않습니다.');
+      alert("새 비밀번호가 일치하지 않습니다.");
       return;
     }
-    console.log('비밀번호 업데이트 시도:', { currentPassword, newPassword });
+    console.log("비밀번호 업데이트 시도:", { currentPassword, newPassword });
     // TODO: 실제 비밀번호 변경 API 호출
   };
 
   // 계정 삭제 핸들러
   const handleAccountDelete = () => {
-    if (window.confirm('정말 계정을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-      console.log('계정 삭제 실행');
+    if (
+      window.confirm(
+        "정말 계정을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+      )
+    ) {
+      console.log("계정 삭제 실행");
       // TODO: 실제 계정 삭제 API 호출
     }
   };
 
   return (
     // [수정] 여기에 'pt' 클래스를 추가해 여백의 미
-    <div className="max-w-4xl mx-auto pt-12">
+    <div className="max-w-4xl mx-auto px-8 py-12">
       <header className="flex flex-wrap justify-between gap-3 mb-8">
         <p className="text-gray-900 text-4xl font-black leading-tight tracking-[-0.033em]">
           마이페이지
@@ -55,7 +59,9 @@ const Profile = () => {
                 </span>
               </div>
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-white text-sm font-medium">사진 변경</span>
+                <span className="text-white text-sm font-medium">
+                  사진 변경
+                </span>
               </div>
               <input
                 type="file"
@@ -92,7 +98,7 @@ const Profile = () => {
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   <div
                     className="bg-primary h-2.5 rounded-full"
-                    style={{ width: '45%' }}
+                    style={{ width: "45%" }}
                   ></div>
                 </div>
               </div>

@@ -1,88 +1,66 @@
-﻿/* Base layout */
-/* test */
-.app-container {
-  display: grid;
-  grid-template-rows: auto 1fr; /* header? content ?곸뿭 */
-  grid-template-columns: 1fr; /* 湲곕낯?곸쑝濡???媛쒖쓽 而щ읆 */
-  grid-template-areas:
-    "header"
-    "main";
-  height: 100vh;
-  width: 100vw;
-  overflow-x: hidden; /* ?щ씪?대뱶 ?좊땲硫붿씠????媛濡??ㅽ겕濡ㅻ컮媛 ?앷린??寃껋쓣 諛⑹??⑸땲?? */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.app-nav {
-  grid-area: header;
-  z-index: 10;
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
 }
 
 .app-main {
-  grid-area: main;
-  display: flex; /* ?먯떇 ?붿냼媛 ?믪씠瑜?梨꾩슱 ???덈룄濡?flexbox 而⑦뀒?대꼫濡?留뚮벊?덈떎. */
-  overflow-y: auto; /* ?댁슜???섏튌 寃쎌슦 ???곸뿭???ㅽ겕濡ㅻ릺?꾨줉 ?ㅼ떆 ?쒖꽦?뷀빀?덈떎. */
-  min-height: 0; /* Grid ?꾩씠?쒖씠 遺紐⑥쓽 ?ш린瑜?珥덇낵?섏? ?딅룄濡?蹂댁옣?⑸땲?? */
-  background-color: #ffffff; /* 페이지 배경을 흰색으로 통일 */
-  margin-right: 0; /* 湲곕낯 ?ㅻⅨ履??щ갚 ?놁쓬 */
-  transition: margin-right 0.35s ease-in-out; /* ?щ갚 蹂寃쎌뿉 ?좊땲硫붿씠???곸슜 */
+  display: flex;
 }
 
-/* ?ъ씠?쒕컮媛 蹂댁씪 ?? MainContent ?ㅻⅨ履쎌뿉 ?ъ씠?쒕컮 ?덈퉬留뚰겮 ?щ갚??以띾땲?? */
-.app-container.chat-sidebar-visible .app-main {
-  margin-right: 33.33vw; /* ?ъ씠?쒕컮 ?덈퉬(?붾㈃??1/3)留뚰겮 ?щ갚??以띾땲?? */
-}
-
-.app-sidebar {
-  /* ?ъ씠?쒕컮瑜??붾㈃ ?ㅻⅨ履쎌뿉 怨좎젙?쒗궢?덈떎. */
-  position: fixed;
-  top: 60px; /* Nav ?믪씠(60px)留뚰겮 ?꾨옒???꾩튂?쒗궢?덈떎. */
-  right: 0;
-  height: calc(100% - 60px); /* Nav ?믪씠瑜??쒖쇅???섎㉧吏 ?믪씠瑜?李⑥??⑸땲?? */
-  width: 33.33vw; /* 釉뚮씪?곗? 媛濡??덈퉬??1/3??李⑥??⑸땲?? */
+.app-container {
+  display: flex;
+  overflow-x: hidden;
   overflow-y: auto;
-  border-left: 1px solid #ccc;
-  background-color: #fff;
-  transform: translateX(100%); /* 湲곕낯?곸쑝濡??붾㈃ 諛뽰뿉 ?꾩튂 */
-  transition: transform 0.35s ease-in-out; /* ?щ씪?대뱶 ?좊땲硫붿씠???곸슜 */
-  z-index: 20;
 }
 
-/* ?ъ씠?쒕컮媛 蹂댁씪 ?? ?쒖옄由щ줈 ?대룞?쒗궢?덈떎. */
-.app-container.chat-sidebar-visible .app-sidebar {
-  transform: translateX(0);
+.content-container {
+  display: flex;
+  margin-left: 60px;
+  flex-direction: column;
+  flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+}
+.content-container.sign-page,
+.content-container.test-page {
+  margin-left: 0;
 }
 
-/* --- ?쇱そ 硫붾돱 ?ъ씠?쒕컮 ?ㅽ???--- */
-.menu-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  z-index: 30; /* ?ㅻⅨ ?ъ씠?쒕컮???붿냼蹂대떎 ?꾩뿉 ?ㅻ룄濡??ㅼ젙 */
-  transform: translateX(-100%);
-  transition: transform 0.35s ease-in-out;
+.panel-container {
+  flex: 0 0;
+  flex-basis: 100%;
+  transition: flex-basis 0.3s ease-in-out;
+  min-width: 400px;
 }
 
-/* ?쇱そ 硫붾돱 ?ъ씠?쒕컮媛 蹂댁씪 ?뚯쓽 ?ㅽ???*/
-.app-container.menu-sidebar-visible .menu-sidebar {
-  transform: translateX(0);
+.panel-container.chat-bot-visible {
+  flex-basis: calc(100% - 30vw);
 }
 
-/* --- ?ㅻ쾭?덉씠 ?ㅽ???--- */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 25; /* 硫붾돱 ?ъ씠?쒕컮(30)蹂대떎???꾨옒, ?ㅻⅨ ?붿냼?ㅻ낫?ㅻ뒗 ?꾩뿉 ?꾩튂 */
+.app-chat-bot {
+  overflow: hidden;
+  height: calc(100vh - 60px);
+  flex: 0 0;
+  flex-basis: 0;
   opacity: 0;
-  transition: opacity 0.35s ease-in-out;
-  pointer-events: none; /* 湲곕낯?곸쑝濡??대┃ ?덈릺寃??ㅼ젙 */
+  transition: opacity 0.3s ease-in-out, flex-basis 0.3s ease-in-out;
 }
 
-.app-container.menu-sidebar-visible .overlay {
+.app-chat-bot.chat-bot-visible {
   opacity: 1;
-  pointer-events: auto; /* ?ъ씠?쒕컮 蹂댁씪 ?뚮쭔 ?대┃ 媛?ν븯寃??ㅼ젙 */
+  flex-basis: 30vw;
 }

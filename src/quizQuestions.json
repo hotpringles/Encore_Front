@@ -1,0 +1,118 @@
+[
+  { "hasTested": true },
+  {
+    "question": "경제학에서 \"희소성(Scarcity)\"이란 무엇을 의미하나요?",
+    "options": [
+      "자원의 풍부함",
+      "인간의 욕구는 무한한데 비해 자원은 한정되어 있는 상태",
+      "물가가 지속적으로 상승하는 현상",
+      "특정 상품을 독점적으로 판매하는 시장"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "물가가 전반적으로 지속해서 상승하는 현상을 무엇이라고 하나요?",
+    "options": [
+      "인플레이션 (Inflation)",
+      "디플레이션 (Deflation)",
+      "스태그플레이션 (Stagflation)",
+      "환율 (Exchange Rate)"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "question": "상품의 가격이 오르면 수요량이 감소하고, 가격이 내리면 수요량이 증가하는 법칙을 무엇이라고 하나요?",
+    "options": ["공급의 법칙", "수요의 법칙", "기회비용", "매몰비용"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "국가 경제 전체의 움직임을 다루는 경제학 분야는 무엇인가요?",
+    "options": [
+      "미시경제학 (Microeconomics)",
+      "거시경제학 (Macroeconomics)",
+      "행동경제학 (Behavioral Economics)",
+      "계량경제학 (Econometrics)"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "한 국가의 총체적인 경제 성과를 측정하는 가장 대표적인 지표로, 일정 기간 국내에서 생산된 모든 최종 재화와 서비스의 시장 가치를 합한 것은 무엇인가요?",
+    "options": [
+      "GNP (국민총생산)",
+      "GDP (국내총생산)",
+      "CPI (소비자물가지수)",
+      "무역수지"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "은행과 같은 금융기관에 돈을 맡길 때 받는 대가(이자)의 비율을 무엇이라고 하나요?",
+    "options": [
+      "세율 (Tax Rate)",
+      "수수료 (Fee)",
+      "금리 (Interest Rate)",
+      "배당 (Dividend)"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "기업이 자금을 조달하기 위해 발행하는 유가증권으로, 소유자에게 회사의 지분 일부를 나눠주는 것은 무엇인가요?",
+    "options": [
+      "채권 (Bond)",
+      "주식 (Stock)",
+      "어음 (Promissory Note)",
+      "부동산 (Real Estate)"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "시장에 단 하나의 공급자만 존재하여 가격 결정에 막대한 영향을 미치는 시장 구조를 무엇이라고 하나요?",
+    "options": [
+      "완전 경쟁 (Perfect Competition)",
+      "과점 (Oligopoly)",
+      "독점 (Monopoly)",
+      "독점적 경쟁 (Monopolistic Competition)"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "중앙은행이 시중의 통화량을 조절하기 위해 사용하는 대표적인 정책 수단은 무엇인가요?",
+    "options": [
+      "세금 인상",
+      "정부 지출 확대",
+      "기준금리 변경",
+      "최저임금 인상"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "A라는 활동을 선택함으로써 포기해야 하는 B라는 활동의 가치 중 가장 큰 가치를 무엇이라고 하나요?",
+    "options": [
+      "기회비용 (Opportunity Cost)",
+      "매몰비용 (Sunk Cost)",
+      "한계비용 (Marginal Cost)",
+      "고정비용 (Fixed Cost)"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "question": "주식 시장에서 주가가 전반적으로 하락할 것으로 예상되는 시장을 무엇이라고 부르나요?",
+    "options": [
+      "불 마켓 (Bull Market)",
+      "베어 마켓 (Bear Market)",
+      "블루오션 (Blue Ocean)",
+      "레드오션 (Red Ocean)"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "정부가 발행하거나 보증하는 '빚' 문서를 뜻하며, 정해진 날짜에 정해진 이자를 지급할 것을 약속하는 증서는 무엇인가요?",
+    "options": [
+      "국채 (Government Bond)",
+      "회사채 (Corporate Bond)",
+      "주식 (Stock)",
+      "펀드 (Fund)"
+    ],
+    "correctAnswer": 0
+  }
+]

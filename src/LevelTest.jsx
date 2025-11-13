@@ -1,135 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // --- 퀴즈 데이터 ---
 // [수정] 12개의 레벨 테스트 문제로 교체
-const quizQuestions = [
-  {
-    question: '경제학에서 "희소성(Scarcity)"이란 무엇을 의미하나요?',
-    options: [
-      '자원의 풍부함',
-      '인간의 욕구는 무한한데 비해 자원은 한정되어 있는 상태',
-      '물가가 지속적으로 상승하는 현상',
-      '특정 상품을 독점적으로 판매하는 시장',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '물가가 전반적으로 지속해서 상승하는 현상을 무엇이라고 하나요?',
-    options: [
-      '인플레이션 (Inflation)',
-      '디플레이션 (Deflation)',
-      '스태그플레이션 (Stagflation)',
-      '환율 (Exchange Rate)',
-    ],
-    correctAnswer: 0,
-  },
-  {
-    question: '상품의 가격이 오르면 수요량이 감소하고, 가격이 내리면 수요량이 증가하는 법칙을 무엇이라고 하나요?',
-    options: [
-      '공급의 법칙',
-      '수요의 법칙',
-      '기회비용',
-      '매몰비용',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '국가 경제 전체의 움직임을 다루는 경제학 분야는 무엇인가요?',
-    options: [
-      '미시경제학 (Microeconomics)',
-      '거시경제학 (Macroeconomics)',
-      '행동경제학 (Behavioral Economics)',
-      '계량경제학 (Econometrics)',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '한 국가의 총체적인 경제 성과를 측정하는 가장 대표적인 지표로, 일정 기간 국내에서 생산된 모든 최종 재화와 서비스의 시장 가치를 합한 것은 무엇인가요?',
-    options: [
-      'GNP (국민총생산)',
-      'GDP (국내총생산)',
-      'CPI (소비자물가지수)',
-      '무역수지',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '은행과 같은 금융기관에 돈을 맡길 때 받는 대가(이자)의 비율을 무엇이라고 하나요?',
-    options: [
-      '세율 (Tax Rate)',
-      '수수료 (Fee)',
-      '금리 (Interest Rate)',
-      '배당 (Dividend)',
-    ],
-    correctAnswer: 2,
-  },
-  {
-    question: '기업이 자금을 조달하기 위해 발행하는 유가증권으로, 소유자에게 회사의 지분 일부를 나눠주는 것은 무엇인가요?',
-    options: [
-      '채권 (Bond)',
-      '주식 (Stock)',
-      '어음 (Promissory Note)',
-      '부동산 (Real Estate)',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '시장에 단 하나의 공급자만 존재하여 가격 결정에 막대한 영향을 미치는 시장 구조를 무엇이라고 하나요?',
-    options: [
-      '완전 경쟁 (Perfect Competition)',
-      '과점 (Oligopoly)',
-      '독점 (Monopoly)',
-      '독점적 경쟁 (Monopolistic Competition)',
-    ],
-    correctAnswer: 2,
-  },
-  {
-    question: '중앙은행이 시중의 통화량을 조절하기 위해 사용하는 대표적인 정책 수단은 무엇인가요?',
-    options: [
-      '세금 인상',
-      '정부 지출 확대',
-      '기준금리 변경',
-      '최저임금 인상',
-    ],
-    correctAnswer: 2,
-  },
-  {
-    question: 'A라는 활동을 선택함으로써 포기해야 하는 B라는 활동의 가치 중 가장 큰 가치를 무엇이라고 하나요?',
-    options: [
-      '기회비용 (Opportunity Cost)',
-      '매몰비용 (Sunk Cost)',
-      '한계비용 (Marginal Cost)',
-      '고정비용 (Fixed Cost)',
-    ],
-    correctAnswer: 0,
-  },
-  {
-    question: '주식 시장에서 주가가 전반적으로 하락할 것으로 예상되는 시장을 무엇이라고 부르나요?',
-    options: [
-      '불 마켓 (Bull Market)',
-      '베어 마켓 (Bear Market)',
-      '블루오션 (Blue Ocean)',
-      '레드오션 (Red Ocean)',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    question: '정부가 발행하거나 보증하는 \'빚\' 문서를 뜻하며, 정해진 날짜에 정해진 이자를 지급할 것을 약속하는 증서는 무엇인가요?',
-    options: [
-      '국채 (Government Bond)',
-      '회사채 (Corporate Bond)',
-      '주식 (Stock)',
-      '펀드 (Fund)',
-    ],
-    correctAnswer: 0,
-  },
-];
-const TOTAL_QUESTIONS = quizQuestions.length; // 총 문제 수 (12개)
+
+const TOTAL_QUESTIONS = 12; // 총 문제 수 (12개)
 
 // 1. 퀴즈 시작 화면 (수정 없음)
 const QuizStart = ({ onStartQuiz }) => (
-  <div className="w-full max-w-3xl">
+  <div className="w-full max-w-3xl h-full">
     <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg border border-gray-200/80 dark:border-white/10 overflow-hidden">
       <div className="p-8 sm:p-12 md:p-16 text-center">
         <div className="flex justify-center mb-6">
@@ -154,7 +33,9 @@ const QuizStart = ({ onStartQuiz }) => (
               <span className="material-symbols-outlined mr-3 text-primary">
                 checklist
               </span>
-              <span className="text-sm font-medium">총 {TOTAL_QUESTIONS}개의 문제</span>
+              <span className="text-sm font-medium">
+                총 {TOTAL_QUESTIONS}개의 문제
+              </span>
             </li>
             <li className="flex items-center text-gray-700 dark:text-gray-300">
               <span className="material-symbols-outlined mr-3 text-primary">
@@ -196,16 +77,16 @@ const QuizMiddle = ({
   const progressPercent = ((questionIndex + 1) / TOTAL_QUESTIONS) * 100;
 
   return (
-    <div className="flex flex-col max-w-[768px] flex-1 w-full">
+    <div className="flex flex-col justify-center max-w-[768px] flex-1 w-full">
       <div className="px-4 text-center">
-        <h1 className="text-gray-900 dark:text-gray-50 tracking-tight text-[32px] font-bold leading-tight pt-6 pb-2">
+        <h1 className="text-gray-900 dark:text-gray-50 tracking-tight text-[28px] font-bold leading-tight pt-4 pb-1">
           경제 상식 퀴즈
         </h1>
         <p className="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pb-3">
           {questionIndex + 1}/{TOTAL_QUESTIONS} 문제
         </p>
       </div>
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-3 p-3">
         <div className="rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-2 rounded-full bg-primary"
@@ -213,9 +94,9 @@ const QuizMiddle = ({
           ></div>
         </div>
       </div>
-      <div className="flex flex-col gap-8 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-6 sm:p-8 mt-6">
+      <div className="flex flex-col gap-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-6 mt-4">
         <div className="flex flex-wrap justify-between gap-3">
-          <p className="text-gray-900 dark:text-gray-50 text-3xl font-bold leading-tight tracking-[-0.03em] min-w-72">
+          <p className="text-gray-900 dark:text-gray-50 text-2xl font-bold leading-tight tracking-[-0.03em] min-w-72">
             {question.question}
           </p>
         </div>
@@ -226,17 +107,17 @@ const QuizMiddle = ({
               <button
                 key={index}
                 onClick={() => setSelectedAnswer(index)}
-                className={`flex w-full cursor-pointer items-center gap-4 rounded-lg border p-4 text-left transition-all ${
+                className={`flex w-full cursor-pointer items-center gap-4 rounded-lg border p-3 text-left transition-all ${
                   isSelected
-                    ? 'border-2 border-primary bg-primary/10'
-                    : 'border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800'
+                    ? "border-2 border-primary bg-primary/10"
+                    : "border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
                 <span
                   className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border ${
                     isSelected
-                      ? 'border-2 border-primary bg-primary text-white'
-                      : 'border-gray-300 dark:border-gray-600'
+                      ? "border-2 border-primary bg-primary text-white"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   {isSelected && (
@@ -258,7 +139,9 @@ const QuizMiddle = ({
             disabled={selectedAnswer === null}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-600"
           >
-            <span>{questionIndex === TOTAL_QUESTIONS - 1 ? '결과 보기' : '다음'}</span>
+            <span>
+              {questionIndex === TOTAL_QUESTIONS - 1 ? "결과 보기" : "다음"}
+            </span>
             <span className="material-symbols-outlined">arrow_forward</span>
           </button>
         </div>
@@ -268,36 +151,37 @@ const QuizMiddle = ({
 };
 
 // 3. 퀴즈 완료 화면 (등급 로직 수정)
-const QuizEnd = ({ score }) => {
+const QuizEnd = ({ score, setHasTested }) => {
   const navigate = useNavigate();
 
   // [수정] 4가지 등급 분류 로직
-  let grade = '';
-  let icon = ''; // 아이콘 URL
-  let description = ''; // 등급 설명 (추가)
+  let grade = "";
+  let icon = ""; // 아이콘 URL
+  let description = ""; // 등급 설명 (추가)
 
   // 등급 기준: 12문제 기준
   // 0-3점: 씨앗 (기본)
   // 4-6점: 새싹
   // 7-9점: 나무
   // 10-12점: 숲
-  
+
   if (score >= 10) {
-    grade = '숲';
-    description = '경제 지식이 풍부하시네요!';
-    icon = 'https://placehold.co/96x96/108918/FFFFFF?text=🌲'; // '숲' 아이콘 예시
+    grade = "숲";
+    description = "경제 지식이 풍부하시네요!";
+    icon = "https://placehold.co/96x96/108918/FFFFFF?text=🌲"; // '숲' 아이콘 예시
   } else if (score >= 7) {
-    grade = '나무';
-    description = '경제의 기본기를 잘 갖추고 계세요!';
-    icon = 'https://placehold.co/96x96/3E8918/FFFFFF?text=🌳'; // '나무' 아이콘 예시
+    grade = "나무";
+    description = "경제의 기본기를 잘 갖추고 계세요!";
+    icon = "https://placehold.co/96x96/3E8918/FFFFFF?text=🌳"; // '나무' 아이콘 예시
   } else if (score >= 4) {
-    grade = '새싹';
-    description = '경제 상식에 대해 알아가고 계시군요!';
-    icon = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBvDAcvPLXbHkkQ84p1UdR2R3XX-Nm1XDNVWaN5s-a3Yxtd99p-IJTN7bbB_M4KyDIasJNweZGIDF4plNEFuRhVmmHjzP9JSQUKdtzo4C_j-6t191YPEbmbZG_Ot5a0R0O-aQcnI-JeNx7XIj9dzFz6uNBKOi9LAP0eEJ0R_mXSM0ibJTa07wDr-riC50SjZ44rwRguUjaYRSfS8Vt3FckobSLsUvoe43TsK6prHIwQvsj5B56ObDn7jzes-RHGmZ6oYn-zT-QsNh4'; // '새싹' 아이콘 (기존)
+    grade = "새싹";
+    description = "경제 상식에 대해 알아가고 계시군요!";
+    icon =
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBvDAcvPLXbHkkQ84p1UdR2R3XX-Nm1XDNVWaN5s-a3Yxtd99p-IJTN7bbB_M4KyDIasJNweZGIDF4plNEFuRhVmmHjzP9JSQUKdtzo4C_j-6t191YPEbmbZG_Ot5a0R0O-aQcnI-JeNx7XIj9dzFz6uNBKOi9LAP0eEJ0R_mXSM0ibJTa07wDr-riC50SjZ44rwRguUjaYRSfS8Vt3FckobSLsUvoe43TsK6prHIwQvsj5B56ObDn7jzes-RHGmZ6oYn-zT-QsNh4"; // '새싹' 아이콘 (기존)
   } else {
-    grade = '씨앗';
-    description = '이제 막 경제 공부를 시작하셨네요!';
-    icon = 'https://placehold.co/96x96/D2691E/FFFFFF?text=🌰'; // '씨앗' 아이콘 예시
+    grade = "씨앗";
+    description = "이제 막 경제 공부를 시작하셨네요!";
+    icon = "https://placehold.co/96x96/D2691E/FFFFFF?text=🌰"; // '씨앗' 아이콘 예시
   }
 
   return (
@@ -316,12 +200,12 @@ const QuizEnd = ({ score }) => {
           src={icon} // [수정] 등급별 아이콘
         />
         <p className="text-2xl font-bold text-primary mt-2">{grade}</p>
-        
+
         {/* [오류 수정] </BODY_TEXT> -> </p> 로 변경 */}
         <p className="text-gray-500 text-base font-medium mt-2">
           {description}
         </p>
-        
+
         <p className="text-gray-500 text-sm font-medium mt-4">
           ({score} / {TOTAL_QUESTIONS})
         </p>
@@ -329,13 +213,19 @@ const QuizEnd = ({ score }) => {
       <div className="flex justify-center w-full">
         <div className="flex flex-col sm:flex-row flex-1 gap-3 px-4 py-3 max-w-[480px] justify-center">
           <button
-            onClick={() => navigate('/profile')}
+            onClick={() => {
+              setHasTested(true);
+              navigate("/profile");
+            }}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#f0f2f4] text-[#111418] text-base font-bold leading-normal tracking-[0.015em] grow"
           >
             <span className="truncate">마이페이지</span>
           </button>
           <button
-            onClick={() => navigate('/main')}
+            onClick={() => {
+              setHasTested(true);
+              navigate("/main");
+            }}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] grow"
           >
             <span className="truncate">학습 시작하기</span>
@@ -348,14 +238,14 @@ const QuizEnd = ({ score }) => {
 
 // --- 메인 퀴즈 컴포넌트 ---
 // (수정 없음)
-const LevelTest = () => {
-  const [quizState, setQuizState] = useState('start'); // 'start', 'middle', 'end'
+const LevelTest = ({ quizQuestions, setHasTested }) => {
+  const [quizState, setQuizState] = useState("start"); // 'start', 'middle', 'end'
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const handleStartQuiz = () => {
-    setQuizState('middle');
+    setQuizState("middle");
   };
 
   const handleNextQuestion = () => {
@@ -367,15 +257,15 @@ const LevelTest = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
     } else {
-      setQuizState('end');
+      setQuizState("end");
     }
   };
 
   const renderQuizState = () => {
     switch (quizState) {
-      case 'start':
+      case "start":
         return <QuizStart onStartQuiz={handleStartQuiz} />;
-      case 'middle':
+      case "middle":
         return (
           <QuizMiddle
             question={quizQuestions[currentQuestionIndex]}
@@ -385,8 +275,8 @@ const LevelTest = () => {
             onNextQuestion={handleNextQuestion}
           />
         );
-      case 'end':
-        return <QuizEnd score={score} />;
+      case "end":
+        return <QuizEnd setHasTested={setHasTested} score={score} />;
       default:
         return <QuizStart onStartQuiz={handleStartQuiz} />;
     }
@@ -394,7 +284,7 @@ const LevelTest = () => {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-gray-50 dark:bg-background-dark">
-      <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
         {renderQuizState()}
       </main>
     </div>

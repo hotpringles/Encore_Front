@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EconoLearn AI - Economic Highlights</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1973f0",
+              "background-light": "#ffffff",
+              "background-dark": "#101822",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="font-display">
+    <div
+      class="relative flex h-auto min-h-screen w-full flex-col bg-background-light group/design-root overflow-x-hidden"
+    >
+      <div class="flex h-full grow">
+        <aside
+          class="w-64 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col"
+        >
+          <div class="p-6">
+            <div class="flex items-center gap-4 text-gray-800">
+              <div class="size-6 text-primary">
+                <svg
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h2
+                class="text-gray-800 text-lg font-bold leading-tight tracking-[-0.015em]"
+              >
+                EconoLearn AI
+              </h2>
+            </div>
+          </div>
+          <nav class="flex-grow p-4">
+            <ul class="space-y-2">
+              <li>
+                <a
+                  class="flex items-center gap-3 rounded-lg bg-primary/10 text-primary px-3 py-2 text-sm font-semibold"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >dashboard</span
+                  >
+                  <span>Dashboard</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined text-lg">school</span>
+                  <span>Learn</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >chat_bubble</span
+                  >
+                  <span>AI Chat</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined text-lg">history</span>
+                  <span>History</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >bookmark</span
+                  >
+                  <span>Saved</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="p-4 mt-auto">
+            <a
+              class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+              href="#"
+            >
+              <span class="material-symbols-outlined text-lg">settings</span>
+              <span>Settings</span>
+            </a>
+            <a
+              class="flex items-center gap-3 rounded-lg hover:bg-gray-100 text-gray-600 px-3 py-2 text-sm font-medium"
+              href="#"
+            >
+              <span class="material-symbols-outlined text-lg">help</span>
+              <span>Help</span>
+            </a>
+            <div class="border-t border-gray-200 mt-4 pt-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  data-alt="User avatar placeholder"
+                  style="
+                    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBVEMgnhgLVwjzjA2SoJsPkQyLVURFN_VOYjDtIc1jIIDF2Ba8zk-Pb0s51da4WWvRVq6V_BuIAsJBCnjlvpWNSG3fEqLsoQ_uiM7LXZTKYCR3B_O5hrI2yeSPklZ1hl9IWWKW6TvHLJwCxA00L9ixAMGyUUf5MJORpfjirS4h0P6uY4aMkjlyahdWKNxrG3deZGPDlXNqe6MV91I4wE83oosK3-mxxNGM5347dleOU-Qrqrwa2Pf2bcJBbtM5bpyxwoULySeo1Cs');
+                  "
+                ></div>
+                <div>
+                  <p class="text-sm font-semibold text-gray-800">Jane Doe</p>
+                  <p class="text-xs text-gray-500">jane.doe@example.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="layout-container flex h-full grow flex-col flex-1">
+          <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 px-10 py-3"
+          >
+            <div class="flex flex-1 justify-end gap-2 sm:gap-4">
+              <label class="flex flex-col w-full !h-10 max-w-sm">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                  <div
+                    class="text-gray-400 flex border border-gray-300 bg-white items-center justify-center pl-3 rounded-l-lg border-r-0"
+                  >
+                    <span class="material-symbols-outlined">search</span>
+                  </div>
+                  <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 bg-white h-full placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    placeholder="Search news, topics..."
+                    value=""
+                  />
+                </div>
+              </label>
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >notifications</span
+                >
+              </button>
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >account_circle</span
+                >
+              </button>
+            </div>
+          </header>
+          <main class="py-10 px-10 bg-gray-50/50 flex-grow">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <h1
+                class="text-gray-900 text-4xl font-black leading-tight tracking-[-0.033em] min-w-72"
+              >
+                Today's Economic Highlights
+              </h1>
+            </div>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-0 z-10 flex items-center">
+                <button
+                  class="bg-white/80 hover:bg-white p-2 rounded-full -ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-gray-200"
+                >
+                  <span class="material-symbols-outlined text-gray-800"
+                    >chevron_left</span
+                  >
+                </button>
+              </div>
+              <div class="absolute inset-y-0 right-0 z-10 flex items-center">
+                <button
+                  class="bg-white/80 hover:bg-white p-2 rounded-full -mr-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-gray-200"
+                >
+                  <span class="material-symbols-outlined text-gray-800"
+                    >chevron_right</span
+                  >
+                </button>
+              </div>
+              <div
+                class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden snap-x snap-mandatory scroll-smooth"
+              >
+                <div
+                  class="flex items-stretch p-4 gap-6 flex-shrink-0 w-full transition-transform duration-500 ease-in-out"
+                >
+                  <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-xl bg-white border border-gray-200 shadow-sm min-w-60 snap-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div
+                      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl flex flex-col"
+                      data-alt="A line graph showing stock market trends"
+                      style="
+                        background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5io5UzBsVYWUPwc7bPn2NGUUHDXYhQ32f7wObgKpcwhggyGeEo43eu-T452HRry9C3-4SjxJRSyugFvbE6eJjH1SVjd_hcYqKH3bM7JiKy11ZSxivINTp5XgLFlVOSHAysibDrMWggCTM4iTSxOxONukRgrKSIWmhqRXCWaP95qC1D32cm6VrEHGCGjPH5-6nSF9eDJVyeWyh0_dir4E_BKeA_S6vfxrqd0gPAyPl5gdCBCOyVfVHqJHz8soiLdPGLG0tGMpWGAY');
+                      "
+                    ></div>
+                    <div
+                      class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4"
+                    >
+                      <div>
+                        <span
+                          class="inline-block bg-primary/20 text-primary text-xs font-semibold mb-2 px-2.5 py-0.5 rounded-full"
+                          >Market Update</span
+                        >
+                        <p
+                          class="text-gray-900 text-lg font-bold leading-normal"
+                        >
+                          Global Market Trends: A Deep Dive into Q3
+                        </p>
+                        <p
+                          class="text-gray-500 text-sm font-normal leading-normal mt-1"
+                        >
+                          An analysis of recent global market performance and
+                          its impact on major economies.
+                        </p>
+                      </div>
+                      <a
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90"
+                        href="#"
+                      >
+                        <span class="truncate">Read More</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-xl bg-white border border-gray-200 shadow-sm min-w-60 snap-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div
+                      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl flex flex-col"
+                      data-alt="The exterior of a central bank building"
+                      style="
+                        background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3TFJFEvISdQGW42BL9NRRjejQtFuZDQrPjmqDgbWosQ7Cax7-4ZZg2lYJP3TWZTPmBo5Z9mMDIcH1toM4rFjV6gYgRIVrCCiM7A7EHouKTKtYpMCd9nt6bhlGFuj0ReDb0Rt7sSYORDZHY1n6fH5aubuFQdjr72MYYBH3olVfw0xRFs9SAXAo93FH8xonaLsl8mpwfUaYPeCRiTk_8wzvw_C7zKEG1CaOy5pFJ9w2sgCHZsRIMnQWsXDJt01vEqHMH-KyCpI10B4');
+                      "
+                    ></div>
+                    <div
+                      class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4"
+                    >
+                      <div>
+                        <span
+                          class="inline-block bg-primary/20 text-primary text-xs font-semibold mb-2 px-2.5 py-0.5 rounded-full"
+                          >Monetary Policy</span
+                        >
+                        <p
+                          class="text-gray-900 text-lg font-bold leading-normal"
+                        >
+                          Central Bank Announces Key Policy Shift
+                        </p>
+                        <p
+                          class="text-gray-500 text-sm font-normal leading-normal mt-1"
+                        >
+                          Understanding the potential consequences of the latest
+                          interest rate decision.
+                        </p>
+                      </div>
+                      <a
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90"
+                        href="#"
+                      >
+                        <span class="truncate">Read More</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-xl bg-white border border-gray-200 shadow-sm min-w-60 snap-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div
+                      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl flex flex-col"
+                      data-alt="An abstract image representing artificial intelligence"
+                      style="
+                        background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0RMwCnLvItWCQVAeBrIMBoTUjqpY4FlJKDmJLStA4PisNtq-TnFPqrt5iEI_H4uVk37HYYols-jnpS4EJmc6OI1VuvX5rosvUZna-CXXqwGJj19Kwvf5p8bdq2ciBnCddB-909FaJUlNRL7eKjZFjUqoVYBAYKkqvLAJtQt4leGmU4RvPAaLVuZloNea5c9xL3YBvREYm3R9z9p6GrLe09fc_t7-Kg36S_F2xowXtYeQ0TPuicsLAyGLCkJSgKR_1jtRBh9yE-AY');
+                      "
+                    ></div>
+                    <div
+                      class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4"
+                    >
+                      <div>
+                        <span
+                          class="inline-block bg-primary/20 text-primary text-xs font-semibold mb-2 px-2.5 py-0.5 rounded-full"
+                          >Tech &amp; Economy</span
+                        >
+                        <p
+                          class="text-gray-900 text-lg font-bold leading-normal"
+                        >
+                          The Economic Impact of AI on Modern Industries
+                        </p>
+                        <p
+                          class="text-gray-500 text-sm font-normal leading-normal mt-1"
+                        >
+                          Exploring the disruptive potential and economic
+                          implications of new AI technologies.
+                        </p>
+                      </div>
+                      <a
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90"
+                        href="#"
+                      >
+                        <span class="truncate">Read More</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center mt-4 gap-2">
+                <div class="w-2 h-2 rounded-full bg-primary"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+              </div>
+            </div>
+            <div class="mt-8 px-4">
+              <div class="relative flex items-center justify-center">
+                <div
+                  class="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-gray-50/50 to-transparent pointer-events-none z-10"
+                ></div>
+                <div
+                  class="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-gray-50/50 to-transparent pointer-events-none z-10"
+                ></div>
+                <div
+                  class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden w-full py-4"
+                >
+                  <div
+                    class="flex items-center space-x-4 flex-nowrap mx-auto px-4"
+                  >
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 21
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 22
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 23
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-900 text-sm font-bold group-hover:text-primary transition-colors"
+                        >
+                          Today
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-12px] w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 25
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 26
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                    <div class="w-24 h-px bg-gray-200 flex-shrink-0"></div>
+                    <a
+                      class="relative flex-shrink-0 flex flex-col items-center group cursor-pointer"
+                      href="#"
+                    >
+                      <div class="w-24 text-center">
+                        <p
+                          class="text-gray-500 text-sm font-medium group-hover:text-gray-900 transition-colors"
+                        >
+                          Oct 27
+                        </p>
+                      </div>
+                      <div
+                        class="absolute bottom-[-10px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary transition-colors"
+                      ></div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
