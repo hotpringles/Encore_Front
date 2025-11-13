@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Menu({ location }) {
+function Menu({ location, articles, setSelectedArticle }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -57,7 +57,25 @@ function Menu({ location }) {
           <span className="text-sm font-semibold text-gray-500 mb-2 block font-['Pretendard','Noto_Sans_KR',sans-serif]">
             최근 본 뉴스
           </span>
-          <ul className="space-y-1"></ul>
+          <ul className="space-y-1">
+            {articles.map((reports) => (
+              <li key={reports.id}>
+                <Link
+                  to={"/main"}
+                  className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
+                  onClick={() => {
+                    setSelectedArticle(reports);
+                    onToggleMenu(item.path);
+                  }}
+                >
+                  <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
+                    {reports.date}
+                  </span>
+                  <span className="text-lg font-medium">{item.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
         <div
           className={`p-4 border-t border-gray-200 whitespace-nowrap transition-opacity duration-300 ease-in-out ${

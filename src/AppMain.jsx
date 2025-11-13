@@ -82,10 +82,11 @@ function AppMain({ reports }) {
               return (
                 <div key={report.id} className={getCardClass(index)}>
                   <Card
-                    title={report.title}
-                    imageUrl={report.imageUrl}
-                    summary={report.summary}
-                    originalUrl={report.originalUrl}
+                    title={report.summaries.title}
+                    imageUrl={report.summaries.article.imageUrl}
+                    summary={report.summaries.content}
+                    originalUrl={report.summaries.article.url}
+                    author={report.summaries.article.author}
                     quiz={report.quiz}
                   />
                 </div>
