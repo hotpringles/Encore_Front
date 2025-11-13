@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 // [수정] react-router-dom에서 Link 외에 useNavigate도 가져옵니다.
 import { Link, useNavigate } from "react-router-dom";
+// [추가] accountApi에서 login 함수를 가져옵니다.
+import { login } from "./api/accountApi";
 
 const SignIn = ({ hasTested }) => {
-  const [email, setEmail] = useState("");
+  // [수정] API 명세에 맞춰 'username'으로 상태 이름을 변경합니다.
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -16,15 +19,27 @@ const SignIn = ({ hasTested }) => {
   };
 
   // 폼 제출 핸들러
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // 폼 기본 제출 동작 방지
-    console.log("로그인 시도:", { email, password });
 
-    // TODO: 실제로는 여기서 서버와 통신해 아이디/비밀번호가 맞는지 확인해야 합니다.
+    try {
+      // [추가] API를 호출하여 로그인을 시도합니다.
+      const response = await login({ username, password });
 
-    // [수정] 로그인이 성공했다고 가정하고, /main 경로로 즉시 이동시킵니다.
-    if (hasTested) navigate("/main");
-    else navigate("/level-test");
+      // [추가] 서버 응답에서 access 토큰을 추출합니다. (키 이름은 백엔드 사양에 따라 다를 수 있습니다)
+      const accessToken = response.data.access;
+
+      // [추가] 토큰을 localStorage에 저장합니다.
+      localStorage.setItem("accessToken", accessToken);
+
+      // [추가] 로그인 성공 후, 테스트 여부에 따라 적절한 페이지로 이동합니다.
+      if (hasTested) navigate("/main");
+      else navigate("/level-test");
+    } catch (error) {
+      // [추가] 로그인 실패 시 에러를 처리합니다.
+      console.error("로그인 실패:", error);
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+    }
   };
 
   return (
@@ -96,8 +111,8 @@ const SignIn = ({ hasTested }) => {
                           className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#212529] dark:text-white dark:focus:border-primary/80 focus:outline-0 focus:ring-2 focus:ring-primary/40 border border-[#cfd9e8] dark:border-slate-700 bg-white dark:bg-slate-800/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder-slate-500 p-[15px] pl-12 text-base font-normal leading-normal"
                           id="email"
                           placeholder="이메일 또는 사용자 이름을 입력하세요"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
                         />
                       </div>
                     </div>

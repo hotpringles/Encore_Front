@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// [추가] accountApi에서 signUp 함수를 가져옵니다.
+import { signUp } from "./api/accountApi";
 
 const SignupPage = ({ hasTested }) => {
   const [username, setUsername] = useState("");
@@ -12,7 +14,7 @@ const SignupPage = ({ hasTested }) => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -20,13 +22,18 @@ const SignupPage = ({ hasTested }) => {
       return;
     }
 
-    console.log("회원가입 시도:", { username, email, password });
+    try {
+      // [추가] API를 호출하여 회원가입을 시도합니다.
+      await signUp({ username, email, password });
 
-    // TODO: 실제 회원가입 API 호출 로직
-
-    alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
-    if (hasTested) navigate("/main");
-    else navigate("/level-test");
+      // [추가] 회원가입 성공 시 알림을 보여주고 로그인 페이지로 이동합니다.
+      alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+      navigate("/signin");
+    } catch (error) {
+      // [추가] 회원가입 실패 시 에러를 처리합니다. (예: 아이디 중복)
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다. 다른 아이디나 이메일을 사용해주세요.");
+    }
   };
 
   return (

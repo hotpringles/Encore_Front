@@ -7,6 +7,13 @@ const api = axios.create({
 });
 
 // 요청/응답 인터셉터에서 토큰 달기, 에러 공통 처리도 여기서 가능
-// api.interceptors.request.use((config) => { ... });
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken"); // 로컬 스토리지에서 토큰 가져오기
+  if (token) {
+    // 토큰이 있으면 Authorization 헤더에 추가
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export default api;
