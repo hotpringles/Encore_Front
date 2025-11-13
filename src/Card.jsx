@@ -2,7 +2,11 @@ import { useState, useRef, useEffect, useCallback } from "react"; // [추가] us
 import CardForNews from "./CardForNews.jsx";
 import CardForQuiz from "./CardForQuiz.jsx";
 import "./Card.css";
-import { fetchOxQuizDetail, fetchMcQuizDetail } from "./api/quizApi.js";
+import {
+  fetchOxQuizDetail,
+  fetchMcQuizDetail,
+  fetchScQuizDetail,
+} from "./api/quizApi.js";
 
 function Card({ title, imageUrl, summary, originalUrl, terms, quizId }) {
   const hasQuiz = Boolean(quiz);
@@ -10,7 +14,7 @@ function Card({ title, imageUrl, summary, originalUrl, terms, quizId }) {
   const scrollContainerRef = useRef(null); // [추가] 스크롤 컨테이너 Ref
   const [oxQuiz, setOxQuiz] = useState(null);
   const [mcQuiz, setMcQuiz] = useState(null);
-  const [scQuiz, setScQuiz] = useState(null);
+  const [saQuiz, setSaQuiz] = useState(null);
 
   const loadQuiz = useCallback(async (id) => {
     try {
@@ -19,7 +23,7 @@ function Card({ title, imageUrl, summary, originalUrl, terms, quizId }) {
       const sc = await fetchScQuizDetail(id);
       setOxQuiz(ox);
       setMcQuiz(mc);
-      setScQuiz(sc);
+      setSaQuiz(sc);
     } catch (err) {
       console.error(err);
       setError("퀴즈를 불러오는 데 실패했습니다.");
@@ -84,7 +88,7 @@ function Card({ title, imageUrl, summary, originalUrl, terms, quizId }) {
         <CardForQuiz
           oxQuiz={oxQuiz}
           mcQuiz={mcQuiz}
-          scQuiz={scQuiz}
+          saQuiz={saQuiz}
           hasQuiz={hasQuiz}
           quizReady={quizReady}
           oxAnswer={oxAnswer}
