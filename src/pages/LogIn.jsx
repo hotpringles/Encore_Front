@@ -24,12 +24,13 @@ const LogIn = ({ setUser }) => {
 
     try {
       // [추가] API를 호출하여 로그인을 시도합니다.
-      const { access } = await login({ username, password });
+      // const { access } = await login({ username, password }); -> api에서 localStorage로 access 할당
+      await login({ username, password });
 
       // [추가] 서버 응답에서 access 토큰을 추출합니다. (키 이름은 백엔드 사양에 따라 다를 수 있습니다)
 
       // [추가] 토큰을 localStorage에 저장합니다.
-      localStorage.setItem("accessToken", access);
+      // localStorage.setItem("accessToken", access);
 
       const user = await fetchProfile();
       setUser(user);
