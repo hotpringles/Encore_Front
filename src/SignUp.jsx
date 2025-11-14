@@ -25,10 +25,17 @@ const SignupPage = ({ hasTested }) => {
     try {
       // [추가] API를 호출하여 회원가입을 시도합니다.
       await signUp({ username, email, password });
+      const accessToken = await SignIn({ username, password });
+      localStorage.setItem("accessToken", accessToken);
+
+      const response = await login({ username, password });
+
+      const user = await fetchProfile();
 
       // [추가] 회원가입 성공 시 알림을 보여주고 로그인 페이지로 이동합니다.
       alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
-      navigate("/signin");
+      if (user.hasTested) navigate("/main");
+      else navigate("/level-test");
     } catch (error) {
       // [추가] 회원가입 실패 시 에러를 처리합니다. (예: 아이디 중복)
       console.error("회원가입 실패:", error);

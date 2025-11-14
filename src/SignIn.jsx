@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // [수정] react-router-dom에서 Link 외에 useNavigate도 가져옵니다.
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 login 함수를 가져옵니다.
-import { login } from "./api/userApi";
+import { fetchProfile, login } from "./api/userApi";
 
 const SignIn = ({ hasTested }) => {
   // [수정] API 명세에 맞춰 'username'으로 상태 이름을 변경합니다.
@@ -27,13 +27,15 @@ const SignIn = ({ hasTested }) => {
       const response = await login({ username, password });
 
       // [추가] 서버 응답에서 access 토큰을 추출합니다. (키 이름은 백엔드 사양에 따라 다를 수 있습니다)
-      const accessToken = response.data.access;
+      const accessToken = response.access;
 
       // [추가] 토큰을 localStorage에 저장합니다.
       localStorage.setItem("accessToken", accessToken);
 
+      const user = await fetchProfile();
+
       // [추가] 로그인 성공 후, 테스트 여부에 따라 적절한 페이지로 이동합니다.
-      if (hasTested) navigate("/main");
+      if (user.hasTested) navigate("/main");
       else navigate("/level-test");
     } catch (error) {
       // [추가] 로그인 실패 시 에러를 처리합니다.
