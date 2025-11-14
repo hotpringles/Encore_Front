@@ -52,8 +52,8 @@ function App() {
       setError(null); // 에러 초기화
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
-
-      dataObj = groupByDate(data.results);
+      const list = Array.isArray(data) ? data : data?.results ?? [];
+      dataObj = groupByDate(list);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
         b.localeCompare(a)
       ); // 최신순 (큰 날짜가 앞)
