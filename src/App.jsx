@@ -53,7 +53,7 @@ function App() {
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
       const list = Array.isArray(data) ? data : data?.results ?? [];
-      dataObj = groupByDate(list);
+      const dataObj = groupByDate(list);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
         b.localeCompare(a)
       ); // 최신순 (큰 날짜가 앞)
@@ -64,8 +64,9 @@ function App() {
         return acc;
       }, []);
 
-      setArticles(sortedData.slice(0, 7)); // 응답 데이터를 state에 저장
-      setSelectedReports(articles[0]); // 첫 번째 날짜 기사들을 선택
+      const recent7days = sortedData.slice(0, 7);
+      setArticles(recent7days); // 응답 데이터를 state에 저장
+      setSelectedReports(recent7days[0] ?? null); // 첫 번째 날짜 기사들을 선택
     } catch (err) {
       console.error(err);
       setError("뉴스를 불러오는 데 실패했습니다.");
@@ -92,7 +93,7 @@ function App() {
           <Menu
             location={location}
             articles={articles}
-            setSelectedArticle={setSelectedArticle}
+            setSelectedReports={setSelectedReports}
           />
         </nav>
       )}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Menu({ location, articles, setSelectedArticle }) {
+function Menu({ location, articles, setSelectedReports }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -12,7 +12,7 @@ function Menu({ location, articles, setSelectedArticle }) {
   const onToggleMenu = (path) => {
     if (location.pathname === path) {
       setIsMenuVisible((prev) => !prev);
-    } else if (isMenuVisible && location.path !== path) {
+    } else if (isMenuVisible && location.pathname !== path) {
       setIsMenuVisible((prev) => !prev);
     }
   };
@@ -64,8 +64,8 @@ function Menu({ location, articles, setSelectedArticle }) {
                   to={"/main"}
                   className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
                   onClick={() => {
-                    setSelectedArticle(reports);
-                    onToggleMenu(item.path);
+                    setSelectedReports(reports);
+                    closeMenu();
                   }}
                 >
                   <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
