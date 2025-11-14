@@ -53,13 +53,13 @@ function App() {
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
 
-      dataObj = groupByDate(data);
+      dataObj = groupByDate(data.results);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
         b.localeCompare(a)
       ); // 최신순 (큰 날짜가 앞)
 
       // 날짜에 따라 정렬된 객체 배열을 배열로 관리
-      const sortedData = sortedDates.reduces((acc, key) => {
+      const sortedData = sortedDates.reduce((acc, key) => {
         acc.push(dataObj[key]);
         return acc;
       }, []);
