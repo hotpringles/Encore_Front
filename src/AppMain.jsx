@@ -82,13 +82,13 @@ function AppMain({ reports }) {
               return (
                 <div key={report.id} className={getCardClass(index)}>
                   <Card
-                    title={report.summaries.title}
-                    imageUrl={report.summaries.article.imageUrl}
-                    summary={report.summaries.content}
-                    terms={report.summaries.terms}
-                    originalUrl={report.summaries.article.url}
-                    author={report.summaries.article.author}
-                    quizId={report.summaries.id}
+                    title={report.summaries[0].title}
+                    imageUrl={report.summaries[0].article.imageUrl}
+                    summary={report.summaries[0].content}
+                    terms={report.summaries[0].terms}
+                    originalUrl={report.summaries[0].article.url}
+                    author={report.summaries[0].article.author}
+                    quizId={report.summaries[0].id}
                   />
                 </div>
               );
