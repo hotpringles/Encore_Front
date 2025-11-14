@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from "react"; // [추가] useRef, useEffect
-import CardForNews from "./CardForNews.jsx";
-import CardForQuiz from "./CardForQuiz.jsx";
-import "./Card.css";
+import CardForNews from "./CardForNews.jsx"; // 같은 components 폴더 내
+import CardForQuiz from "./CardForQuiz.jsx"; // 같은 components 폴더 내
+import "../styles/Card.css";
 import {
   fetchOxQuizDetail,
   fetchMcQuizDetail,
   fetchScQuizDetail,
-} from "./api/quizApi.js";
+} from "../api/quizApi.js";
 
 function Card({
   title,

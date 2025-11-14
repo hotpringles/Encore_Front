@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../api/accountApi.js";
 
-function Menu({ location, articles, setSelectedReports, user }) {
+function Menu({ location, articles, setSelectedReports, user, setUser }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -18,6 +19,13 @@ function Menu({ location, articles, setSelectedReports, user }) {
   };
   const closeMenu = () => {
     setIsMenuVisible(false);
+  };
+  const handleLogout = async () => {
+    await logout();
+    localStorage.removeItem("accessToken");
+    setUser({});
+    closeMenu();
+    // 로그인 페이지로 이동하는 로직은 App.jsx 등 상위에서 처리하는 것이 더 좋습니다.
   };
 
   return (
@@ -63,14 +71,14 @@ function Menu({ location, articles, setSelectedReports, user }) {
           ))}
         </ul>
         <div
-          className={`grow p-4 border-t border-gray-200 whitespace-nowrap transition-opacity duration-300 ease-in-out ${
+          className={`p-4 border-t border-gray-200 whitespace-nowrap transition-opacity duration-300 ease-in-out overflow-y-auto ${
             isMenuVisible ? "opacity-100" : "opacity-0"
           }`}
         >
           <span className="text-sm font-semibold text-gray-500 mb-2 block font-['Pretendard','Noto_Sans_KR',sans-serif]">
             최근 본 뉴스
           </span>
-          <ul className="space-y-1">
+          <ul className="space-y-1 max-h-48 overflow-y-auto">
             {articles.map((reports) => (
               <li key={reports.id}>
                 <Link
@@ -123,6 +131,17 @@ function Menu({ location, articles, setSelectedReports, user }) {
               chevron_right
             </span>
           </Link>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
+          >
+            <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
+              logout
+            </span>
+            <div className="font-semibold text-base font-['Pretendard','Noto_Sans_KR',sans-serif]">
+              로그아웃
+            </div>
+          </button>
         </div>
       </nav>
     </>

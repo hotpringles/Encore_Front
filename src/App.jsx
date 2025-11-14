@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 // import "./tooltipGlobal";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { fetchSummaries } from "./api/summaryApi.js";
-import Nav from "./Nav"; // [수정] fetchProfile을 accountApi에서 가져옵니다.
-import { updateMyInfo, fetchProfile } from "./api/accountApi.js";
-import Profile from "./Profile";
-import LogIn from "./LogIn.jsx";
-import SignUp from "./SignUp";
-import Menu from "./Menu";
-import ChatBot from "./ChatBot";
-import AppMain from "./AppMain";
-import Description from "./Description";
-import LevelTest from "./LevelTest";
+import { fetchSummaries } from "./api/summaryApi.js"; // 경로는 그대로 유지
+import Nav from "./components/Nav";
+import { updateMyInfo, fetchProfile } from "./api/accountApi.js"; // 경로는 그대로 유지
+import Profile from "./pages/Profile";
+import LogIn from "./pages/LogIn.jsx";
+import SignUp from "./pages/SignUp";
+import Menu from "./components/Menu";
+import ChatBot from "./components/ChatBot";
+import AppMain from "./pages/AppMain";
+import Description from "./pages/Description";
+import LevelTest from "./pages/LevelTest";
 import quizQuestions from "./quizQuestions.json";
-import "./App.css";
+import "./styles/App.css";
 
 function App() {
   const [isChatBotVisible, setIsChatBotVisible] = useState(false);
@@ -147,7 +147,7 @@ function App() {
         {/* isSignPage가 true일 때 (로그인/회원가입 페이지)는 Nav를 숨깁니다. */}
         {!isSignPage && hasTested && (
           <header className={"app-nav"}>
-            <Nav onToggleChatBot={onToggleChatBot} />
+            <Nav onToggleChatBot={onToggleChatBot} user={user} />
           </header>
         )}
         <main className={"app-main grow"}>
@@ -179,7 +179,10 @@ function App() {
                   />
                 }
               />
-              <Route path="/profile" element={<Profile user={user} />} />
+              <Route
+                path="/profile"
+                element={<Profile user={user} setUser={setUser} />}
+              />
               <Route path="/description" element={<Description />} />
             </Routes>
             {/* isSignPage가 true일 때 (로그인/회원가입 페이지)는 ChatBot을 숨깁니다. */}

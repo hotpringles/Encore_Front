@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie"; // [추가] js-cookie 라이브러리 import
-import "./ChatBot.css";
+import "../styles/ChatBot.css";
 
 // [추가] 오늘 자정에 만료되는 쿠키 만료 시간을 계산하는 함수
 const getCookieExpires = () => {

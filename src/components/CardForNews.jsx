@@ -1,5 +1,5 @@
-import "./CardForNews.css";
-import KeywordTooltip from "./KeywordToolTip";
+import "../styles/CardForNews.css";
+import KeywordTooltip from "./KeywordTooltip";
 
 function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
   const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 signUp 함수를 가져옵니다.
-import { signUp, login, fetchProfile } from "./api/accountApi.js";
+import { signUp, login, fetchProfile } from "../api/accountApi.js";
 
 const SignupPage = ({ setUser }) => {
   const [username, setUsername] = useState("");

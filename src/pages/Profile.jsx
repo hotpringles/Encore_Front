@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateMyInfo, deleteMyAccount, logout } from "./api/accountApi";
+import { updateMyInfo, deleteMyAccount, logout } from "../api/accountApi";
 
 // [추가] 경험치에 따라 등급 정보를 반환하는 헬퍼 함수
 const getTierInfo = (exp) => {

@@ -201,7 +201,6 @@ const QuizEnd = ({ score, setHasTested }) => {
         />
         <p className="text-2xl font-bold text-primary mt-2">{grade}</p>
 
-        {/* [오류 수정] </BODY_TEXT> -> </p> 로 변경 */}
         <p className="text-gray-500 text-base font-medium mt-2">
           {tier.description}
         </p>
@@ -238,7 +237,7 @@ const QuizEnd = ({ score, setHasTested }) => {
 
 // --- 메인 퀴즈 컴포넌트 ---
 // (수정 없음)
-const LevelTest = ({ quizQuestions, setHasTested }) => {
+function LevelTest({ quizQuestions, setHasTested }) {
   const [quizState, setQuizState] = useState("start"); // 'start', 'middle', 'end'
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -289,6 +288,6 @@ const LevelTest = ({ quizQuestions, setHasTested }) => {
       </main>
     </div>
   );
-};
+}
 
 export default LevelTest;

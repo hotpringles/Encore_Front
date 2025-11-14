@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import Card from "./Card.jsx";
-import "./AppMain.css";
+import Card from "../components/Card.jsx";
+import "../styles/AppMain.css";
 
 function PageIndicator({ totalCards, currentPage }) {
   const dots = Array.from({ length: totalCards }, (_, index) => index);

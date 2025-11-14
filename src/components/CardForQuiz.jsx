@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./CardForQuiz.css";
+import "../styles/CardForQuiz.css";
 
 // [추가] 정답/오답 피드백을 위한 헬퍼 컴포넌트
 function FeedbackBlock({ isCorrect, message, explanation }) {
