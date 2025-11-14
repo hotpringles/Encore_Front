@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { fetchSummaries } from "./api/summaryApi.js";
 import Nav from "./Nav";
 import Profile from "./Profile";
-import SignIn from "./SignIn";
+import LogIn from "./LogIn.jsx";
 import SignUp from "./SignUp";
 import Menu from "./Menu";
 import ChatBot from "./ChatBot";
@@ -17,7 +17,7 @@ import "./App.css";
 function App() {
   const [isChatBotVisible, setIsChatBotVisible] = useState(false);
   const location = useLocation();
-  const isSignPage = ["/", "/signin", "/signup"].includes(location.pathname);
+  const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   // const toggleMenu = () => {
   //   setIsMenuVisible((prev) => !prev);
   // };
@@ -33,6 +33,8 @@ function App() {
   const [selectedReports, setSelectedReports] = useState(null);
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
+
+  const [user, setUser] = useState({});
 
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))
   const groupByDate = (groups) => {
@@ -117,11 +119,9 @@ function App() {
           >
             {/* Routes는 항상 렌더링되어야 합니다. 그렇지 않으면 페이지가 보이지 않습니다. */}
             <Routes>
-              <Route path="/" element={<SignIn hasTested={hasTested} />} />
-              <Route
-                path="/signup"
-                element={<SignUp hasTested={hasTested} />}
-              />
+              <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="/login" element={<LogIn setUser={setUser} />} />
+              <Route path="/signup" element={<SignUp setUser={setUser} />} />
               <Route
                 path="/level-test"
                 element={

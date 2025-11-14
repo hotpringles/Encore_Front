@@ -19,9 +19,8 @@ export const updateMyInfo = async (data) => {
   return res.data;
 };
 
-// 특정 유저 조회 (GET /accounts/{userId})
-export const fetchUser = async (id) => {
-  const res = await api.get(`/accounts/${id}`);
+export const fetchProfile = async () => {
+  const res = await api.get("/accounts/profile/");
   return res.data;
 };
 

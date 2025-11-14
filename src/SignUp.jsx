@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 signUp 함수를 가져옵니다.
-import { signUp } from "./api/userApi.js";
+import { signUp, login } from "./api/accountApi.js";
 
-const SignupPage = ({ hasTested }) => {
+const SignupPage = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +25,11 @@ const SignupPage = ({ hasTested }) => {
     try {
       // [추가] API를 호출하여 회원가입을 시도합니다.
       await signUp({ username, email, password });
-      const accessToken = await SignIn({ username, password });
-      localStorage.setItem("accessToken", accessToken);
-
-      const response = await login({ username, password });
+      const { access } = await login({ username, password });
+      localStorage.setItem("accessToken", access);
 
       const user = await fetchProfile();
+      setUser(user);
 
       // [추가] 회원가입 성공 시 알림을 보여주고 로그인 페이지로 이동합니다.
       alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
@@ -222,7 +221,7 @@ const SignupPage = ({ hasTested }) => {
                     이미 계정이 있으신가요?{" "}
                     <Link
                       className="font-bold text-primary hover:text-[#1976D2] hover:underline"
-                      to="/signin"
+                      to="/login"
                     >
                       로그인
                     </Link>
