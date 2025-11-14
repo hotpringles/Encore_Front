@@ -53,7 +53,7 @@ function CardForQuiz({
   const saIsCorrect = saSubmittedAnswer !== null && saSubmittedAnswer.isCorrect;
 
   // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
-  const quizInstanceId = quiz.mc.id || new Date().getTime();
+  const quizInstanceId = mcQuiz.id || new Date().getTime();
 
   // 제출 전 선택한 답을 저장하는 로컬 상태
   const [localOxSelection, setLocalOxSelection] = useState(null);

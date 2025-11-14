@@ -1,6 +1,45 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { updateMyInfo, deleteMyAccount, logout } from "./api/accountApi";
 
-const Profile = () => {
+// [추가] 경험치에 따라 등급 정보를 반환하는 헬퍼 함수
+const getTierInfo = (exp) => {
+  const score = Math.floor((exp / 100) * 12); // 경험치(0-100)를 레벨테스트 점수(0-12)처럼 변환
+
+  if (score >= 10) {
+    return {
+      name: "숲",
+      icon: "🌲",
+      color: "text-emerald-800",
+      bg: "bg-emerald-100",
+    };
+  } else if (score >= 7) {
+    return {
+      name: "나무",
+      icon: "🌳",
+      color: "text-lime-800",
+      bg: "bg-lime-100",
+    };
+  } else if (score >= 4) {
+    return {
+      name: "새싹",
+      icon: "🌱",
+      color: "text-green-800",
+      bg: "bg-green-100",
+    };
+  } else {
+    return {
+      name: "씨앗",
+      icon: "🌰",
+      color: "text-yellow-800",
+      bg: "bg-yellow-100",
+    };
+  }
+};
+
+function Profile({ user, setUser }) {
+  const tier = getTierInfo(user?.exp || 0);
+  const navigate = useNavigate();
   // 비밀번호 변경 폼을 위한 state
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -15,25 +54,48 @@ const Profile = () => {
   };
 
   // 비밀번호 업데이트 핸들러
-  const handlePasswordUpdate = (e) => {
+  const handlePasswordUpdate = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
       alert("새 비밀번호가 일치하지 않습니다.");
       return;
     }
-    console.log("비밀번호 업데이트 시도:", { currentPassword, newPassword });
-    // TODO: 실제 비밀번호 변경 API 호출
+    try {
+      // [수정] 실제 비밀번호 변경 API 호출
+      await updateMyInfo({
+        current_password: currentPassword,
+        new_password: newPassword,
+      });
+      alert("비밀번호가 성공적으로 변경되었습니다.");
+      // 입력 필드 초기화
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+    } catch (error) {
+      console.error("비밀번호 변경 실패:", error);
+      alert("비밀번호 변경에 실패했습니다. 현재 비밀번호를 확인해주세요.");
+    }
   };
 
   // 계정 삭제 핸들러
-  const handleAccountDelete = () => {
+  const handleAccountDelete = async () => {
     if (
       window.confirm(
         "정말 계정을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
       )
     ) {
-      console.log("계정 삭제 실행");
-      // TODO: 실제 계정 삭제 API 호출
+      try {
+        await deleteMyAccount();
+        await logout(); // 서버 측 로그아웃
+        localStorage.removeItem("accessToken"); // 클라이언트 측 토큰 제거
+        setUser({}); // App 상태의 user 정보 초기화
+        alert("계정이 삭제되었습니다. 로그인 페이지로 이동합니다.");
+        navigate("/login", { replace: true });
+        // window.location.reload(); // App 상태를 완전히 초기화하기 위해 필요할 수 있음
+      } catch (error) {
+        console.error("계정 삭제 실패:", error);
+        alert("계정 삭제에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
@@ -74,11 +136,13 @@ const Profile = () => {
             <div className="flex flex-col w-full">
               <div className="flex justify-between items-start">
                 <div>
+                  {/* [수정] 실제 사용자 이름으로 변경 */}
                   <h1 className="text-gray-900 text-2xl font-bold leading-normal">
-                    John Doe
+                    {user?.username || "사용자"}
                   </h1>
+                  {/* [수정] 실제 사용자 이메일로 변경 */}
                   <p className="text-gray-600 text-base font-normal leading-normal">
-                    john.doe@email.com
+                    {user?.email || "이메일 정보 없음"}
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-1">
@@ -93,12 +157,16 @@ const Profile = () => {
                   <span className="text-gray-600 text-sm font-medium">
                     경험치
                   </span>
-                  <span className="text-primary text-sm font-bold">45%</span>
+                  {/* [수정] 실제 경험치로 변경 (user 객체에 exp가 있다고 가정) */}
+                  <span className="text-primary text-sm font-bold">
+                    {user?.exp || 0}%
+                  </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  {/* [수정] 실제 경험치로 변경 */}
                   <div
                     className="bg-primary h-2.5 rounded-full"
-                    style={{ width: "45%" }}
+                    style={{ width: `${user?.exp || 0}%` }}
                   ></div>
                 </div>
               </div>
@@ -195,6 +263,6 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Profile;

@@ -59,6 +59,34 @@
   border-bottom-left-radius: 4px;
 }
 
+/* [추가] 입력 중 애니메이션 */
+.typing-indicator {
+  opacity: 0.7;
+}
+.typing-indicator::after {
+  content: "";
+  animation: typing 1.2s infinite;
+  display: inline-block;
+  width: 1.5em;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+@keyframes typing {
+  0% {
+    content: ".";
+  }
+  33% {
+    content: "..";
+  }
+  66% {
+    content: "...";
+  }
+  100% {
+    content: ".";
+  }
+}
+
 .chat-input-form {
   display: flex;
   padding: 16px;

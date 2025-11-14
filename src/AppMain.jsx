@@ -19,11 +19,18 @@ function PageIndicator({ totalCards, currentPage }) {
   );
 }
 
-function AppMain({ reports }) {
+function AppMain({ reports, onQuizCorrect }) {
   const cards = useMemo(() => {
     if (Array.isArray(reports) && reports.length > 0) return reports;
     else return null;
   }, [reports]);
+
+  // [추가] 요일을 계산하는 로직
+  const getDayOfWeek = (dateString) => {
+    if (!dateString) return "";
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    return days[new Date(dateString).getDay()];
+  };
 
   const totalCards = cards?.length || 0;
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,8 +69,11 @@ function AppMain({ reports }) {
   return (
     <div className="main-container flex flex-col items-center justify-between w-full h-full relative overflow-x-hidden">
       <div className="date-indicator p-[10px_20px] shadow-[0_6px_20px_rgba(0,0,0,0.08)] flex items-baseline gap-[6px]  rounded-[999px] mt-3 mb-[15px]">
-        <span className="cards-date font-bold">2025.12.09</span>
-        <span className="cards.day text-blue-500 font-bold">토요일</span>
+        <span className="cards-date font-bold">{reports[0].date}</span>
+        {/* [수정] 요일을 동적으로 표시합니다. */}
+        <span className="cards.day text-blue-500 font-bold">
+          {getDayOfWeek(reports[0].date)}요일
+        </span>
       </div>
       <div className="main-reports flex items-center justify-center w-full relative">
         {totalCards > 1 && (
@@ -89,6 +99,7 @@ function AppMain({ reports }) {
                     originalUrl={report.summaries[0].article.url}
                     author={report.summaries[0].article.author}
                     quizId={report.summaries[0].id}
+                    onQuizCorrect={onQuizCorrect}
                   />
                 </div>
               );

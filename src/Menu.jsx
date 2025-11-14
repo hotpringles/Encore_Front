@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Menu({ location, articles, setSelectedReports }) {
+function Menu({ location, articles, setSelectedReports, user }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -33,7 +33,20 @@ function Menu({ location, articles, setSelectedReports }) {
           flex flex-col justify-between
           ${isMenuVisible ? "w-[240px]" : "w-[60px]"}`}
       >
-        <ul className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
+        {/* [추가] 메뉴 토글 버튼 */}
+        <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
+          <button
+            onClick={() => setIsMenuVisible(!isMenuVisible)}
+            className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
+            title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
+          >
+            <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
+              menu
+            </span>
+            <span className="text-lg font-medium">메뉴</span>
+          </button>
+        </div>
+        <ul className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap grow">
           {menuItems.map((item) => (
             <li key={item.path}>
               <Link
@@ -71,7 +84,9 @@ function Menu({ location, articles, setSelectedReports }) {
                   <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
                     {reports.date}
                   </span>
-                  <span className="text-lg font-medium">{item.label}</span>
+                  <span className="text-lg font-medium">
+                    {reports.summaries[0].title}
+                  </span>
                 </Link>
               </li>
             ))}
@@ -90,11 +105,12 @@ function Menu({ location, articles, setSelectedReports }) {
             <img
               alt="프로필"
               className="w-10 h-10 rounded-full mr-3 bg-gray-300"
+              src={user?.profileImage || undefined} // [수정] 사용자 프로필 이미지
             />{" "}
             {/* 프로필 이미지 플레이스홀더 */}
             <div className="flex-grow whitespace-nowrap">
               <div className="font-semibold text-base font-['Pretendard','Noto_Sans_KR',sans-serif]">
-                홍길동
+                {user?.username || "사용자"}
               </div>
               <div className="text-sm text-gray-500 font-['Pretendard','Noto_Sans_KR',sans-serif]">
                 프로필 보기

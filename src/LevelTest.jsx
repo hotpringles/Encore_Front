@@ -154,35 +154,35 @@ const QuizMiddle = ({
 const QuizEnd = ({ score, setHasTested }) => {
   const navigate = useNavigate();
 
-  // [수정] 4가지 등급 분류 로직
-  let grade = "";
-  let icon = ""; // 아이콘 URL
-  let description = ""; // 등급 설명 (추가)
-
-  // 등급 기준: 12문제 기준
-  // 0-3점: 씨앗 (기본)
-  // 4-6점: 새싹
-  // 7-9점: 나무
-  // 10-12점: 숲
-
-  if (score >= 10) {
-    grade = "숲";
-    description = "경제 지식이 풍부하시네요!";
-    icon = "https://placehold.co/96x96/108918/FFFFFF?text=🌲"; // '숲' 아이콘 예시
-  } else if (score >= 7) {
-    grade = "나무";
-    description = "경제의 기본기를 잘 갖추고 계세요!";
-    icon = "https://placehold.co/96x96/3E8918/FFFFFF?text=🌳"; // '나무' 아이콘 예시
-  } else if (score >= 4) {
-    grade = "새싹";
-    description = "경제 상식에 대해 알아가고 계시군요!";
-    icon =
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBvDAcvPLXbHkkQ84p1UdR2R3XX-Nm1XDNVWaN5s-a3Yxtd99p-IJTN7bbB_M4KyDIasJNweZGIDF4plNEFuRhVmmHjzP9JSQUKdtzo4C_j-6t191YPEbmbZG_Ot5a0R0O-aQcnI-JeNx7XIj9dzFz6uNBKOi9LAP0eEJ0R_mXSM0ibJTa07wDr-riC50SjZ44rwRguUjaYRSfS8Vt3FckobSLsUvoe43TsK6prHIwQvsj5B56ObDn7jzes-RHGmZ6oYn-zT-QsNh4"; // '새싹' 아이콘 (기존)
-  } else {
-    grade = "씨앗";
-    description = "이제 막 경제 공부를 시작하셨네요!";
-    icon = "https://placehold.co/96x96/D2691E/FFFFFF?text=🌰"; // '씨앗' 아이콘 예시
-  }
+  // [수정] 등급 분류 로직을 Profile.jsx와 유사하게 변경
+  const getTierInfoFromResult = (resultScore) => {
+    if (resultScore >= 10) {
+      return {
+        name: "숲",
+        icon: "🌲",
+        description: "경제 지식이 풍부하시네요!",
+      };
+    } else if (resultScore >= 7) {
+      return {
+        name: "나무",
+        icon: "🌳",
+        description: "경제의 기본기를 잘 갖추고 계세요!",
+      };
+    } else if (resultScore >= 4) {
+      return {
+        name: "새싹",
+        icon: "🌱",
+        description: "경제 상식에 대해 알아가고 계시군요!",
+      };
+    } else {
+      return {
+        name: "씨앗",
+        icon: "🌰",
+        description: "이제 막 경제 공부를 시작하셨네요!",
+      };
+    }
+  };
+  const tier = getTierInfoFromResult(score);
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl text-center">
@@ -203,7 +203,7 @@ const QuizEnd = ({ score, setHasTested }) => {
 
         {/* [오류 수정] </BODY_TEXT> -> </p> 로 변경 */}
         <p className="text-gray-500 text-base font-medium mt-2">
-          {description}
+          {tier.description}
         </p>
 
         <p className="text-gray-500 text-sm font-medium mt-4">

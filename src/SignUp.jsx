@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 signUp 함수를 가져옵니다.
-import { signUp, login } from "./api/accountApi.js";
+import { signUp, login, fetchProfile } from "./api/accountApi.js";
 
 const SignupPage = ({ setUser }) => {
   const [username, setUsername] = useState("");
@@ -31,8 +31,8 @@ const SignupPage = ({ setUser }) => {
       const user = await fetchProfile();
       setUser(user);
 
-      // [추가] 회원가입 성공 시 알림을 보여주고 로그인 페이지로 이동합니다.
-      alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+      // [수정] 회원가입 및 로그인 성공 후, 실제 동작에 맞는 알림을 보여줍니다.
+      alert("회원가입이 완료되었습니다. 서비스를 시작합니다.");
       if (user.hasTested) navigate("/main");
       else navigate("/level-test");
     } catch (error) {
@@ -190,7 +190,6 @@ const SignupPage = ({ setUser }) => {
                           placeholder="비밀번호를 다시 입력하세요"
                           type={showConfirmPassword ? "text" : "password"}
                           value={confirmPassword}
-                          // [수정] e.targe.value -> e.target.value 오타 수정
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <button
