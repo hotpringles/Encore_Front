@@ -14,9 +14,11 @@ import Description from "./pages/Description";
 import LevelTest from "./pages/LevelTest";
 import quizQuestions from "./quizQuestions.json";
 import "./styles/App.css";
+import { useUiStore } from "./store/uiStore.js";
+import { useUserStore } from "./store/userStore.js";
+import { useNewsStore } from "./store/newsStore.js";
 
 function App() {
-  const [isChatBotVisible, setIsChatBotVisible] = useState(false);
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   // const toggleMenu = () => {
@@ -25,35 +27,44 @@ function App() {
   const onToggleChatBot = () => {
     setIsChatBotVisible((prev) => !prev);
   };
+  // const [isChatBotVisible, setIsChatBotVisible] = useState(false);
+  const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
+  const setIsChatBotVisible = useUiStore((state) => state.setIsChatBotVisible);
 
-  const [hasTested, setHasTested] = useState(() => {
-    const flag = !quizQuestions[0].hasTested;
-    return flag;
-  });
-  const [articles, setArticles] = useState([]);
-  const [selectedReports, setSelectedReports] = useState(null);
+  // const [hasTested, setHasTested] = useState(() => {
+  //   const flag = !quizQuestions[0].hasTested;
+  //   return flag;
+  // });
+  // const [user, setUser] = useState({});
+
+  const { user, setUser, hasTested, setHasTested } = useUserStore();
+  //
+  // const [articles, setArticles] = useState([]);
+  // const [selectedReports, setSelectedReports] = useState(null);
+  const { newsGroup, setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
+    useNewsStore();
+
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
 
-  const [user, setUser] = useState({});
   const [authLoading, setAuthLoading] = useState(true); // [추가] 인증 로딩 상태
   // [추가] 사용자 경험치를 업데이트하는 함수
-  const updateUserExp = async (amount) => {
-    if (!user || !user.id) return;
+  // const updateUserExp = async (amount) => {
+  //   if (!user || !user.id) return;
 
-    const newExp = Math.min(100, (user.exp || 0) + amount); // 경험치는 100을 넘지 않도록
-    const updatedUser = { ...user, exp: newExp };
+  //   const newExp = Math.min(100, (user.exp || 0) + amount); // 경험치는 100을 넘지 않도록
+  //   const updatedUser = { ...user, exp: newExp };
 
-    try {
-      // 1. UI를 즉시 업데이트
-      setUser(updatedUser);
-      // 2. 백엔드에 변경사항을 저장
-      await updateMyInfo({ exp: newExp });
-    } catch (error) {
-      console.error("경험치 업데이트 실패:", error);
-      // 필요하다면 여기서 원래 user 상태로 롤백할 수 있습니다.
-    }
-  };
+  //   try {
+  //     // 1. UI를 즉시 업데이트
+  //     setUser(updatedUser);
+  //     // 2. 백엔드에 변경사항을 저장
+  //     await updateMyInfo({ exp: newExp });
+  //   } catch (error) {
+  //     console.error("경험치 업데이트 실패:", error);
+  //     // 필요하다면 여기서 원래 user 상태로 롤백할 수 있습니다.
+  //   }
+  // };
 
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))
   const groupByDate = (groups) => {
@@ -67,7 +78,7 @@ function App() {
   };
 
   // 2) 뉴스를 불러오는 함수
-  const loadArticles = async () => {
+  const loadNewsGroup = async () => {
     try {
       setLoading(true); // 로딩 시작
       setError(null); // 에러 초기화
@@ -86,8 +97,8 @@ function App() {
       }, []);
 
       const recent7days = sortedData.slice(0, 7);
-      setArticles(recent7days); // 응답 데이터를 state에 저장
-      setSelectedReports(recent7days[0] ?? null); // 첫 번째 날짜 기사들을 선택
+      setNewsGroup(recent7days); // 응답 데이터를 state에 저장
+      setSelectedNewsGroup(recent7days[0] ?? null); // 첫 번째 날짜 기사들을 선택
     } catch (err) {
       console.error(err);
       setError("뉴스를 불러오는 데 실패했습니다.");
@@ -99,7 +110,7 @@ function App() {
   // 3) 컴포넌트가 처음 화면에 나타날 때 딱 한 번 실행
   useEffect(() => {
     // [추가] 앱 시작 시 뉴스 데이터 로드
-    loadArticles();
+    loadNewsGroup();
 
     // [추가] 앱 시작 시 로그인 상태 확인
     const checkLoginStatus = async () => {
@@ -132,9 +143,9 @@ function App() {
         <nav className="app-menu border-r">
           <Menu
             location={location}
-            articles={articles}
+            newsGroup={newsGroup}
             user={user}
-            setSelectedReports={setSelectedReports}
+            selectedNewsGroup={setSelectedNewsGroup}
           />
         </nav>
       )}
@@ -174,7 +185,7 @@ function App() {
                 path="/main"
                 element={
                   <AppMain
-                    reports={selectedReports}
+                    selectedNewsGroup={selectedNewsGroup}
                     onQuizCorrect={updateUserExp}
                   />
                 }
