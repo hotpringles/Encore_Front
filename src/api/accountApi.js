@@ -1,11 +1,11 @@
 // src/api/accountApi.js
 import api from "./client";
 
-const SIGNUP_URL = "/accounts/signup";
-const LOGIN_URL = "/accounts/login";
-const LOGOUT_URL = "/accounts/logout";
+const SIGNUP_URL = "/accounts/signup/";
+const LOGIN_URL = "/accounts/login/";
+const LOGOUT_URL = "/accounts/logout/";
 const PROFILE_URL = "/accounts/profile/";
-const ACCOUNT_URL = "/accounts";
+const ACCOUNT_URL = "/accounts/";
 
 // 로그인 (POST /accounts/login)
 export const login = async (data) => {
