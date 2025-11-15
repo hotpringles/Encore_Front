@@ -40,13 +40,13 @@ function CardForQuiz({
   oxAnswer,
   mcAnswer,
   quizReady,
-  saInput,
-  saSubmittedAnswer,
+  saInput, // Card.jsx에서 saInput으로 전달하므로 맞춤
+  scSubmittedAnswer: saSubmittedAnswer,
   handleGenerateQuiz,
   handleOxAnswer,
   handleMcAnswer,
-  handleSaInputChange,
-  handleSaSubmit,
+  handleSaInputChange, // Card.jsx에서 handleSaInputChange로 전달하므로 맞춤
+  handleSaSubmit, // Card.jsx에서 handleSaSubmit으로 전달하므로 맞춤
 }) {
   const oxIsCorrect = oxAnswer !== null && oxQuiz.answer === oxAnswer;
   const mcIsCorrect = mcAnswer !== null && mcQuiz.answer === mcAnswer;

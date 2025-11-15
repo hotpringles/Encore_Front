@@ -5,7 +5,7 @@ import "../styles/Card.css";
 import {
   fetchOxQuizDetail,
   fetchMcQuizDetail,
-  fetchScQuizDetail,
+  fetchSaQuizDetail,
 } from "../api/quizApi.js";
 
 function Card({
@@ -20,11 +20,18 @@ function Card({
   const hasQuiz = Boolean(quizId); // [수정] 'quiz'가 아닌 'quizId'의 존재 여부로 확인합니다.
   const [quizReady, setQuizReady] = useState(false);
   const scrollContainerRef = useRef(null); // [추가] 스크롤 컨테이너 Ref
+
+  const [quizLoading, setQuizLoading] = useState(true); // [추가] 퀴즈 데이터 로딩 상태
+  const [error, setError] = useState(null); // [추가] 에러 상태
   const [oxQuiz, setOxQuiz] = useState(null);
   const [mcQuiz, setMcQuiz] = useState(null);
   const [saQuiz, setSaQuiz] = useState(null);
-  const [quizLoading, setQuizLoading] = useState(true); // [추가] 퀴즈 데이터 로딩 상태
-  const [error, setError] = useState(null); // [추가] 에러 상태
+  const [oxAnswer, setOxAnswer] = useState(null);
+  // 4지선다 선택 답
+  const [mcAnswer, setMcAnswer] = useState(null);
+  // [추가] 단답형 입력 값 및 제출 답
+  const [saInput, setScInput] = useState(""); // 사용자의 현재 입력 값
+  const [saSubmittedAnswer, setScSubmittedAnswer] = useState(null); // 제출된 답안 { text: string, isCorrect: bool }
 
   const loadQuiz = useCallback(async (id) => {
     if (!id) return; // quizId가 없으면 함수를 실행하지 않습니다.
@@ -32,7 +39,7 @@ function Card({
       setQuizLoading(true); // 로딩 시작
       const ox = await fetchOxQuizDetail(id);
       const mc = await fetchMcQuizDetail(id);
-      const sc = await fetchScQuizDetail(id);
+      const sc = await fetchSaQuizDetail(id);
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
@@ -52,12 +59,6 @@ function Card({
     if (quizId) loadQuiz(quizId);
   }, [quizId, loadQuiz]);
   // ox 선택 답
-  const [oxAnswer, setOxAnswer] = useState(null);
-  // 4지선다 선택 답
-  const [mcAnswer, setMcAnswer] = useState(null);
-  // [추가] 단답형 입력 값 및 제출 답
-  const [saInput, setSaInput] = useState("");
-  const [saSubmittedAnswer, setSaSubmittedAnswer] = useState(null); // { text: string, isCorrect: bool }
 
   const handleGenerateQuiz = () => {
     // [수정] 퀴즈 데이터가 모두 로드되었을 때만 퀴즈를 준비시킵니다.
@@ -65,8 +66,8 @@ function Card({
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
     setOxAnswer(null);
     setMcAnswer(null);
-    setSaInput(""); // [추가] 단답형 상태 초기화
-    setSaSubmittedAnswer(null); // [추가] 단답형 상태 초기화
+    setScInput(""); // [수정] 단답형 입력 필드 초기화
+    setScSubmittedAnswer(null); // [수정] 단답형 제출 결과 초기화
   };
 
   const handleOxAnswer = (boolean) => {
@@ -89,25 +90,24 @@ function Card({
   };
 
   // [추가] 단답형 입력 변경 핸들러
-  const handleSaInputChange = (e) => {
-    setSaInput(e.target.value);
-    //setSaSubmittedAnswer(null); // 입력 중에는 피드백 숨김
+  const handleScInputChange = (e) => {
+    setScInput(e.target.value);
   };
 
   // [추가] 단답형 제출 핸들러
-  const handleSaSubmit = (e) => {
+  const handleScAnswer = (e) => {
     //e.preventDefault();
     // [수정] 이미 제출한 문제라면 경험치를 주지 않습니다.
     if (saSubmittedAnswer !== null) return;
     if (!saInput.trim()) return; // 입력값이 없으면 반환
 
-    // [수정] 'quiz' 변수 대신 상태에 저장된 'saQuiz'를 사용합니다.
+    // [수정] 'saQuiz' 오타를 'scQuiz'로 바로잡고, 비교 대상을 'scInput'으로 변경합니다.
     const isCorrect =
       saInput.trim().toLowerCase() === saQuiz.answer.toLowerCase();
     if (isCorrect) {
       onQuizCorrect(10);
     }
-    setSaSubmittedAnswer({ text: saInput, isCorrect });
+    setScSubmittedAnswer({ text: saInput, isCorrect });
   };
 
   return (
@@ -130,13 +130,13 @@ function Card({
           quizReady={quizReady}
           oxAnswer={oxAnswer}
           mcAnswer={mcAnswer}
-          saInput={saInput} // [추가]
-          saSubmittedAnswer={saSubmittedAnswer} // [추가]
+          saInput={saInput} // [수정]
+          saSubmittedAnswer={saSubmittedAnswer} // [수정]
           handleGenerateQuiz={handleGenerateQuiz}
           handleOxAnswer={handleOxAnswer}
           handleMcAnswer={handleMcAnswer}
-          handleSaInputChange={handleSaInputChange} // [추가]
-          handleSaSubmit={handleSaSubmit} // [추가]
+          handleScInputChange={handleScInputChange} // [수정]
+          handleScSubmit={handleScAnswer} // [수정]
         />
       )}
     </div>

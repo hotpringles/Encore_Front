@@ -1,57 +1,60 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateMyInfo, deleteMyAccount, logout } from "../api/accountApi";
+import { useUserStore } from "../store/userStore";
 
 // [추가] 경험치에 따라 등급 정보를 반환하는 헬퍼 함수
-const getTierInfo = (exp) => {
-  const score = Math.floor((exp / 100) * 12); // 경험치(0-100)를 레벨테스트 점수(0-12)처럼 변환
+// const getTierInfo = (exp) => {
+//   const score = Math.floor((exp / 100) * 12); // 경험치(0-100)를 레벨테스트 점수(0-12)처럼 변환
 
-  if (score >= 10) {
-    return {
-      name: "숲",
-      icon: "🌲",
-      color: "text-emerald-800",
-      bg: "bg-emerald-100",
-    };
-  } else if (score >= 7) {
-    return {
-      name: "나무",
-      icon: "🌳",
-      color: "text-lime-800",
-      bg: "bg-lime-100",
-    };
-  } else if (score >= 4) {
-    return {
-      name: "새싹",
-      icon: "🌱",
-      color: "text-green-800",
-      bg: "bg-green-100",
-    };
-  } else {
-    return {
-      name: "씨앗",
-      icon: "🌰",
-      color: "text-yellow-800",
-      bg: "bg-yellow-100",
-    };
-  }
-};
+//   if (score >= 10) {
+//     return {
+//       name: "숲",
+//       icon: "🌲",
+//       color: "text-emerald-800",
+//       bg: "bg-emerald-100",
+//     };
+//   } else if (score >= 7) {
+//     return {
+//       name: "나무",
+//       icon: "🌳",
+//       color: "text-lime-800",
+//       bg: "bg-lime-100",
+//     };
+//   } else if (score >= 4) {
+//     return {
+//       name: "새싹",
+//       icon: "🌱",
+//       color: "text-green-800",
+//       bg: "bg-green-100",
+//     };
+//   } else {
+//     return {
+//       name: "씨앗",
+//       icon: "🌰",
+//       color: "text-yellow-800",
+//       bg: "bg-yellow-100",
+//     };
+//   }
+// };
 
-function Profile({ user, setUser }) {
-  const tier = getTierInfo(user?.exp || 0);
+function Profile() {
+  const { user, setUser } = useUserStore();
+
+  const tier = user.grade;
   const navigate = useNavigate();
   // 비밀번호 변경 폼을 위한 state
-  const [currentPassword, setCurrentPassword] = useState("");
+  // const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   // 프로필 사진 변경 핸들러
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      console.log("선택된 파일:", e.target.files[0].name);
-      // TODO: 이미지 업로드 및 미리보기 로직 구현
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     console.log("선택된 파일:", e.target.files[0].name);
+  //     // TODO: 이미지 업로드 및 미리보기 로직 구현
+  //   }
+  // };
 
   // 비밀번호 업데이트 핸들러
   const handlePasswordUpdate = async (e) => {
@@ -63,12 +66,11 @@ function Profile({ user, setUser }) {
     try {
       // [수정] 실제 비밀번호 변경 API 호출
       await updateMyInfo({
-        current_password: currentPassword,
-        new_password: newPassword,
+        password: newPassword,
       });
       alert("비밀번호가 성공적으로 변경되었습니다.");
       // 입력 필드 초기화
-      setCurrentPassword("");
+      // setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
     } catch (error) {

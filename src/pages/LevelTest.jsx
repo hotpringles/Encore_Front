@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../store/userStore";
 
 // --- 퀴즈 데이터 ---
 // [수정] 12개의 레벨 테스트 문제로 교체
@@ -183,7 +184,7 @@ const QuizEnd = ({ score, setHasTested }) => {
     }
   };
   const tier = getTierInfoFromResult(score);
-
+  const setHasTested = useUserStore((state) => state.setHasTested);
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl text-center">
       <h1 className="text-[#111418] tracking-tight text-3xl sm:text-4xl font-bold leading-tight px-4 text-center pb-3 pt-6">
@@ -195,7 +196,7 @@ const QuizEnd = ({ score, setHasTested }) => {
       <div className="w-full max-w-sm bg-white rounded-xl border border-gray-200 p-8 my-6 flex flex-col items-center">
         <p className="text-gray-500 text-sm font-medium">당신의 등급</p>
         <img
-          alt={`${grade} 등급 아이콘`}
+          alt={"등급 아이콘"}
           className="w-24 h-24 mt-4 mb-2"
           src={icon} // [수정] 등급별 아이콘
         />
@@ -237,7 +238,7 @@ const QuizEnd = ({ score, setHasTested }) => {
 
 // --- 메인 퀴즈 컴포넌트 ---
 // (수정 없음)
-function LevelTest({ quizQuestions, setHasTested }) {
+function LevelTest({ quizQuestions }) {
   const [quizState, setQuizState] = useState("start"); // 'start', 'middle', 'end'
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -275,7 +276,7 @@ function LevelTest({ quizQuestions, setHasTested }) {
           />
         );
       case "end":
-        return <QuizEnd setHasTested={setHasTested} score={score} />;
+        return <QuizEnd score={score} />;
       default:
         return <QuizStart onStartQuiz={handleStartQuiz} />;
     }

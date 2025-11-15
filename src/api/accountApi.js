@@ -30,7 +30,7 @@ export const signUp = async (data) => {
 
 // 내 정보 수정 (PUT /accounts)
 export const updateMyInfo = async (data) => {
-  const res = await api.put(ACCOUNT_URL, data);
+  const res = await api.patch(ACCOUNT_URL, data);
   return res.data;
 };
 

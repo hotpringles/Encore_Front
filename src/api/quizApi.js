@@ -110,7 +110,7 @@ export const deleteMcQuiz = async (id) => {
  * [GET] /sc-quiz/
  * - 단답형 퀴즈 전체 목록을 가져오는 함수
  */
-export const fetchScQuizzes = async () => {
+export const fetchSaQuizzes = async () => {
   const res = await api.get("/sc-quiz/");
   return res.data;
 };
@@ -121,7 +121,7 @@ export const fetchScQuizzes = async () => {
  *
  * @param {number|string} id - 조회할 단답형 퀴즈 ID
  */
-export const fetchScQuizDetail = async (id) => {
+export const fetchSaQuizDetail = async (id) => {
   const res = await api.get(`/sc-quiz/?summary=${id}`);
   return res.data;
 };
@@ -133,7 +133,7 @@ export const fetchScQuizDetail = async (id) => {
  * @param {number|string} id - 수정할 단답형 퀴즈 ID
  * @param {Object} data - 수정 내용 (문제, 정답, 해설 등)
  */
-export const updateScQuiz = async (id, data) => {
+export const updateSaQuiz = async (id, data) => {
   const res = await api.put(`/sc-quiz/${id}/`, data);
   return res.data;
 };
@@ -144,7 +144,7 @@ export const updateScQuiz = async (id, data) => {
  *
  * @param {number|string} id - 삭제할 단답형 퀴즈 ID
  */
-export const deleteScQuiz = async (id) => {
+export const deleteSaQuiz = async (id) => {
   const res = await api.delete(`/sc-quiz/${id}/`);
   return res.data;
 };
