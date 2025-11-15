@@ -4,7 +4,7 @@ import { logout } from "../api/accountApi.js";
 import { useUiStore } from "../store/uiStore.js";
 import { useNewsStore } from "../store/newsStore.js";
 
-function Menu({ location, user, setUser }) {
+function Menu({ location }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -16,6 +16,11 @@ function Menu({ location, user, setUser }) {
   // const setIsMenuVisible = useUiStore((state) => state.setIsMenuVisible);
   // const closeMenu = useUiStore((state) => state.closeMenu);
   const { isMenuVisible, setIsMenuVisible, closeMenu } = useUiStore();
+  const { user, setUser, logOut } = useUserStore();
+
+  const toggleMenu = () => {
+    setIsMenuVisible((prev) => !prev);
+  };
 
   const onToggleMenu = (path) => {
     if (location.pathname === path) {
@@ -33,8 +38,8 @@ function Menu({ location, user, setUser }) {
   const handleLogout = async () => {
     await logout();
     localStorage.removeItem("accessToken");
-    setUser({});
     closeMenu();
+    logOut();
     // 로그인 페이지로 이동하는 로직은 App.jsx 등 상위에서 처리하는 것이 더 좋습니다.
   };
 
@@ -54,7 +59,7 @@ function Menu({ location, user, setUser }) {
         {/* [추가] 메뉴 토글 버튼 */}
         <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
           <button
-            onClick={() => setIsMenuVisible(!isMenuVisible)}
+            onClick={toggleMenu}
             className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
             title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
           >
