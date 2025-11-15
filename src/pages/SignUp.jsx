@@ -25,16 +25,18 @@ const SignupPage = ({ setUser }) => {
     try {
       // [추가] API를 호출하여 회원가입을 시도합니다.
       await signUp({ username, email, password });
-      const { access } = await login({ username, password });
-      localStorage.setItem("accessToken", access);
 
-      const user = await fetchProfile();
-      setUser(user);
+      // const { access } = await login({ username, password });
+      // localStorage.setItem("accessToken", access);
+
+      // const user = await fetchProfile();
+      // setUser(user);
 
       // [수정] 회원가입 및 로그인 성공 후, 실제 동작에 맞는 알림을 보여줍니다.
       alert("회원가입이 완료되었습니다. 서비스를 시작합니다.");
-      if (user.hasTested) navigate("/main");
-      else navigate("/level-test");
+      // if (user.hasTested) navigate("/main");
+      // else navigate("/level-test");
+      navigate("/login");
     } catch (error) {
       // [추가] 회원가입 실패 시 에러를 처리합니다. (예: 아이디 중복)
       console.error("회원가입 실패:", error);
