@@ -152,7 +152,7 @@ const QuizMiddle = ({
 };
 
 // 3. 퀴즈 완료 화면 (등급 로직 수정)
-const QuizEnd = ({ score, setHasTested }) => {
+const QuizEnd = ({ score }) => {
   const navigate = useNavigate();
 
   // [수정] 등급 분류 로직을 Profile.jsx와 유사하게 변경
