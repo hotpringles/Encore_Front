@@ -45,7 +45,7 @@ const LogIn = () => {
       setHasTested(user.grade ? true : false);
 
       // [추가] 로그인 성공 후, 테스트 여부에 따라 적절한 페이지로 이동합니다.
-      if (hasTested) navigate("/main");
+      if (user.grade) navigate("/main");
       else navigate("/level-test");
     } catch (error) {
       // [추가] 로그인 실패 시 에러를 처리합니다.
