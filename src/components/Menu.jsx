@@ -12,30 +12,22 @@ function Menu() {
     { path: "/level-test", label: "테스트", icon: "task" },
   ];
 
-  // const [isMenuVisible, setIsMenuVisible] = useState(false);
-  // const isMenuVisible = useUiStore((state) => state.isMenuVisible);
-  // const setIsMenuVisible = useUiStore((state) => state.setIsMenuVisible);
-  // const closeMenu = useUiStore((state) => state.closeMenu);
-  const { isMenuVisible, setIsMenuVisible, closeMenu } = useUiStore();
+  const { isMenuVisible, toggleMenu, closeMenu } = useUiStore();
   const { user, logOut } = useUserStore();
 
-  const toggleMenu = () => {
-    setIsMenuVisible((prev) => !prev);
-  };
-
-  const onToggleMenu = (path) => {
+  // 링크 클릭 시 동작을 정의하는 새로운 핸들러
+  const handleLinkClick = (path) => {
+    // 현재 경로와 클릭한 링크의 경로가 같으면 메뉴를 토글
     if (location.pathname === path) {
-      setIsMenuVisible((prev) => !prev);
-    } else if (isMenuVisible && location.pathname !== path) {
-      setIsMenuVisible((prev) => !prev);
+      toggleMenu();
+    } else {
+      // 다른 경로로 이동할 때는 메뉴를 닫기만 함
+      closeMenu();
     }
   };
 
   const { newsGroup, setSelectedNewsGroup } = useNewsStore();
 
-  // const closeMenu = () => {
-  //   setIsMenuVisible(false);
-  // };
   const handleLogout = async () => {
     await logout();
     // localStorage.removeItem("accessToken"); // logout() API 함수에서 이미 처리합니다.
@@ -76,7 +68,7 @@ function Menu() {
               <Link
                 to={item.path}
                 className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
-                onClick={() => onToggleMenu(item.path)}
+                onClick={() => handleLinkClick(item.path)}
               >
                 <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
                   {item.icon}
