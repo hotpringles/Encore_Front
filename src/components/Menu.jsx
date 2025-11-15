@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../api/accountApi.js";
+import { useUiStore } from "../store/uiStore.js";
+import { useNewsStore } from "../store/newsStore.js";
 
-function Menu({ location, articles, setSelectedReports, user, setUser }) {
+function Menu({ location, user, setUser }) {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
     { path: "/level-test", label: "테스트", icon: "task" },
   ];
 
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  // const [isMenuVisible, setIsMenuVisible] = useState(false);
+  // const isMenuVisible = useUiStore((state) => state.isMenuVisible);
+  // const setIsMenuVisible = useUiStore((state) => state.setIsMenuVisible);
+  // const closeMenu = useUiStore((state) => state.closeMenu);
+  const { isMenuVisible, setIsMenuVisible, closeMenu } = useUiStore();
+
   const onToggleMenu = (path) => {
     if (location.pathname === path) {
       setIsMenuVisible((prev) => !prev);
@@ -17,9 +24,12 @@ function Menu({ location, articles, setSelectedReports, user, setUser }) {
       setIsMenuVisible((prev) => !prev);
     }
   };
-  const closeMenu = () => {
-    setIsMenuVisible(false);
-  };
+
+  const { newsGroup, setSelectedNewsGroup } = useNewsStore();
+
+  // const closeMenu = () => {
+  //   setIsMenuVisible(false);
+  // };
   const handleLogout = async () => {
     await logout();
     localStorage.removeItem("accessToken");
@@ -79,13 +89,13 @@ function Menu({ location, articles, setSelectedReports, user, setUser }) {
             최근 본 뉴스
           </span>
           <ul className="space-y-1 max-h-48 overflow-y-auto">
-            {articles.map((reports) => (
+            {newsGroup.map((reports) => (
               <li key={reports.id}>
                 <Link
                   to={"/main"}
                   className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
                   onClick={() => {
-                    setSelectedReports(reports);
+                    setSelectedNewsGroup(reports);
                     closeMenu();
                   }}
                 >

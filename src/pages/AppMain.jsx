@@ -19,11 +19,12 @@ function PageIndicator({ totalCards, currentPage }) {
   );
 }
 
-function AppMain({ reports, onQuizCorrect }) {
+function AppMain({ selectedNewsGroup, onQuizCorrect }) {
   const cards = useMemo(() => {
-    if (Array.isArray(reports) && reports.length > 0) return reports;
+    if (Array.isArray(selectedNewsGroup) && selectedNewsGroup.length > 0)
+      return selectedNewsGroup;
     else return null;
-  }, [reports]);
+  }, [selectedNewsGroup]);
 
   // [추가] 요일을 계산하는 로직
   const getDayOfWeek = (dateString) => {
@@ -69,10 +70,12 @@ function AppMain({ reports, onQuizCorrect }) {
   return (
     <div className="main-container flex flex-col items-center justify-between w-full h-full relative overflow-x-hidden">
       <div className="date-indicator p-[10px_20px] shadow-[0_6px_20px_rgba(0,0,0,0.08)] flex items-baseline gap-[6px]  rounded-[999px] mt-3 mb-[15px]">
-        <span className="cards-date font-bold">{reports[0].date}</span>
+        <span className="cards-date font-bold">
+          {selectedNewsGroup[0].date}
+        </span>
         {/* [수정] 요일을 동적으로 표시합니다. */}
         <span className="cards.day text-blue-500 font-bold">
-          {getDayOfWeek(reports[0].date)}요일
+          {getDayOfWeek(selectedNewsGroup[0].date)}요일
         </span>
       </div>
       <div className="main-reports flex items-center justify-center w-full relative">
@@ -88,7 +91,7 @@ function AppMain({ reports, onQuizCorrect }) {
         )}
         <div className="cards-viewport">
           <div className="cards-wrapper">
-            {reports.map((report, index) => {
+            {selectedNewsGroup.map((report, index) => {
               return (
                 <div key={report.id} className={getCardClass(index)}>
                   <Card

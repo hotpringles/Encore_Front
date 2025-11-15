@@ -21,24 +21,9 @@ import { useNewsStore } from "./store/newsStore.js";
 function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
-  // const toggleMenu = () => {
-  //   setIsMenuVisible((prev) => !prev);
-  // };
-  const onToggleChatBot = () => {
-    setIsChatBotVisible((prev) => !prev);
-  };
-  // const [isChatBotVisible, setIsChatBotVisible] = useState(false);
-  const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const setIsChatBotVisible = useUiStore((state) => state.setIsChatBotVisible);
-
-  // const [hasTested, setHasTested] = useState(() => {
-  //   const flag = !quizQuestions[0].hasTested;
-  //   return flag;
-  // });
-  // const [user, setUser] = useState({});
-
-  const { user, setUser, hasTested, setHasTested } = useUserStore();
-  //
+  const { isChatBotVisible, toggleChatBot } = useUiStore();
+  const { user, setUser, hasTested, setHasTested, updateUserExp } =
+    useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
   const { newsGroup, setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
@@ -141,12 +126,7 @@ function App() {
       {/* isSignPage가 false일 때 (메인 앱 페이지)는 Menu를 표시합니다. */}
       {!isSignPage && hasTested && (
         <nav className="app-menu border-r">
-          <Menu
-            location={location}
-            newsGroup={newsGroup}
-            user={user}
-            selectedNewsGroup={setSelectedNewsGroup}
-          />
+          <Menu location={location} user={user} />
         </nav>
       )}
 
@@ -158,7 +138,7 @@ function App() {
         {/* isSignPage가 true일 때 (로그인/회원가입 페이지)는 Nav를 숨깁니다. */}
         {!isSignPage && hasTested && (
           <header className={"app-nav"}>
-            <Nav onToggleChatBot={onToggleChatBot} user={user} />
+            <Nav onToggleChatBot={toggleChatBot} user={user} />
           </header>
         )}
         <main className={"app-main grow"}>
