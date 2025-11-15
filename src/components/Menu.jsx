@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "../api/accountApi.js";
 import { useUiStore } from "../store/uiStore.js";
 import { useNewsStore } from "../store/newsStore.js";
+import { useUserStore } from "../store/userStore.js";
 
-function Menu({ location }) {
+function Menu() {
+  const location = useLocation();
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
@@ -16,7 +17,7 @@ function Menu({ location }) {
   // const setIsMenuVisible = useUiStore((state) => state.setIsMenuVisible);
   // const closeMenu = useUiStore((state) => state.closeMenu);
   const { isMenuVisible, setIsMenuVisible, closeMenu } = useUiStore();
-  const { user, setUser, logOut } = useUserStore();
+  const { user, logOut } = useUserStore();
 
   const toggleMenu = () => {
     setIsMenuVisible((prev) => !prev);
@@ -37,7 +38,7 @@ function Menu({ location }) {
   // };
   const handleLogout = async () => {
     await logout();
-    localStorage.removeItem("accessToken");
+    // localStorage.removeItem("accessToken"); // logout() API 함수에서 이미 처리합니다.
     closeMenu();
     logOut();
     // 로그인 페이지로 이동하는 로직은 App.jsx 등 상위에서 처리하는 것이 더 좋습니다.
@@ -94,8 +95,8 @@ function Menu({ location }) {
             최근 본 뉴스
           </span>
           <ul className="space-y-1 max-h-48 overflow-y-auto">
-            {newsGroup.map((reports) => (
-              <li key={reports.id}>
+            {newsGroup.map((reports, index) => (
+              <li key={reports[0]?.date || index}>
                 <Link
                   to={"/main"}
                   className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
@@ -105,10 +106,7 @@ function Menu({ location }) {
                   }}
                 >
                   <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
-                    {reports.date}
-                  </span>
-                  <span className="text-lg font-medium">
-                    {reports.summaries[0].title}
+                    {reports[0]?.date}
                   </span>
                 </Link>
               </li>

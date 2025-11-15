@@ -126,7 +126,7 @@ function App() {
       {/* isSignPage가 false일 때 (메인 앱 페이지)는 Menu를 표시합니다. */}
       {!isSignPage && hasTested && (
         <nav className="app-menu border-r">
-          <Menu location={location} user={user} />
+          <Menu />
         </nav>
       )}
 
