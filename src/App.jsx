@@ -22,7 +22,8 @@ function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const { user, setUser, hasTested } = useUserStore();
+  const { user, setUser, hasTested, setHasTested, setLevelIcon } =
+    useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
   const { setNewsGroup, setSelectedNewsGroup } = useNewsStore();
@@ -30,7 +31,7 @@ function App() {
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
 
-  // const [authLoading, setAuthLoading] = useState(true); // [추가] 인증 로딩 상태
+  const [authLoading, setAuthLoading] = useState(true); // [수정] 인증 로딩 상태 주석 해제
 
   // [추가] 사용자 점수(경험치)를 업데이트하는 함수
   const updateUserScore = async (amount) => {
@@ -96,27 +97,31 @@ function App() {
     // [추가] 앱 시작 시 뉴스 데이터 로드
     loadNewsGroup();
 
-    // [추가] 앱 시작 시 로그인 상태 확인
+    // [수정] 앱 시작 시 로그인 상태 확인 로직 활성화
     const checkLoginStatus = async () => {
-      // const token = localStorage.getItem("accessToken");
-      // if (token) {
-      //   try {
-      //     const userData = await fetchProfile();
-      //     setUser(userData);
-      //   } catch (error) {
-      //     console.error("자동 로그인 실패:", error);
-      //     localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
-      //   }
-      // }
-      // setAuthLoading(false); // 인증 확인 완료
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        try {
+          const userData = await fetchProfile();
+          setUser(userData);
+          setHasTested(!!userData.grade); // [추가] 등급 유무로 hasTested 설정
+          setLevelIcon(userData.grade); // [추가] 등급 아이콘 설정
+        } catch (error) {
+          console.error("자동 로그인 실패:", error);
+          localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
+          localStorage.removeItem("refreshToken");
+        }
+      }
+      setAuthLoading(false); // 인증 확인 완료
     };
 
     checkLoginStatus();
   }, []); // [] = 최초 마운트 시 1번만 실행
 
   // 4) 상태에 따라 다른 화면 보여주기
-  // [수정] 뉴스 로딩과 인증 로딩을 모두 기다립니다.
-  if (loading) return <div>데이터를 불러오는 중...</div>;
+  // [수정] 인증 로딩 상태를 먼저 확인합니다.
+  if (authLoading) return <div>인증 정보를 확인하는 중...</div>;
+  if (loading) return <div>뉴스 데이터를 불러오는 중...</div>;
   if (error) return <div>{error}</div>;
 
   return (
