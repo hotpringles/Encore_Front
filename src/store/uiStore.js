@@ -8,7 +8,7 @@ export const useUiStore = create((set) => ({
   setIsChatBotVisible: (value) => set({ isChatBotVisible: value }),
 
   toggleMenu: () => set((state) => ({ isMenuVisible: !state.isMenuVisible })),
-  closMenu: () => set({ isMenuVisible: false }),
+  closeMenu: () => set({ isMenuVisible: false }),
   toggleChatBot: () =>
     set((state) => ({ isChatBotVisible: !state.isChatBotVisible })),
 }));
