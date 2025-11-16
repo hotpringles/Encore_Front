@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Card from "../components/Card.jsx";
 import "../styles/AppMain.css";
 
@@ -20,11 +20,14 @@ function PageIndicator({ totalCards, currentPage }) {
 }
 
 function AppMain({ selectedNewsGroup, onQuizCorrect }) {
-  const cards = useMemo(() => {
-    if (Array.isArray(selectedNewsGroup) && selectedNewsGroup.length > 0)
-      return selectedNewsGroup;
-    else return null;
-  }, [selectedNewsGroup]);
+  // [개선] useMemo 대신 간단한 변수 할당 사용
+  const cards =
+    Array.isArray(selectedNewsGroup) && selectedNewsGroup.length > 0
+      ? selectedNewsGroup
+      : null;
+
+  const totalCards = cards?.length || 0;
+  const [currentPage, setCurrentPage] = useState(0);
 
   // [추가] 요일을 계산하는 로직
   const getDayOfWeek = (dateString) => {
@@ -33,8 +36,11 @@ function AppMain({ selectedNewsGroup, onQuizCorrect }) {
     return days[new Date(dateString).getDay()];
   };
 
-  const totalCards = cards?.length || 0;
-  const [currentPage, setCurrentPage] = useState(0);
+  // [추가] 뉴스 그룹이 변경될 때 currentPage를 0으로 리셋합니다.
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [selectedNewsGroup]);
+
   const handlePrev = () => {
     setCurrentPage((prev) => (prev - 1 + totalCards) % totalCards);
   };
@@ -51,9 +57,7 @@ function AppMain({ selectedNewsGroup, onQuizCorrect }) {
     const nextPage = (currentPage + 1) % totalCards;
 
     if (index === currentPage) return ACTIVE;
-
     if (index == prevPage) return NONACTIVE + " prev";
-    if (index == currentPage) return ACTIVE;
     if (index == nextPage) return NONACTIVE + " next";
 
     return NONACTIVE;
@@ -74,7 +78,7 @@ function AppMain({ selectedNewsGroup, onQuizCorrect }) {
           {selectedNewsGroup[0].date}
         </span>
         {/* [수정] 요일을 동적으로 표시합니다. */}
-        <span className="cards.day text-blue-500 font-bold">
+        <span className="cards-day text-blue-500 font-bold">
           {getDayOfWeek(selectedNewsGroup[0].date)}요일
         </span>
       </div>
