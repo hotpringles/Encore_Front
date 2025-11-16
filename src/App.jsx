@@ -22,8 +22,7 @@ function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const { user, setUser, hasTested, setHasTested, updateUserExp } =
-    useUserStore();
+  const { setUser, hasTested, setHasTested } = useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
   const { setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
@@ -138,7 +137,7 @@ function App() {
         {/* isSignPage가 true일 때 (로그인/회원가입 페이지)는 Nav를 숨깁니다. */}
         {!isSignPage && hasTested && (
           <header className={"app-nav"}>
-            <Nav onToggleChatBot={toggleChatBot} user={user} />
+            <Nav />
           </header>
         )}
         <main className={"app-main grow"}>
@@ -150,8 +149,8 @@ function App() {
             {/* Routes는 항상 렌더링되어야 합니다. 그렇지 않으면 페이지가 보이지 않습니다. */}
             <Routes>
               <Route index element={<Navigate to="/login" replace />} />
-              <Route path="/login" element={<LogIn setUser={setUser} />} />
-              <Route path="/signup" element={<SignUp setUser={setUser} />} />
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route
                 path="/level-test"
                 element={
@@ -170,10 +169,7 @@ function App() {
                   />
                 }
               />
-              <Route
-                path="/profile"
-                element={<Profile user={user} setUser={setUser} />}
-              />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/description" element={<Description />} />
             </Routes>
             {/* isSignPage가 true일 때 (로그인/회원가입 페이지)는 ChatBot을 숨깁니다. */}
