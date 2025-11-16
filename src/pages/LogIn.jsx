@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 // [수정] react-router-dom에서 Link 외에 useNavigate도 가져옵니다.
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 login 함수를 가져옵니다.
@@ -11,11 +11,7 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // const setUser = useUserStore((state) => state.setUser);
-  // const hasTested = useUserStore((state) => state.hasTested);
-  // const setHasTested = useUserStore((state) => state.setHasTested);
-
-  const { setUser, hasTested, setHasTested } = useUserStore();
+  const { setUser, setHasTested } = useUserStore();
 
   // [수정] useNavigate 훅을 실행해서 navigate 함수를 만듭니다.
   const navigate = useNavigate();
@@ -30,27 +26,25 @@ const LogIn = () => {
     e.preventDefault(); // 폼 기본 제출 동작 방지
 
     try {
-      // [추가] API를 호출하여 로그인을 시도합니다.
-      // const { access } = await login({ username, password }); -> api에서 localStorage로 access 할당
+      // 1. API를 호출하여 로그인 시도 (성공 시 토큰이 저장됨)
       await login({ username, password });
-      setPassword("");
 
-      // [추가] 서버 응답에서 access 토큰을 추출합니다. (키 이름은 백엔드 사양에 따라 다를 수 있습니다)
-
-      // [추가] 토큰을 localStorage에 저장합니다.
-      // localStorage.setItem("accessToken", access);
-
+      // 2. 저장된 토큰으로 사용자 프로필 정보를 가져옴
       const user = await fetchProfile();
       setUser(user);
-      setHasTested(user.grade ? true : false);
+      // [개선] user.grade 존재 여부를 boolean으로 변환
+      setHasTested(!!user.grade);
 
-      // [추가] 로그인 성공 후, 테스트 여부에 따라 적절한 페이지로 이동합니다.
+      // 3. 등급(grade) 유무에 따라 적절한 페이지로 이동
       if (user.grade) navigate("/main");
       else navigate("/level-test");
     } catch (error) {
       // [추가] 로그인 실패 시 에러를 처리합니다.
       console.error("로그인 실패:", error);
       alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+    } finally {
+      // [개선] 보안을 위해 로그인 시도 후 비밀번호 필드를 비웁니다.
+      setPassword("");
     }
   };
 
