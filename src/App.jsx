@@ -21,12 +21,12 @@ import { useNewsStore } from "./store/newsStore.js";
 function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
-  const { isChatBotVisible, toggleChatBot } = useUiStore();
+  const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
   const { user, setUser, hasTested, setHasTested, updateUserExp } =
     useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
-  const { newsGroup, setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
+  const { setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
     useNewsStore();
 
   const [loading, setLoading] = useState(true); // 로딩 상태
