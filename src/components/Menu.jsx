@@ -3,6 +3,10 @@ import { logout } from "../api/accountApi.js";
 import { useUiStore } from "../store/uiStore.js";
 import { useNewsStore } from "../store/newsStore.js";
 import { useUserStore } from "../store/userStore.js";
+import seed from "../assets/seed.png";
+import sprout from "../assets/sprout.png";
+import tree from "../assets/tree.png";
+import forest from "../assets/forest.png";
 
 function Menu() {
   const location = useLocation();
@@ -35,6 +39,14 @@ function Menu() {
     logOut();
     // 로그인 페이지로 이동하는 로직은 App.jsx 등 상위에서 처리하는 것이 더 좋습니다.
   };
+
+  const levelIcons = {
+    씨앗: seed,
+    새싹: sprout,
+    나무: tree,
+    숲: forest,
+  };
+  const levelIcon = useUserStore((state) => state.levelIcon);
 
   return (
     <>
@@ -118,8 +130,8 @@ function Menu() {
             <img
               alt="프로필"
               className="w-10 h-10 rounded-full mr-3 bg-gray-300"
-              src={user?.profileImage || undefined} // [수정] 사용자 프로필 이미지
-            />{" "}
+              src={levelIcons[levelIcon]} // [수정] 사용자 프로필 이미지
+            />
             {/* 프로필 이미지 플레이스홀더 */}
             <div className="flex-grow whitespace-nowrap">
               <div className="font-semibold text-base font-['Pretendard','Noto_Sans_KR',sans-serif]">

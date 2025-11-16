@@ -11,7 +11,7 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setUser, setHasTested } = useUserStore();
+  const { setUser, setHasTested, setLevelIcon } = useUserStore();
 
   // [수정] useNavigate 훅을 실행해서 navigate 함수를 만듭니다.
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const LogIn = () => {
       setUser(user);
       // [개선] user.grade 존재 여부를 boolean으로 변환
       setHasTested(!!user.grade);
+      setLevelIcon(user.grade);
 
       // 3. 등급(grade) 유무에 따라 적절한 페이지로 이동
       if (user.grade) navigate("/main");
