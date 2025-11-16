@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Card from "../components/Card.jsx";
 import "../styles/AppMain.css";
+import { useNewsStore } from "../store/newsStore.js";
 
 function PageIndicator({ totalCards, currentPage }) {
   const dots = Array.from({ length: totalCards }, (_, index) => index);
@@ -19,7 +20,8 @@ function PageIndicator({ totalCards, currentPage }) {
   );
 }
 
-function AppMain({ selectedNewsGroup, onQuizCorrect }) {
+function AppMain({ onQuizCorrect }) {
+  const selectedNewsGroup = useNewsStore((state) => state.selectedNewsGroup);
   // [개선] useMemo 대신 간단한 변수 할당 사용
   const cards =
     Array.isArray(selectedNewsGroup) && selectedNewsGroup.length > 0

@@ -22,33 +22,33 @@ function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const { setUser, hasTested, setHasTested } = useUserStore();
+  const { user, setUser, hasTested, setHasTested } = useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
-  const { setNewsGroup, selectedNewsGroup, setSelectedNewsGroup } =
-    useNewsStore();
+  const { setNewsGroup, setSelectedNewsGroup } = useNewsStore();
 
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
 
   const [authLoading, setAuthLoading] = useState(true); // [추가] 인증 로딩 상태
-  // [추가] 사용자 경험치를 업데이트하는 함수
-  // const updateUserExp = async (amount) => {
-  //   if (!user || !user.id) return;
 
-  //   const newExp = Math.min(100, (user.exp || 0) + amount); // 경험치는 100을 넘지 않도록
-  //   const updatedUser = { ...user, exp: newExp };
+  // [추가] 사용자 점수(경험치)를 업데이트하는 함수
+  const updateUserScore = async (amount) => {
+    if (!user) return;
 
-  //   try {
-  //     // 1. UI를 즉시 업데이트
-  //     setUser(updatedUser);
-  //     // 2. 백엔드에 변경사항을 저장
-  //     await updateMyInfo({ exp: newExp });
-  //   } catch (error) {
-  //     console.error("경험치 업데이트 실패:", error);
-  //     // 필요하다면 여기서 원래 user 상태로 롤백할 수 있습니다.
-  //   }
-  // };
+    const newScore = (user.score || 0) + amount;
+    const updatedUser = { ...user, score: newScore };
+
+    try {
+      // 1. UI를 즉시 업데이트 (Optimistic Update)
+      setUser(updatedUser);
+      // 2. 백엔드에 변경사항을 저장
+      await updateMyInfo({ score: newScore });
+    } catch (error) {
+      console.error("점수 업데이트 실패:", error);
+      // TODO: 필요하다면 여기서 원래 user 상태로 롤백하는 로직을 추가할 수 있습니다.
+    }
+  };
 
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))
   const groupByDate = (groups) => {
@@ -155,19 +155,13 @@ function App() {
                 path="/level-test"
                 element={
                   <LevelTest // [수정] splice() -> slice() 로 변경하여 원본 배열 수정을 방지합니다.
-                    quizQuestions={quizQuestions.slice(1)}
                     setHasTested={setHasTested}
                   />
                 }
               />
               <Route
                 path="/main"
-                element={
-                  <AppMain
-                    selectedNewsGroup={selectedNewsGroup}
-                    onQuizCorrect={updateUserExp}
-                  />
-                }
+                element={<AppMain onQuizCorrect={updateUserScore} />}
               />
               <Route path="/profile" element={<Profile />} />
               <Route path="/description" element={<Description />} />
