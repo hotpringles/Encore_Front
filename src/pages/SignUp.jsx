@@ -9,6 +9,10 @@ const SignupPage = ({ setUser }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  // [개선] 로딩 및 에러 상태를 관리하기 위한 state 추가
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -18,9 +22,14 @@ const SignupPage = ({ setUser }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
+      // [개선] alert 대신 error 상태를 업데이트합니다.
+      setError("비밀번호가 일치하지 않습니다.");
       return;
     }
+
+    // [개선] API 요청 시작 시 로딩 상태 활성화 및 에러 초기화
+    setIsLoading(true);
+    setError(null);
 
     try {
       // [추가] API를 호출하여 회원가입을 시도합니다.
@@ -33,14 +42,19 @@ const SignupPage = ({ setUser }) => {
       // setUser(user);
 
       // [수정] 회원가입 및 로그인 성공 후, 실제 동작에 맞는 알림을 보여줍니다.
-      alert("회원가입이 완료되었습니다. 서비스를 시작합니다.");
+      alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
       // if (user.hasTested) navigate("/main");
       // else navigate("/level-test");
       navigate("/login");
-    } catch (error) {
-      // [추가] 회원가입 실패 시 에러를 처리합니다. (예: 아이디 중복)
-      console.error("회원가입 실패:", error);
-      alert("회원가입에 실패했습니다. 다른 아이디나 이메일을 사용해주세요.");
+    } catch (err) {
+      // [수정] 백엔드가 상세 에러를 제공하지 않는 경우, 간단한 메시지로 처리합니다.
+      console.error("회원가입 실패:", err);
+      setError(
+        "회원가입에 실패했습니다. 아이디, 이메일, 비밀번호를 다시 확인해주세요."
+      );
+    } finally {
+      // [개선] API 요청 종료 시 로딩 상태 비활성화
+      setIsLoading(false);
     }
   };
 
@@ -210,11 +224,22 @@ const SignupPage = ({ setUser }) => {
                       </div>
                     </div>
 
+                    {/* [개선] 에러가 있을 경우, 메시지를 화면에 표시합니다. */}
+                    {error && (
+                      <div
+                        className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700"
+                        role="alert"
+                      >
+                        {error}
+                      </div>
+                    )}
+
                     <button
                       type="submit"
-                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#1976D2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#1976D2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:bg-gray-400"
+                      disabled={isLoading} // [개선] 로딩 중일 때 버튼 비활성화
                     >
-                      회원가입
+                      {isLoading ? "가입 처리 중..." : "회원가입"}
                     </button>
                   </div>
 
