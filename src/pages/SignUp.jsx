@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 signUp 함수를 가져옵니다.
-import { signUp, login, fetchProfile } from "../api/accountApi.js";
+import { signUp } from "../api/accountApi.js";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -20,6 +20,12 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // [개선] 프론트엔드 유효성 검사 추가
+    if (!username || !email || !password) {
+      setError("모든 필드를 입력해주세요.");
+      return;
+    }
 
     if (password !== confirmPassword) {
       // [개선] alert 대신 error 상태를 업데이트합니다.
@@ -52,6 +58,21 @@ const SignUp = () => {
       setError(
         "회원가입에 실패했습니다. 아이디, 이메일, 비밀번호를 다시 확인해주세요."
       );
+      // [개선] 서버에서 오는 구체적인 에러 메시지를 처리합니다.
+      if (err.response && err.response.data) {
+        // err.response.data가 { username: ["..."], email: ["..."] } 형태일 경우
+        const errorData = err.response.data;
+        const errorMessages = Object.keys(errorData)
+          .map((key) => {
+            // "username: 이미 존재하는 사용자 아이디입니다." 와 같은 형식으로 변환
+            return `${key}: ${errorData[key].join(", ")}`;
+          })
+          .join("\n");
+        setError(errorMessages || "입력한 정보를 다시 확인해주세요.");
+      } else {
+        // 네트워크 에러 또는 서버가 상세 메시지를 보내지 않는 경우
+        setError("회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
     } finally {
       // [개선] API 요청 종료 시 로딩 상태 비활성화
       setIsLoading(false);

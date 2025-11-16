@@ -22,7 +22,7 @@ function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const { user, setUser, hasTested, setHasTested } = useUserStore();
+  const { user, setUser, hasTested } = useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
   const { setNewsGroup, setSelectedNewsGroup } = useNewsStore();
@@ -30,7 +30,7 @@ function App() {
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
 
-  const [authLoading, setAuthLoading] = useState(true); // [추가] 인증 로딩 상태
+  // const [authLoading, setAuthLoading] = useState(true); // [추가] 인증 로딩 상태
 
   // [추가] 사용자 점수(경험치)를 업데이트하는 함수
   const updateUserScore = async (amount) => {
@@ -98,17 +98,17 @@ function App() {
 
     // [추가] 앱 시작 시 로그인 상태 확인
     const checkLoginStatus = async () => {
-      const token = localStorage.getItem("accessToken");
-      if (token) {
-        try {
-          const userData = await fetchProfile();
-          setUser(userData);
-        } catch (error) {
-          console.error("자동 로그인 실패:", error);
-          localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
-        }
-      }
-      setAuthLoading(false); // 인증 확인 완료
+      // const token = localStorage.getItem("accessToken");
+      // if (token) {
+      //   try {
+      //     const userData = await fetchProfile();
+      //     setUser(userData);
+      //   } catch (error) {
+      //     console.error("자동 로그인 실패:", error);
+      //     localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
+      //   }
+      // }
+      // setAuthLoading(false); // 인증 확인 완료
     };
 
     checkLoginStatus();
