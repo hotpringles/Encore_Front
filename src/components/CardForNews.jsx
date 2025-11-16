@@ -13,7 +13,10 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
 
     // "금리|물가|환율" 이런 패턴 생성
     // [수정] terms 배열의 각 객체에서 'term' 속성을 추출하여 패턴을 만듭니다.
-    const pattern = terms.map((t) => escapeRegExp(t.term)).join("|");
+    const pattern = terms
+      .filter((t) => t.term && t.term.trim() !== "") // [개선] 빈 키워드 필터링
+      .map((t) => escapeRegExp(t.term))
+      .join("|");
     const regex = new RegExp(`(${pattern})`, "gi"); // 대소문자 무시하고 싶으면 gi
 
     const parts = summary.split(regex); // [일반문자열, 매칭된단어, 일반문자열, 매칭된단어, ...]

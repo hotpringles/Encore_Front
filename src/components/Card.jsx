@@ -30,8 +30,8 @@ function Card({
   // 4지선다 선택 답
   const [mcAnswer, setMcAnswer] = useState(null);
   // [추가] 단답형 입력 값 및 제출 답
-  const [saInput, setScInput] = useState(""); // 사용자의 현재 입력 값
-  const [saSubmittedAnswer, setScSubmittedAnswer] = useState(null); // 제출된 답안 { text: string, isCorrect: bool }
+  const [saInput, setSaInput] = useState(""); // 사용자의 현재 입력 값
+  const [saSubmittedAnswer, setSaSubmittedAnswer] = useState(null); // 제출된 답안 { text: string, isCorrect: bool }
 
   const loadQuiz = useCallback(async (id) => {
     if (!id) return; // quizId가 없으면 함수를 실행하지 않습니다.
@@ -39,13 +39,13 @@ function Card({
       setQuizLoading(true); // 로딩 시작
       const ox = await fetchOxQuizDetail(id);
       const mc = await fetchMcQuizDetail(id);
-      const sc = await fetchSaQuizDetail(id);
+      const sa = await fetchSaQuizDetail(id);
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
       setOxQuiz(Array.isArray(ox) ? ox[0] : ox);
       setMcQuiz(Array.isArray(mc) ? mc[0] : mc);
-      setSaQuiz(Array.isArray(sc) ? sc[0] : sc);
+      setSaQuiz(Array.isArray(sa) ? sa[0] : sa);
     } catch (err) {
       console.error(err);
       setError("퀴즈를 불러오는 데 실패했습니다.");
@@ -66,8 +66,8 @@ function Card({
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
     setOxAnswer(null);
     setMcAnswer(null);
-    setScInput(""); // [수정] 단답형 입력 필드 초기화
-    setScSubmittedAnswer(null); // [수정] 단답형 제출 결과 초기화
+    setSaInput(""); // [수정] 단답형 입력 필드 초기화
+    setSaSubmittedAnswer(null); // [수정] 단답형 제출 결과 초기화
   };
 
   const handleOxAnswer = (boolean) => {
@@ -90,24 +90,23 @@ function Card({
   };
 
   // [추가] 단답형 입력 변경 핸들러
-  const handleScInputChange = (e) => {
-    setScInput(e.target.value);
+  const handleSaInputChange = (e) => {
+    setSaInput(e.target.value);
   };
 
   // [추가] 단답형 제출 핸들러
-  const handleScAnswer = (e) => {
+  const handleSaSubmit = (e) => {
     //e.preventDefault();
     // [수정] 이미 제출한 문제라면 경험치를 주지 않습니다.
     if (saSubmittedAnswer !== null) return;
     if (!saInput.trim()) return; // 입력값이 없으면 반환
 
-    // [수정] 'saQuiz' 오타를 'scQuiz'로 바로잡고, 비교 대상을 'scInput'으로 변경합니다.
     const isCorrect =
       saInput.trim().toLowerCase() === saQuiz.answer.toLowerCase();
     if (isCorrect) {
       onQuizCorrect(10);
     }
-    setScSubmittedAnswer({ text: saInput, isCorrect });
+    setSaSubmittedAnswer({ text: saInput, isCorrect });
   };
 
   return (
@@ -120,8 +119,18 @@ function Card({
         originalUrl={originalUrl}
         terms={terms}
       />
-      {/* [수정] 퀴즈 데이터가 모두 로드된 후에만 CardForQuiz를 렌더링합니다. */}
-      {hasQuiz && !quizLoading && oxQuiz && mcQuiz && (
+      {/* 퀴즈 섹션 렌더링 로직 개선 */}
+      {hasQuiz && quizLoading && (
+        <div className="card-page quiz-page flex justify-center items-center">
+          <p className="text-gray-500">퀴즈를 불러오는 중...</p>
+        </div>
+      )}
+      {hasQuiz && error && (
+        <div className="card-page quiz-page flex justify-center items-center">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
+      {hasQuiz && !quizLoading && !error && oxQuiz && mcQuiz && (
         <CardForQuiz
           oxQuiz={oxQuiz}
           mcQuiz={mcQuiz}
@@ -135,8 +144,8 @@ function Card({
           handleGenerateQuiz={handleGenerateQuiz}
           handleOxAnswer={handleOxAnswer}
           handleMcAnswer={handleMcAnswer}
-          handleScInputChange={handleScInputChange} // [수정]
-          handleScSubmit={handleScAnswer} // [수정]
+          handleSaInputChange={handleSaInputChange} // [수정]
+          handleSaSubmit={handleSaSubmit} // [수정] 함수 이름과 prop 이름 일치
         />
       )}
     </div>

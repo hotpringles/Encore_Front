@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 import "../styles/CardForQuiz.css";
 
 // [추가] 정답/오답 피드백을 위한 헬퍼 컴포넌트
@@ -41,20 +41,20 @@ function CardForQuiz({
   mcAnswer,
   quizReady,
   saInput, // Card.jsx에서 saInput으로 전달하므로 맞춤
-  scSubmittedAnswer: saSubmittedAnswer,
+  saSubmittedAnswer,
   handleGenerateQuiz,
   handleOxAnswer,
   handleMcAnswer,
-  handleSaInputChange, // Card.jsx에서 handleSaInputChange로 전달하므로 맞춤
-  handleSaSubmit, // Card.jsx에서 handleSaSubmit으로 전달하므로 맞춤
+  handleSaInputChange,
+  handleSaSubmit,
 }) {
   const oxIsCorrect = oxAnswer !== null && oxQuiz.answer === oxAnswer;
   const mcIsCorrect = mcAnswer !== null && mcQuiz.answer === mcAnswer;
   const saIsCorrect = saSubmittedAnswer !== null && saSubmittedAnswer.isCorrect;
 
   // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
-  const quizInstanceId = mcQuiz.id || new Date().getTime();
-
+  // [개선] React 18+ 환경에서는 useId 사용을 권장합니다.
+  const uniqueId = useId();
   // 제출 전 선택한 답을 저장하는 로컬 상태
   const [localOxSelection, setLocalOxSelection] = useState(null);
   const [localMcSelection, setLocalMcSelection] = useState(null);
@@ -129,6 +129,7 @@ function CardForQuiz({
                   e.preventDefault();
                   if (localOxSelection !== null) {
                     handleOxAnswer(localOxSelection); // 제출 시 부모 핸들러 호출
+                    setLocalOxSelection(null); // [개선] 제출 후 선택 초기화
                   }
                 }}
               >
@@ -141,8 +142,8 @@ function CardForQuiz({
                     <div className="relative" key={index}>
                       <input
                         className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
-                        id={`ox-${quizInstanceId}-${index}`}
-                        name={`quiz-ox-${quizInstanceId}`}
+                        id={`ox-${uniqueId}-${index}`}
+                        name={`quiz-ox-${uniqueId}`}
                         type="radio"
                         checked={localOxSelection === item.value}
                         onChange={() => {
@@ -153,7 +154,7 @@ function CardForQuiz({
                       />
                       <label
                         className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
-                        htmlFor={`ox-${quizInstanceId}-${index}`}
+                        htmlFor={`ox-${uniqueId}-${index}`}
                       >
                         <div className="flex grow flex-col">
                           <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
@@ -204,6 +205,7 @@ function CardForQuiz({
                   e.preventDefault();
                   if (localMcSelection !== null) {
                     handleMcAnswer(localMcSelection); // 제출 시 부모 핸들러 호출
+                    setLocalMcSelection(null); // [개선] 제출 후 선택 초기화
                   }
                 }}
               >
@@ -213,8 +215,8 @@ function CardForQuiz({
                     <div className="relative" key={index}>
                       <input
                         className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
-                        id={`mc-${quizInstanceId}-${index}`}
-                        name={`quiz-mc-${quizInstanceId}`}
+                        id={`mc-${uniqueId}-${index}`}
+                        name={`quiz-mc-${uniqueId}`}
                         type="radio"
                         value={option}
                         checked={localMcSelection === option}
@@ -226,7 +228,7 @@ function CardForQuiz({
                       />
                       <label
                         className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
-                        htmlFor={`mc-${quizInstanceId}-${index}`}
+                        htmlFor={`mc-${uniqueId}-${index}`}
                       >
                         <div className="flex grow flex-col">
                           <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
