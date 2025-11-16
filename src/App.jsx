@@ -116,7 +116,7 @@ function App() {
 
   // 4) 상태에 따라 다른 화면 보여주기
   // [수정] 뉴스 로딩과 인증 로딩을 모두 기다립니다.
-  if (loading || authLoading) return <div>데이터를 불러오는 중...</div>;
+  if (loading) return <div>데이터를 불러오는 중...</div>;
   if (error) return <div>{error}</div>;
 
   return (
