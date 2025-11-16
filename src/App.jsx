@@ -153,11 +153,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route
                 path="/level-test"
-                element={
-                  <LevelTest // [수정] splice() -> slice() 로 변경하여 원본 배열 수정을 방지합니다.
-                    setHasTested={setHasTested}
-                  />
-                }
+                element={<LevelTest quizQuestions={quizQuestions} />}
               />
               <Route
                 path="/main"
