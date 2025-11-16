@@ -8,5 +8,5 @@ export const useUserStore = create((set) => ({
   setUser: (profile) => set({ user: profile }),
   setHasTested: (value) => set({ hasTested: value }),
   logOut: () => set({ user: null, hasTested: false }),
-  setLevelIcon: (levelIcon) => set({ levelIcon }),
+  setLevelIcon: (value) => set({ levelIcon: value }),
 }));
