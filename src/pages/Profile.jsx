@@ -3,40 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { updateMyInfo, deleteMyAccount, logout } from "../api/accountApi";
 import { useUserStore } from "../store/userStore";
 
-// [추가] 경험치에 따라 등급 정보를 반환하는 헬퍼 함수
-// const getTierInfo = (exp) => {
-//   const score = Math.floor((exp / 100) * 12); // 경험치(0-100)를 레벨테스트 점수(0-12)처럼 변환
-
-//   if (score >= 10) {
-//     return {
-//       name: "숲",
-//       icon: "🌲",
-//       color: "text-emerald-800",
-//       bg: "bg-emerald-100",
-//     };
-//   } else if (score >= 7) {
-//     return {
-//       name: "나무",
-//       icon: "🌳",
-//       color: "text-lime-800",
-//       bg: "bg-lime-100",
-//     };
-//   } else if (score >= 4) {
-//     return {
-//       name: "새싹",
-//       icon: "🌱",
-//       color: "text-green-800",
-//       bg: "bg-green-100",
-//     };
-//   } else {
-//     return {
-//       name: "씨앗",
-//       icon: "🌰",
-//       color: "text-yellow-800",
-//       bg: "bg-yellow-100",
-//     };
-//   }
-// };
+// [추가] 등급 아이콘 이미지 import
+import seed from "../assets/seed.png";
+import sprout from "../assets/sprout.png";
+import tree from "../assets/tree.png";
+import forest from "../assets/forest.png";
 
 function Profile() {
   const { user, setUser } = useUserStore();
@@ -48,13 +19,12 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  // 프로필 사진 변경 핸들러
-  // const handleImageChange = (e) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     console.log("선택된 파일:", e.target.files[0].name);
-  //     // TODO: 이미지 업로드 및 미리보기 로직 구현
-  //   }
-  // };
+  const levelIcon = {
+    씨앗: seed,
+    새싹: sprout,
+    나무: tree,
+    숲: forest,
+  };
 
   // 비밀번호 업데이트 핸들러
   const handlePasswordUpdate = async (e) => {
@@ -113,28 +83,11 @@ function Profile() {
         {/* --- 프로필 섹션 --- */}
         <section className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center gap-6">
-            <label
-              htmlFor="profile-picture-upload"
-              className="relative group size-24 flex-shrink-0 cursor-pointer"
-            >
-              <div className="flex items-center justify-center bg-gray-100 rounded-full size-24 border-2 border-dashed border-gray-300">
-                <span className="material-symbols-outlined text-gray-400 text-4xl">
-                  add_a_photo
-                </span>
-              </div>
-              <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-white text-sm font-medium">
-                  사진 변경
-                </span>
-              </div>
-              <input
-                type="file"
-                id="profile-picture-upload"
-                className="hidden"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </label>
+            <img
+              src={levelIcon[tier]}
+              alt={tier}
+              className="size-24 rounded-full object-cover border-2 border-gray-200"
+            />
             <div className="flex flex-col w-full">
               <div className="flex justify-between items-start">
                 <div>
@@ -147,28 +100,31 @@ function Profile() {
                     {user?.email || "이메일 정보 없음"}
                   </p>
                 </div>
-                <div className="flex flex-col items-center gap-1">
-                  <div className="bg-green-100 p-2 rounded-full">
-                    <span className="text-3xl">🌱</span>
+                {/* [수정] 등급 정보 동적 표시 */}
+                {/* <div className={`flex flex-col items-center gap-1`}>
+                  <div className={`${tier.bg} p-2 rounded-full`}>
+                    <img src={tier.icon} alt={tier.name} className="size-8" />
                   </div>
-                  <span className="text-green-800 text-sm font-bold">새싹</span>
-                </div>
+                  <span className={`${tier.color} text-sm font-bold`}>
+                    {tier.name}
+                  </span>
+                </div> */}
               </div>
               <div className="mt-4">
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-gray-600 text-sm font-medium">
-                    경험치
+                    다음 등급까지
                   </span>
-                  {/* [수정] 실제 경험치로 변경 (user 객체에 exp가 있다고 가정) */}
+                  {/* [수정] 실제 점수로 변경 */}
                   <span className="text-primary text-sm font-bold">
-                    {user?.exp || 0}%
+                    {user?.score || 0} / 100
                   </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  {/* [수정] 실제 경험치로 변경 */}
+                  {/* [수정] 실제 점수를 기반으로 경험치 바 표시 */}
                   <div
                     className="bg-primary h-2.5 rounded-full"
-                    style={{ width: `${user?.exp || 0}%` }}
+                    style={{ width: `${(user?.score || 0) % 100}%` }}
                   ></div>
                 </div>
               </div>
