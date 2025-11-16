@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // [추가] accountApi에서 signUp 함수를 가져옵니다.
 import { signUp, login, fetchProfile } from "../api/accountApi.js";
 
-const SignupPage = ({ setUser }) => {
+const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
