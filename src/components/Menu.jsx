@@ -13,7 +13,6 @@ function Menu() {
   const menuItems = [
     { path: "/main", label: "Home", icon: "home" },
     { path: "/description", label: "설명", icon: "description" },
-    { path: "/level-test", label: "테스트", icon: "task" },
   ];
 
   const { isMenuVisible, toggleMenu, closeMenu } = useUiStore();
@@ -59,13 +58,13 @@ function Menu() {
       <nav
         className={`fixed top-0 bg-white border-r border-gray-200 overflow-hidden z-50 h-full transition-width duration-300 ease-in-out
           flex flex-col justify-between
-          ${isMenuVisible ? "w-[240px]" : "w-[60px]"}`}
+          ${isMenuVisible ? "w-[240px]" : "w-[61px]"}`}
       >
         {/* [추가] 메뉴 토글 버튼 */}
         <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
           <button
             onClick={toggleMenu}
-            className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
+            className="flex items-center p-3 h-[45px] text-gray-700 bg-white hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border border-gray-200 outline-none focus:outline-none font-['Pretendard','Noto_Sans_KR',sans-serif]"
             title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
           >
             <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
@@ -74,7 +73,7 @@ function Menu() {
             <span className="text-lg font-medium">메뉴</span>
           </button>
         </div>
-        <ul className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap grow">
+        <ul className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
           {menuItems.map((item) => (
             <li key={item.path}>
               <Link
@@ -82,7 +81,7 @@ function Menu() {
                 className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
                 onClick={() => handleLinkClick(item.path)}
               >
-                <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
+                <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
                   {item.icon}
                 </span>
                 <span className="text-lg font-medium">{item.label}</span>
@@ -98,19 +97,22 @@ function Menu() {
           <span className="text-sm font-semibold text-gray-500 mb-2 block font-['Pretendard','Noto_Sans_KR',sans-serif]">
             최근 본 뉴스
           </span>
-          <ul className="space-y-1 max-h-48 overflow-y-auto">
+          {/* [수정] 7열 그리드 레이아웃으로 변경 */}
+          <ul className="grid grid-cols-7 gap-1 max-h-48 overflow-y-auto">
             {newsGroup.map((reports, index) => (
               <li key={reports[0]?.date || index}>
                 <Link
                   to={"/main"}
-                  className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
+                  className="flex items-center justify-center p-2 h-[45px] text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
                   onClick={() => {
                     setSelectedNewsGroup(reports);
                     closeMenu();
                   }}
+                  title={reports[0]?.date} // [추가] 날짜에 마우스를 올리면 전체 날짜 표시
                 >
-                  <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
-                    {reports[0]?.date}
+                  {/* [수정] 날짜의 '일'만 표시하도록 변경 */}
+                  <span className="font-medium">
+                    {new Date(reports[0]?.date).getDate()}
                   </span>
                 </Link>
               </li>
@@ -150,7 +152,7 @@ function Menu() {
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
+            className="w-full flex items-center p-3 text-gray-700 bg-white hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border border-gray-200"
           >
             <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
               logout

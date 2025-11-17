@@ -10,16 +10,21 @@ const ACCOUNT_URL = "/accounts/";
 // 로그인 (POST /accounts/login)
 export const login = async (data) => {
   const res = await api.post(LOGIN_URL, data);
-  const { access } = res.data;
+  // [수정] access 토큰과 refresh 토큰을 모두 받아옵니다.
+  const { access, refresh } = res.data;
   localStorage.setItem("accessToken", access);
+  localStorage.setItem("refreshToken", refresh); // [추가] refresh 토큰을 localStorage에 저장합니다.
 
   return res.data;
 };
 
 // 로그아웃 (POST /accounts/logout)
 export const logout = async () => {
-  await api.post(LOGOUT_URL);
+  // [수정] 로그아웃 시 서버에 refresh 토큰을 전송하여 만료시킵니다.
+  const refreshToken = localStorage.getItem("refreshToken");
+  await api.post(LOGOUT_URL, { refresh: refreshToken });
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken"); // [추가] localStorage에서 refresh 토큰도 제거합니다.
 };
 
 // 회원가입 (POST /accounts)

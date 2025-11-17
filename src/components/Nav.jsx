@@ -33,7 +33,7 @@ function Nav() {
           환영합니다!
         </div>
         <button
-          className="w-[45px] h-[45px] flex items-center justify-center bg-white hover:bg-gray-100 text-gray-700 hover:text-blue-600 rounded-lg focus:outline-none
+          className="w-[45px] h-[45px] flex items-center justify-center bg-white hover:bg-gray-100 text-gray-700 rounded-lg focus:outline-none
           transition-colors no-underline font-['Pretendard','Noto_Sans_KR',sans-serif] border-0 outline-none ring-0 focus-visible:outline-black"
           onClick={toggleChatBot}
           title="챗봇 열기/닫기"

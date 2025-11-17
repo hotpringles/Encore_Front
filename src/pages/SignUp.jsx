@@ -53,25 +53,28 @@ const SignUp = () => {
       // else navigate("/level-test");
       navigate("/login");
     } catch (err) {
-      // [수정] 백엔드가 상세 에러를 제공하지 않는 경우, 간단한 메시지로 처리합니다.
       console.error("회원가입 실패:", err);
-      setError(
-        "회원가입에 실패했습니다. 아이디, 이메일, 비밀번호를 다시 확인해주세요."
-      );
-      // [개선] 서버에서 오는 구체적인 에러 메시지를 처리합니다.
+
+      // [개선] 서버에서 온 상세 에러 메시지를 사용자에게 보여줍니다.
       if (err.response && err.response.data) {
-        // err.response.data가 { username: ["..."], email: ["..."] } 형태일 경우
         const errorData = err.response.data;
-        const errorMessages = Object.keys(errorData)
-          .map((key) => {
-            // "username: 이미 존재하는 사용자 아이디입니다." 와 같은 형식으로 변환
-            return `${key}: ${errorData[key].join(", ")}`;
+        // 예시: { username: ["이미 사용중인 아이디입니다."], email: ["이메일 형식이 올바르지 않습니다."] }
+        const errorMessages = Object.entries(errorData)
+          .map(([field, messages]) => {
+            // 필드 이름을 한글로 변환 (선택적)
+            const fieldName =
+              { username: "아이디", email: "이메일", password: "비밀번호" }[
+                field
+              ] || field;
+            return `${fieldName}: ${
+              Array.isArray(messages) ? messages.join(" ") : messages
+            }`;
           })
           .join("\n");
-        setError(errorMessages || "입력한 정보를 다시 확인해주세요.");
+        setError(errorMessages || "알 수 없는 오류가 발생했습니다.");
       } else {
-        // 네트워크 에러 또는 서버가 상세 메시지를 보내지 않는 경우
-        setError("회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        // 서버에서 상세 에러를 보내주지 않는 경우를 위한 기본 메시지
+        setError("회원가입에 실패했습니다. 입력 내용을 다시 확인해주세요.");
       }
     } finally {
       // [개선] API 요청 종료 시 로딩 상태 비활성화

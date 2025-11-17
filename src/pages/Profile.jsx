@@ -15,7 +15,7 @@ function Profile() {
   const tier = user.grade;
   const navigate = useNavigate();
   // 비밀번호 변경 폼을 위한 state
-  // const [currentPassword, setCurrentPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
@@ -40,7 +40,7 @@ function Profile() {
       });
       alert("비밀번호가 성공적으로 변경되었습니다.");
       // 입력 필드 초기화
-      // setCurrentPassword("");
+      setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
     } catch (error) {
@@ -142,7 +142,7 @@ function Profile() {
             </div>
             <div className="p-6">
               <div className="flex flex-col gap-6">
-                <label className="flex flex-col w-full max-w-sm">
+                <label className="flex flex-col w-full">
                   <p className="text-gray-600 text-base font-medium leading-normal pb-2">
                     현재 비밀번호
                   </p>
