@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Card from "../components/Card.jsx";
 import "../styles/AppMain.css";
 import { useNewsStore } from "../store/newsStore.js";
@@ -28,6 +28,7 @@ function AppMain({ onQuizCorrect }) {
       ? selectedNewsGroup
       : null;
 
+  // console.log(selectedNewsGroup);
   const totalCards = cards?.length || 0;
   const [currentPage, setCurrentPage] = useState(0);
 

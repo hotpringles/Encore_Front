@@ -28,7 +28,7 @@ function App() {
   // const [selectedReports, setSelectedReports] = useState(null);
   const { setNewsGroup, setSelectedNewsGroup } = useNewsStore();
 
-  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [loading, setLoading] = useState(false); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
 
   const [authLoading, setAuthLoading] = useState(true); // [수정] 인증 로딩 상태 주석 해제
@@ -54,19 +54,11 @@ function App() {
   // filter 메소드를 사용해 summaries 배열에서 id가 일치하는 요소를 찾습니다.
   // [수정] filter와 map의 반환 값을 올바르게 사용하도록 함수를 수정합니다.
   const filteredSummaries = (groups) => {
-    // 1. map은 새로운 배열을 반환하므로, 그 결과를 return해야 합니다.
-    return groups.map((group) => {
-      // 2. filter의 결과를 새로운 변수(newSummaries)에 저장합니다.
-      // 참고: summary.id와 user.id를 비교하는 것이 의도한 로직이 맞는지 확인이 필요합니다.
-      const filteredSummaries = group.summaries.filter(
-        (summary) => summary.id === user.id
-      );
-      // 3. 새로 생성된 group 객체에 필터링된 배열(newSummaries)을 할당합니다.
-      return {
-        ...group,
-        summaries: filteredSummaries,
-      };
-    });
+    // [수정] user.id가 없을 때, 그리고 summaries 배열이 비어있을 때를 모두 안전하게 처리합니다.
+    if (!user?.id) {
+      return []; // 사용자 정보가 없으면 빈 배열을 반환하여 아무것도 필터링하지 않습니다.
+    }
+    return groups.filter((group) => group.summaries[0].id === user.id);
   };
 
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))
@@ -87,8 +79,16 @@ function App() {
       setError(null); // 에러 초기화
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
-      const list = Array.isArray(data) ? data : [];
-      const filteredList = filteredSummaries(list);
+      console.log(data);
+      console.log(user.id);
+      // [수정] API 응답 객체 전체가 아닌, 실제 데이터가 담긴 data.results 배열을 전달합니다.
+      // console.log(data);
+      // console.log(data.results[0]);
+      // console.log(data.results[0].summaries[0]);
+      // console.log(data.results[0].summaries[0].id);
+      // console.log(data.results);
+      const filteredList = filteredSummaries(data.results);
+      console.log(filteredList);
       const dataObj = groupByDate(filteredList);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
         b.localeCompare(a)
@@ -111,11 +111,10 @@ function App() {
     }
   };
 
-  // 3) 컴포넌트가 처음 화면에 나타날 때 딱 한 번 실행
-  useEffect(() => {
-    // [추가] 앱 시작 시 뉴스 데이터 로드
-    loadNewsGroup();
+  // [수정] useEffect를 분리하여 역할에 따라 실행 시점을 제어합니다.
 
+  // 1. 컴포넌트가 처음 마운트될 때 사용자 인증 상태를 확인합니다.
+  useEffect(() => {
     // [수정] 앱 시작 시 로그인 상태 확인 로직 활성화
     const checkLoginStatus = async () => {
       const token = localStorage.getItem("accessToken");
@@ -135,7 +134,13 @@ function App() {
     };
 
     checkLoginStatus();
-  }, []); // [] = 최초 마운트 시 1번만 실행
+  }, []); // 의존성 배열이 비어있으므로 최초 1회만 실행됩니다.
+
+  // 2. 사용자 인증이 완료된 후 (authLoading이 false가 되면) 뉴스 데이터를 로드합니다.
+  useEffect(() => {
+    if (authLoading || !user) return;
+    loadNewsGroup();
+  }, [authLoading, user]); // 인증 완료 후 사용자 정보가 있을 때만 실행합니다.
 
   // 4) 상태에 따라 다른 화면 보여주기
   // [수정] 인증 로딩 상태를 먼저 확인합니다.
