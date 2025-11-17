@@ -68,7 +68,7 @@ function Menu() {
             className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
             title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
           >
-            <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
+            <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
               menu
             </span>
             <span className="text-lg font-medium">메뉴</span>
@@ -91,7 +91,7 @@ function Menu() {
           ))}
         </ul>
         <div
-          className={`p-4 border-t border-gray-200 whitespace-nowrap transition-opacity duration-300 ease-in-out overflow-y-auto ${
+          className={`grow p-4 border-t border-gray-200 whitespace-nowrap transition-opacity duration-300 ease-in-out overflow-y-auto ${
             isMenuVisible ? "opacity-100" : "opacity-0"
           }`}
         >
