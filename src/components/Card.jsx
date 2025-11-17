@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react"; // [추가] useRef, useEffect
+import { useState, useRef, useEffect, useCallback, useMemo } from "react"; // [추가] useRef, useEffect
 import CardForNews from "./CardForNews.jsx"; // 같은 components 폴더 내
 import CardForQuiz from "./CardForQuiz.jsx"; // 같은 components 폴더 내
 import "../styles/Card.css";
@@ -7,6 +7,15 @@ import {
   fetchMcQuizDetail,
   fetchSaQuizDetail,
 } from "../api/quizApi.js";
+import { useUserStore } from "../store/userStore.js";
+
+const QUIZ_SEQUENCE_BY_GRADE = {
+  씨앗: ["ox"],
+  새싹: ["ox", "mc"],
+  나무: ["ox", "mc", "sa"],
+  숲: ["ox", "mc", "sa"],
+};
+const DEFAULT_QUIZ_SEQUENCE = ["ox", "mc", "sa"];
 
 function Card({
   title,
@@ -17,21 +26,20 @@ function Card({
   quizId,
   onQuizCorrect,
 }) {
+  const userGrade = useUserStore((state) => state.user?.grade);
+  const quizList = useMemo(() => {
+    return QUIZ_SEQUENCE_BY_GRADE[userGrade] ?? DEFAULT_QUIZ_SEQUENCE;
+  }, [userGrade]);
+
   const hasQuiz = Boolean(quizId); // [수정] 'quiz'가 아닌 'quizId'의 존재 여부로 확인합니다.
   const [quizReady, setQuizReady] = useState(false);
   const scrollContainerRef = useRef(null); // [추가] 스크롤 컨테이너 Ref
 
   const [quizLoading, setQuizLoading] = useState(true); // [추가] 퀴즈 데이터 로딩 상태
   const [error, setError] = useState(null); // [추가] 에러 상태
-  const [oxQuiz, setOxQuiz] = useState(null);
-  const [mcQuiz, setMcQuiz] = useState(null);
-  const [saQuiz, setSaQuiz] = useState(null);
-  const [oxAnswer, setOxAnswer] = useState(null);
-  // 4지선다 선택 답
-  const [mcAnswer, setMcAnswer] = useState(null);
-  // [추가] 단답형 입력 값 및 제출 답
-  const [saInput, setSaInput] = useState(""); // 사용자의 현재 입력 값
-  const [saSubmittedAnswer, setSaSubmittedAnswer] = useState(null); // 제출된 답안 { text: string, isCorrect: bool }
+  const [oxQuizzes, setOxQuizzes] = useState([]);
+  const [mcQuizzes, setMcQuizzes] = useState([]);
+  const [saQuizzes, setSaQuizzes] = useState([]);
 
   const loadQuiz = useCallback(async (id) => {
     if (!id) return; // quizId가 없으면 함수를 실행하지 않습니다.
@@ -43,9 +51,9 @@ function Card({
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
-      setOxQuiz(Array.isArray(ox) ? ox[0] : ox);
-      setMcQuiz(Array.isArray(mc) ? mc[0] : mc);
-      setSaQuiz(Array.isArray(sa) ? sa[0] : sa);
+      setOxQuizzes(Array.isArray(ox) ? ox : ox ? [ox] : []);
+      setMcQuizzes(Array.isArray(mc) ? mc : mc ? [mc] : []);
+      setSaQuizzes(Array.isArray(sa) ? sa : sa ? [sa] : []);
     } catch (err) {
       console.error(err);
       setError("퀴즈를 불러오는 데 실패했습니다.");
@@ -60,53 +68,56 @@ function Card({
   }, [quizId, loadQuiz]);
   // ox 선택 답
 
+  const quizDataMap = useMemo(
+    () => ({
+      ox: oxQuizzes,
+      mc: mcQuizzes,
+      sa: saQuizzes,
+    }),
+    [oxQuizzes, mcQuizzes, saQuizzes]
+  );
+
+  const requiredCountByType = useMemo(() => {
+    return quizList.reduce((acc, type) => {
+      if (!["ox", "mc", "sa"].includes(type)) return acc;
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {});
+  }, [quizList]);
+
+  const isQuizDataReady = useMemo(() => {
+    return Object.entries(requiredCountByType).every(([type, count]) => {
+      const quizzes = quizDataMap[type] || [];
+      return quizzes.length >= count;
+    });
+  }, [requiredCountByType, quizDataMap]);
+
+  const sequenceData = useMemo(() => {
+    if (!isQuizDataReady) return [];
+    const counters = { ox: 0, mc: 0, sa: 0 };
+    return quizList
+      .map((type, orderIndex) => {
+        if (!["ox", "mc", "sa"].includes(type)) return null;
+        const currentIndex = counters[type] || 0;
+        const quiz = quizDataMap[type]?.[currentIndex];
+        counters[type] = currentIndex + 1;
+        if (!quiz) return null;
+        return {
+          type,
+          quiz,
+          orderIndex,
+          typeIndex: currentIndex,
+        };
+      })
+      .filter(Boolean);
+  }, [isQuizDataReady, quizList, quizDataMap]);
+
   const handleGenerateQuiz = () => {
     // [수정] 퀴즈 데이터가 모두 로드되었을 때만 퀴즈를 준비시킵니다.
-    if (!hasQuiz || quizLoading || !oxQuiz || !mcQuiz) return;
+    if (!hasQuiz || quizLoading || !isQuizDataReady || sequenceData.length === 0)
+      return;
+
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
-    setOxAnswer(null);
-    setMcAnswer(null);
-    setSaInput(""); // [수정] 단답형 입력 필드 초기화
-    setSaSubmittedAnswer(null); // [수정] 단답형 제출 결과 초기화
-  };
-
-  const handleOxAnswer = (boolean) => {
-    // [수정] 이미 제출한 문제라면 경험치를 주지 않습니다.
-    if (oxAnswer !== null) return;
-    // [추가] 정답을 맞혔을 때 경험치 획득 함수 호출
-    if (oxQuiz.answer === boolean) {
-      onQuizCorrect(10); // 예: 10점 획득
-    }
-    setOxAnswer(boolean);
-  };
-
-  const handleMcAnswer = (option) => {
-    // [수정] 이미 제출한 문제라면 경험치를 주지 않습니다.
-    if (mcAnswer !== null) return;
-    if (mcQuiz.answer === option) {
-      onQuizCorrect(10);
-    }
-    setMcAnswer(option);
-  };
-
-  // [추가] 단답형 입력 변경 핸들러
-  const handleSaInputChange = (e) => {
-    setSaInput(e.target.value);
-  };
-
-  // [추가] 단답형 제출 핸들러
-  const handleSaSubmit = (e) => {
-    //e.preventDefault();
-    // [수정] 이미 제출한 문제라면 경험치를 주지 않습니다.
-    if (saSubmittedAnswer !== null) return;
-    if (!saInput.trim()) return; // 입력값이 없으면 반환
-
-    const isCorrect =
-      saInput.trim().toLowerCase() === saQuiz.answer.toLowerCase();
-    if (isCorrect) {
-      onQuizCorrect(10);
-    }
-    setSaSubmittedAnswer({ text: saInput, isCorrect });
   };
 
   return (
@@ -130,22 +141,13 @@ function Card({
           <p className="text-red-500">{error}</p>
         </div>
       )}
-      {hasQuiz && !quizLoading && !error && oxQuiz && mcQuiz && (
+      {hasQuiz && !quizLoading && !error && isQuizDataReady && (
         <CardForQuiz
-          oxQuiz={oxQuiz}
-          mcQuiz={mcQuiz}
-          saQuiz={saQuiz}
           hasQuiz={hasQuiz}
+          sequenceData={sequenceData}
           quizReady={quizReady}
-          oxAnswer={oxAnswer}
-          mcAnswer={mcAnswer}
-          saInput={saInput} // [수정]
-          saSubmittedAnswer={saSubmittedAnswer} // [수정]
+          onQuizCorrect={onQuizCorrect}
           handleGenerateQuiz={handleGenerateQuiz}
-          handleOxAnswer={handleOxAnswer}
-          handleMcAnswer={handleMcAnswer}
-          handleSaInputChange={handleSaInputChange} // [수정]
-          handleSaSubmit={handleSaSubmit} // [수정] 함수 이름과 prop 이름 일치
         />
       )}
     </div>

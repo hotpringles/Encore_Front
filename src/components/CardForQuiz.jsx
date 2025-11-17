@@ -32,40 +32,259 @@ const submitButtonStyles =
   "w-full mt-6 px-6 py-3 border-none rounded-lg bg-primary text-white font-bold cursor-pointer transition-all duration-200 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed";
 const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
-function CardForQuiz({
-  hasQuiz,
-  oxQuiz,
-  mcQuiz,
-  saQuiz,
-  oxAnswer,
-  mcAnswer,
-  quizReady,
-  saInput, // Card.jsx에서 saInput으로 전달하므로 맞춤
-  saSubmittedAnswer,
-  handleGenerateQuiz,
-  handleOxAnswer,
-  handleMcAnswer,
-  handleSaInputChange,
-  handleSaSubmit,
-}) {
-  const oxIsCorrect = oxAnswer !== null && oxQuiz.answer === oxAnswer;
-  const mcIsCorrect = mcAnswer !== null && mcQuiz.answer === mcAnswer;
-  const saIsCorrect = saSubmittedAnswer !== null && saSubmittedAnswer.isCorrect;
+function OxQuizSection({ sectionId, quiz, onAnswered }) {
+  const [localSelection, setLocalSelection] = useState(null);
+  const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
-  // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
-  // [개선] React 18+ 환경에서는 useId 사용을 권장합니다.
-  const uniqueId = useId();
-  // 제출 전 선택한 답을 저장하는 로컬 상태
-  const [localOxSelection, setLocalOxSelection] = useState(null);
-  const [localMcSelection, setLocalMcSelection] = useState(null);
-
-  // Enter 키로 폼을 제출하는 공통 핸들러
   const handleKeyDownOnRadio = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       e.currentTarget.form.requestSubmit();
     }
   };
+
+  if (!quiz) return null;
+
+  const isCorrect =
+    submittedAnswer !== null && quiz.answer === submittedAnswer;
+
+  return (
+    <div className="card-page quiz-page">
+      <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-6">
+        <div className="w-full">
+          <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
+            <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
+              (OX) {quiz.question}
+            </p>
+          </div>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (localSelection === null || submittedAnswer !== null) return;
+            setSubmittedAnswer(localSelection);
+            onAnswered?.(quiz.answer === localSelection);
+          }}
+        >
+          <div className="flex flex-col gap-3">
+            {[
+              { label: "O (예)", value: true },
+              { label: "X (아니오)", value: false },
+            ].map((item, index) => (
+              <div className="relative" key={index}>
+                <input
+                  className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
+                  id={`ox-${sectionId}-${index}`}
+                  name={`quiz-ox-${sectionId}`}
+                  type="radio"
+                  checked={localSelection === item.value}
+                  onChange={() => {
+                    setLocalSelection(item.value);
+                  }}
+                  disabled={submittedAnswer !== null}
+                  onKeyDown={handleKeyDownOnRadio}
+                />
+                <label
+                  className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
+                  htmlFor={`ox-${sectionId}-${index}`}
+                >
+                  <div className="flex grow flex-col">
+                    <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
+                      {item.label}
+                    </p>
+                  </div>
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            type="submit"
+            disabled={submittedAnswer !== null || localSelection === null}
+            className={submitButtonStyles}
+            style={primaryColorStyle}
+          >
+            제출하기
+          </button>
+        </form>
+        {submittedAnswer !== null && (
+          <FeedbackBlock
+            isCorrect={isCorrect}
+            message={isCorrect ? "정답입니다!" : "오답입니다!"}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function McQuizSection({ sectionId, quiz, onAnswered }) {
+  const [localSelection, setLocalSelection] = useState(null);
+  const [submittedAnswer, setSubmittedAnswer] = useState(null);
+
+  const handleKeyDownOnRadio = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.currentTarget.form.requestSubmit();
+    }
+  };
+
+  if (!quiz) return null;
+
+  const isCorrect =
+    submittedAnswer !== null && quiz.answer === submittedAnswer;
+
+  return (
+    <div className="card-page quiz-page">
+      <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-6">
+        <div className="w-full">
+          <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
+            <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
+              {quiz.question}
+            </p>
+          </div>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (localSelection === null || submittedAnswer !== null) return;
+            setSubmittedAnswer(localSelection);
+            onAnswered?.(quiz.answer === localSelection);
+          }}
+        >
+          <div className="flex flex-col gap-3">
+            {quiz.options.map((option, index) => (
+              <div className="relative" key={index}>
+                <input
+                  className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
+                  id={`mc-${sectionId}-${index}`}
+                  name={`quiz-mc-${sectionId}`}
+                  type="radio"
+                  value={option}
+                  checked={localSelection === option}
+                  onChange={() => {
+                    setLocalSelection(option);
+                  }}
+                  disabled={submittedAnswer !== null}
+                  onKeyDown={handleKeyDownOnRadio}
+                />
+                <label
+                  className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
+                  htmlFor={`mc-${sectionId}-${index}`}
+                >
+                  <div className="flex grow flex-col">
+                    <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
+                      {option}
+                    </p>
+                  </div>
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            type="submit"
+            disabled={submittedAnswer !== null || localSelection === null}
+            className={submitButtonStyles}
+            style={primaryColorStyle}
+          >
+            제출하기
+          </button>
+        </form>
+        {submittedAnswer !== null && (
+          <FeedbackBlock
+            isCorrect={isCorrect}
+            message={isCorrect ? "정답입니다!" : "오답입니다!"}
+            explanation={quiz.explanation}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SaQuizSection({ sectionId, quiz, onAnswered }) {
+  const [inputValue, setInputValue] = useState("");
+  const [submittedAnswer, setSubmittedAnswer] = useState(null);
+
+  if (!quiz) return null;
+
+  const isCorrect = submittedAnswer?.isCorrect === true;
+
+  return (
+    <div className="card-page quiz-page">
+      <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-8">
+        <div className="flex flex-col gap-8 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm p-6 sm:p-10">
+          <h1 className="text-[#111418] dark:text-white tracking-tight text-[22px] sm:text-[28px] font-bold leading-tight text-center">
+            {quiz.question}
+          </h1>
+          <form
+            className="flex w-full flex-col gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (submittedAnswer !== null) return;
+              if (!inputValue.trim()) return;
+              const normalizedInput = inputValue.trim();
+              const correct =
+                normalizedInput.toLowerCase() === quiz.answer.toLowerCase();
+              const result = {
+                text: normalizedInput,
+                isCorrect: correct,
+              };
+              setSubmittedAnswer(result);
+              onAnswered?.(correct);
+            }}
+          >
+            <label className="sr-only" htmlFor="user-answer">
+              Answer
+            </label>
+            <textarea
+              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-background-light dark:bg-background-dark min-h-32 placeholder:text-[#617289] dark:placeholder:text-gray-500 p-[15px] font-normal leading-normal disabled:opacity-70 text-xl"
+              id={`user-answer-${sectionId}`}
+              placeholder="여기에 답을 입력하세요..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={submittedAnswer !== null}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  e.currentTarget.form.requestSubmit();
+                }
+              }}
+            ></textarea>
+            <button
+              type="submit"
+              disabled={submittedAnswer !== null || !inputValue.trim()}
+              className={submitButtonStyles}
+              style={primaryColorStyle}
+            >
+              제출하기
+            </button>
+          </form>
+        </div>
+        {submittedAnswer !== null && (
+          <FeedbackBlock
+            isCorrect={isCorrect}
+            message={
+              isCorrect ? "정답입니다!" : `오답입니다! (정답: ${quiz.answer})`
+            }
+            explanation={quiz.explanation}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CardForQuiz({
+  hasQuiz,
+  sequenceData = [],
+  quizReady,
+  handleGenerateQuiz,
+  onQuizCorrect,
+}) {
+  // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
+  // [개선] React 18+ 환경에서는 useId 사용을 권장합니다.
+  const uniqueId = useId();
+  const canRenderSequence = Array.isArray(sequenceData) && sequenceData.length > 0;
 
   return (
     <>
@@ -109,220 +328,50 @@ function CardForQuiz({
       )}
 
       {/* 퀴즈가 준비되었을 때 렌더링 */}
-      {quizReady && hasQuiz && (
+      {quizReady && hasQuiz && canRenderSequence && (
         <>
-          {/* === OX 퀴즈 페이지 === */}
-          <div className="card-page quiz-page">
-            <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-6">
-              {/* Question Box */}
-              <div className="w-full">
-                <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
-                  <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-                    (OX) {oxQuiz.question}
-                  </p>
-                </div>
-              </div>
+          {sequenceData.map((entry, index) => {
+            if (!entry?.quiz) return null;
+            const sectionKey = `${entry.type}-${entry.typeIndex}-${index}`;
+            const sectionId = `${uniqueId}-${index}`;
+            const handleAnswered = (isCorrect) => {
+              if (isCorrect) {
+                onQuizCorrect?.(10);
+              }
+            };
 
-              {/* 폼(Form)으로 감싸기 */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (localOxSelection !== null) {
-                    handleOxAnswer(localOxSelection); // 제출 시 부모 핸들러 호출
-                    setLocalOxSelection(null); // [개선] 제출 후 선택 초기화
-                  }
-                }}
-              >
-                {/* Options */}
-                <div className="flex flex-col gap-3">
-                  {[
-                    { label: "O (예)", value: true },
-                    { label: "X (아니오)", value: false },
-                  ].map((item, index) => (
-                    <div className="relative" key={index}>
-                      <input
-                        className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
-                        id={`ox-${uniqueId}-${index}`}
-                        name={`quiz-ox-${uniqueId}`}
-                        type="radio"
-                        checked={localOxSelection === item.value}
-                        onChange={() => {
-                          setLocalOxSelection(item.value);
-                        }}
-                        disabled={oxAnswer !== null} // 한 번이라도 제출했으면 비활성화
-                        onKeyDown={handleKeyDownOnRadio}
-                      />
-                      <label
-                        className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
-                        htmlFor={`ox-${uniqueId}-${index}`}
-                      >
-                        <div className="flex grow flex-col">
-                          <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
-                            {item.label}
-                          </p>
-                        </div>
-                      </label>
-                    </div>
-                  ))}
-                </div>
-
-                {/* 제출하기 버튼 */}
-                <button
-                  type="submit"
-                  disabled={oxAnswer !== null || localOxSelection === null}
-                  className={submitButtonStyles}
-                  style={primaryColorStyle}
-                >
-                  제출하기
-                </button>
-              </form>
-
-              {/* Feedback */}
-              {oxAnswer !== null && (
-                <FeedbackBlock
-                  isCorrect={oxIsCorrect}
-                  message={oxIsCorrect ? "정답입니다!" : "오답입니다!"}
+            if (entry.type === "ox") {
+              return (
+                <OxQuizSection
+                  key={sectionKey}
+                  sectionId={sectionId}
+                  quiz={entry.quiz}
+                  onAnswered={handleAnswered}
                 />
-              )}
-            </div>
-          </div>
-
-          {/* === 4지선다 퀴즈 페이지 === */}
-          <div className="card-page quiz-page">
-            <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-6">
-              {/* Question Box */}
-              <div className="w-full">
-                <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
-                  <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-                    {mcQuiz.question}
-                  </p>
-                </div>
-              </div>
-
-              {/* 폼(Form)으로 감싸기 */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (localMcSelection !== null) {
-                    handleMcAnswer(localMcSelection); // 제출 시 부모 핸들러 호출
-                    setLocalMcSelection(null); // [개선] 제출 후 선택 초기화
-                  }
-                }}
-              >
-                {/* Options */}
-                <div className="flex flex-col gap-3">
-                  {mcQuiz.options.map((option, index) => (
-                    <div className="relative" key={index}>
-                      <input
-                        className="custom-radio peer absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 border-2 border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-0 focus:ring-offset-0"
-                        id={`mc-${uniqueId}-${index}`}
-                        name={`quiz-mc-${uniqueId}`}
-                        type="radio"
-                        value={option}
-                        checked={localMcSelection === option}
-                        onChange={() => {
-                          setLocalMcSelection(option);
-                        }}
-                        disabled={mcAnswer !== null} // 한 번이라도 제출했으면 비활성화
-                        onKeyDown={handleKeyDownOnRadio}
-                      />
-                      <label
-                        className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
-                        htmlFor={`mc-${uniqueId}-${index}`}
-                      >
-                        <div className="flex grow flex-col">
-                          <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
-                            {option}
-                          </p>
-                        </div>
-                      </label>
-                    </div>
-                  ))}
-                </div>
-
-                {/* 제출하기 버튼 */}
-                <button
-                  type="submit"
-                  disabled={mcAnswer !== null || localMcSelection === null}
-                  className={submitButtonStyles}
-                  style={primaryColorStyle}
-                >
-                  제출하기
-                </button>
-              </form>
-
-              {/* Feedback */}
-              {mcAnswer !== null && (
-                <FeedbackBlock
-                  isCorrect={mcIsCorrect}
-                  message={mcIsCorrect ? "정답입니다!" : "오답입니다!"}
-                  explanation={mcQuiz.explanation}
+              );
+            }
+            if (entry.type === "mc") {
+              return (
+                <McQuizSection
+                  key={sectionKey}
+                  sectionId={sectionId}
+                  quiz={entry.quiz}
+                  onAnswered={handleAnswered}
                 />
-              )}
-            </div>
-          </div>
-
-          {/* === 단답형 퀴즈 페이지 === */}
-          {saQuiz && (
-            <div className="card-page quiz-page">
-              <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-8">
-                {/* Question Box */}
-                <div className="flex flex-col gap-8 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm p-6 sm:p-10">
-                  <h1 className="text-[#111418] dark:text-white tracking-tight text-[22px] sm:text-[28px] font-bold leading-tight text-center">
-                    {saQuiz.question}
-                  </h1>
-                  {/* Answer Form */}
-                  <form
-                    className="flex w-full flex-col gap-4"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (saSubmittedAnswer === null && saInput.trim()) {
-                        handleSaSubmit(e);
-                      }
-                    }}
-                  >
-                    <label className="sr-only" htmlFor="user-answer">
-                      Answer
-                    </label>
-                    <textarea
-                      className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-background-light dark:bg-background-dark min-h-32 placeholder:text-[#617289] dark:placeholder:text-gray-500 p-[15px] font-normal leading-normal disabled:opacity-70 text-xl"
-                      id="user-answer"
-                      placeholder="여기에 답을 입력하세요..."
-                      value={saInput}
-                      onChange={handleSaInputChange}
-                      disabled={saSubmittedAnswer !== null} // 한 번이라도 제출했으면 비활성화
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          e.currentTarget.form.requestSubmit();
-                        }
-                      }}
-                    ></textarea>
-                    <button
-                      type="submit"
-                      disabled={saSubmittedAnswer !== null || !saInput.trim()}
-                      className={submitButtonStyles}
-                      style={primaryColorStyle}
-                    >
-                      제출하기
-                    </button>
-                  </form>
-                </div>
-                {/* Feedback */}
-                {saSubmittedAnswer !== null && (
-                  <FeedbackBlock
-                    isCorrect={saIsCorrect}
-                    message={
-                      saIsCorrect
-                        ? "정답입니다!"
-                        : `오답입니다! (정답: ${saQuiz.answer})`
-                    }
-                    explanation={saQuiz.explanation}
-                  />
-                )}
-              </div>
-            </div>
-          )}
+              );
+            }
+            if (entry.type === "sa") {
+              return (
+                <SaQuizSection
+                  key={sectionKey}
+                  sectionId={sectionId}
+                  quiz={entry.quiz}
+                  onAnswered={handleAnswered}
+                />
+              );
+            }
+            return null;
+          })}
         </>
       )}
     </>

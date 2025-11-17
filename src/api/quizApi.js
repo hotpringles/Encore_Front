@@ -14,7 +14,7 @@ import api from "./client";
  */
 export const fetchOxQuizzes = async () => {
   const res = await api.get("/ox-quiz/");
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -25,7 +25,7 @@ export const fetchOxQuizzes = async () => {
  */
 export const fetchOxQuizDetail = async (id) => {
   const res = await api.get(`/ox-quiz/?summary=${id}`);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -37,7 +37,7 @@ export const fetchOxQuizDetail = async (id) => {
  */
 export const updateOxQuiz = async (id, data) => {
   const res = await api.put(`/ox-quiz/${id}`, data);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -48,7 +48,7 @@ export const updateOxQuiz = async (id, data) => {
  */
 export const deleteOxQuiz = async (id) => {
   const res = await api.delete(`/ox-quiz/${id}`);
-  return res.data; // 삭제 성공 시 응답 데이터를 반환 (보통은 비어있음)
+  return res.data.results; // 삭제 성공 시 응답 데이터를 반환 (보통은 비어있음)
 };
 
 /**
@@ -63,7 +63,7 @@ export const deleteOxQuiz = async (id) => {
  */
 export const fetchMcQuizzes = async () => {
   const res = await api.get("/mc-quiz/");
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -74,7 +74,7 @@ export const fetchMcQuizzes = async () => {
  */
 export const fetchMcQuizDetail = async (id) => {
   const res = await api.get(`/mc-quiz/?summary=${id}`);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -86,7 +86,7 @@ export const fetchMcQuizDetail = async (id) => {
  */
 export const updateMcQuiz = async (id, data) => {
   const res = await api.put(`/mc-quiz/${id}/`, data);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -97,7 +97,7 @@ export const updateMcQuiz = async (id, data) => {
  */
 export const deleteMcQuiz = async (id) => {
   const res = await api.delete(`/mc-quiz/${id}/`);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -112,7 +112,7 @@ export const deleteMcQuiz = async (id) => {
  */
 export const fetchSaQuizzes = async () => {
   const res = await api.get("/sc-quiz/");
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -123,7 +123,7 @@ export const fetchSaQuizzes = async () => {
  */
 export const fetchSaQuizDetail = async (id) => {
   const res = await api.get(`/sc-quiz/?summary=${id}`);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -135,7 +135,7 @@ export const fetchSaQuizDetail = async (id) => {
  */
 export const updateSaQuiz = async (id, data) => {
   const res = await api.put(`/sc-quiz/${id}/`, data);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -146,7 +146,7 @@ export const updateSaQuiz = async (id, data) => {
  */
 export const deleteSaQuiz = async (id) => {
   const res = await api.delete(`/sc-quiz/${id}/`);
-  return res.data;
+  return res.data.results;
 };
 
 /**
@@ -164,5 +164,5 @@ export const deleteSaQuiz = async (id) => {
  */
 export const createQuiz = async (data) => {
   const res = await api.post("/quiz/", data);
-  return res.data;
+  return res.data.results;
 };
