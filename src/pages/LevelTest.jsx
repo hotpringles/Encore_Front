@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/userStore";
+import { updateMyInfo } from "../api/accountApi"; // [추가] updateMyInfo API 함수를 가져옵니다.
+import seed from "../assets/seed.png";
+import sprout from "../assets/sprout.png";
+import tree from "../assets/tree.png";
+import forest from "../assets/forest.png";
 
 // --- 퀴즈 데이터 ---
 // [수정] 12개의 레벨 테스트 문제로 교체
@@ -154,37 +159,49 @@ const QuizMiddle = ({
 // 3. 퀴즈 완료 화면 (등급 로직 수정)
 const QuizEnd = ({ score }) => {
   const navigate = useNavigate();
-
+  const resultScore = score;
+  const { setUser, setHasTested } = useUserStore();
   // [수정] 등급 분류 로직을 Profile.jsx와 유사하게 변경
   const getTierInfoFromResult = (resultScore) => {
-    if (resultScore >= 10) {
-      return {
-        name: "숲",
-        icon: "🌲",
-        description: "경제 지식이 풍부하시네요!",
-      };
-    } else if (resultScore >= 7) {
-      return {
-        name: "나무",
-        icon: "🌳",
-        description: "경제의 기본기를 잘 갖추고 계세요!",
-      };
-    } else if (resultScore >= 4) {
+    if (resultScore >= 6) {
       return {
         name: "새싹",
-        icon: "🌱",
         description: "경제 상식에 대해 알아가고 계시군요!",
       };
     } else {
       return {
         name: "씨앗",
-        icon: "🌰",
         description: "이제 막 경제 공부를 시작하셨네요!",
       };
     }
   };
   const tier = getTierInfoFromResult(score);
-  const setHasTested = useUserStore((state) => state.setHasTested);
+
+  const levelIcon = {
+    씨앗: seed,
+    새싹: sprout,
+    나무: tree,
+    숲: forest,
+  };
+
+  // [개선] 페이지 이동과 등급 업데이트 로직을 통합한 핸들러
+  const handleNavigation = async (path) => {
+    try {
+      // 1. 등급에 따라 서버에 점수 업데이트 요청
+      const updatedUser = await updateMyInfo({
+        grade: tier.name,
+        score: tier.name === "새싹" ? 1000 : 0,
+      });
+      // 2. 서버로부터 받은 최신 사용자 정보로 클라이언트 상태(스토어) 업데이트
+      setUser(updatedUser);
+      setHasTested(true);
+      // 3. 지정된 경로로 이동
+      navigate(path);
+    } catch (error) {
+      console.error("등급 업데이트 또는 페이지 이동 실패:", error);
+      alert("정보를 업데이트하는 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl text-center">
       <h1 className="text-[#111418] tracking-tight text-3xl sm:text-4xl font-bold leading-tight px-4 text-center pb-3 pt-6">
@@ -198,9 +215,9 @@ const QuizEnd = ({ score }) => {
         <img
           alt={"등급 아이콘"}
           className="w-24 h-24 mt-4 mb-2"
-          src={icon} // [수정] 등급별 아이콘
+          src={levelIcon[tier.name]} // [수정] 등급별 아이콘
         />
-        <p className="text-2xl font-bold text-primary mt-2">{grade}</p>
+        <p className="text-2xl font-bold text-primary mt-2">{tier.name}</p>
 
         <p className="text-gray-500 text-base font-medium mt-2">
           {tier.description}
@@ -213,19 +230,13 @@ const QuizEnd = ({ score }) => {
       <div className="flex justify-center w-full">
         <div className="flex flex-col sm:flex-row flex-1 gap-3 px-4 py-3 max-w-[480px] justify-center">
           <button
-            onClick={() => {
-              setHasTested(true);
-              navigate("/profile");
-            }}
+            onClick={() => handleNavigation("/profile")}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#f0f2f4] text-[#111418] text-base font-bold leading-normal tracking-[0.015em] grow"
           >
             <span className="truncate">마이페이지</span>
           </button>
           <button
-            onClick={() => {
-              setHasTested(true);
-              navigate("/main");
-            }}
+            onClick={() => handleNavigation("/main")}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] grow"
           >
             <span className="truncate">학습 시작하기</span>
