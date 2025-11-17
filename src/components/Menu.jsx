@@ -111,9 +111,7 @@ function Menu() {
                   title={reports[0]?.date} // [추가] 날짜에 마우스를 올리면 전체 날짜 표시
                 >
                   {/* [수정] 날짜의 '일'만 표시하도록 변경 */}
-                  <span className="font-medium">
-                    {new Date(reports[0]?.date).getDate()}
-                  </span>
+                  <span className="font-medium">{reports[0]?.date}</span>
                 </Link>
               </li>
             ))}
