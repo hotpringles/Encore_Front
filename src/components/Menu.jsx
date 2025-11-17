@@ -58,13 +58,13 @@ function Menu() {
       <nav
         className={`fixed top-0 bg-white border-r border-gray-200 overflow-hidden z-50 h-full transition-width duration-300 ease-in-out
           flex flex-col justify-between
-          ${isMenuVisible ? "w-[240px]" : "w-[61px]"}`}
+          ${isMenuVisible ? "w-[240px]" : "w-[60px]"}`}
       >
         {/* [추가] 메뉴 토글 버튼 */}
         <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
           <button
             onClick={toggleMenu}
-            className="flex items-center p-3 h-[45px] text-gray-700 bg-white hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border border-gray-200 outline-none focus:outline-none font-['Pretendard','Noto_Sans_KR',sans-serif]"
+            className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border-none outline-none "
             title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
           >
             <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
@@ -152,7 +152,7 @@ function Menu() {
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center p-3 text-gray-700 bg-white hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border border-gray-200"
+            className="w-full flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
           >
             <span className="material-symbols-outlined mr-4 text-2xl flex justify-center items-center">
               logout

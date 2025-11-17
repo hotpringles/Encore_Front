@@ -51,6 +51,24 @@ function App() {
     }
   };
 
+  // filter 메소드를 사용해 summaries 배열에서 id가 일치하는 요소를 찾습니다.
+  // [수정] filter와 map의 반환 값을 올바르게 사용하도록 함수를 수정합니다.
+  const filteredSummaries = (groups) => {
+    // 1. map은 새로운 배열을 반환하므로, 그 결과를 return해야 합니다.
+    return groups.map((group) => {
+      // 2. filter의 결과를 새로운 변수(newSummaries)에 저장합니다.
+      // 참고: summary.id와 user.id를 비교하는 것이 의도한 로직이 맞는지 확인이 필요합니다.
+      const filteredSummaries = group.summaries.filter(
+        (summary) => summary.id === user.id
+      );
+      // 3. 새로 생성된 group 객체에 필터링된 배열(newSummaries)을 할당합니다.
+      return {
+        ...group,
+        summaries: filteredSummaries,
+      };
+    });
+  };
+
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))
   const groupByDate = (groups) => {
     return groups.reduce((acc, item) => {
@@ -69,8 +87,9 @@ function App() {
       setError(null); // 에러 초기화
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
-      const list = Array.isArray(data) ? data : data?.results ?? [];
-      const dataObj = groupByDate(list);
+      const list = Array.isArray(data) ? data : [];
+      const filteredList = filteredSummaries(list);
+      const dataObj = groupByDate(filteredList);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
         b.localeCompare(a)
       ); // 최신순 (큰 날짜가 앞)
