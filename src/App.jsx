@@ -58,7 +58,9 @@ function App() {
     if (!user?.id) {
       return []; // 사용자 정보가 없으면 빈 배열을 반환하여 아무것도 필터링하지 않습니다.
     }
-    return groups.filter((group) => group.summaries[0].id === user.id);
+    return groups.filter(
+      (group) => group.summaries[0].article.user === user.id
+    );
   };
 
   // groups를 날짜에 따라 분류하는 함수(key: value(같은 날짜 객체 배열))

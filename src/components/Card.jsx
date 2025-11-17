@@ -10,10 +10,10 @@ import {
 import { useUserStore } from "../store/userStore.js";
 
 const QUIZ_SEQUENCE_BY_GRADE = {
-  씨앗: ["ox"],
-  새싹: ["ox", "mc"],
-  나무: ["ox", "mc", "sa"],
-  숲: ["ox", "mc", "sa"],
+  씨앗: ["ox", "ox"],
+  새싹: ["mc", "mc"],
+  나무: ["mc", "mc"],
+  숲: ["sa", "sa"],
 };
 const DEFAULT_QUIZ_SEQUENCE = ["ox", "mc", "sa"];
 
@@ -114,7 +114,12 @@ function Card({
 
   const handleGenerateQuiz = () => {
     // [수정] 퀴즈 데이터가 모두 로드되었을 때만 퀴즈를 준비시킵니다.
-    if (!hasQuiz || quizLoading || !isQuizDataReady || sequenceData.length === 0)
+    if (
+      !hasQuiz ||
+      quizLoading ||
+      !isQuizDataReady ||
+      sequenceData.length === 0
+    )
       return;
 
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
