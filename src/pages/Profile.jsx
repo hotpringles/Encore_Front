@@ -36,7 +36,8 @@ function Profile() {
     try {
       // [수정] 실제 비밀번호 변경 API 호출
       await updateMyPassword({
-        password: newPassword,
+        old_password: currentPassword,
+        new_password: newPassword,
       });
       alert("비밀번호가 성공적으로 변경되었습니다.");
       // 입력 필드 초기화
