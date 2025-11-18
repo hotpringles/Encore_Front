@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateMyInfo, deleteMyAccount, logout } from "../api/accountApi";
+import { updateMyPassword, deleteMyAccount, logout } from "../api/accountApi";
 import { useUserStore } from "../store/userStore";
 
 // [추가] 등급 아이콘 이미지 import
@@ -35,7 +35,7 @@ function Profile() {
     }
     try {
       // [수정] 실제 비밀번호 변경 API 호출
-      await updateMyInfo({
+      await updateMyPassword({
         password: newPassword,
       });
       alert("비밀번호가 성공적으로 변경되었습니다.");

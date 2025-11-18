@@ -6,6 +6,7 @@ const LOGIN_URL = "/accounts/login/";
 const LOGOUT_URL = "/accounts/logout/";
 const PROFILE_URL = "/accounts/profile/";
 const ACCOUNT_URL = "/accounts/";
+const PASSWORD_UPADTE_URL = "/accounts/password-change/";
 
 // 로그인 (POST /accounts/login)
 export const login = async (data) => {
@@ -34,8 +35,14 @@ export const signUp = async (data) => {
 };
 
 // 내 정보 수정 (PUT /accounts)
-export const updateMyInfo = async (data) => {
-  const res = await api.patch(ACCOUNT_URL, data);
+// export const updateMyInfo = async (data) => {
+//   const res = await api.patch(ACCOUNT_URL, data);
+//   return res.data;
+// };
+
+// 비밀번호 수정(PATCH /accounts)
+export const updateMyPassword = async (data) => {
+  const res = await api.post(PASSWORD_UPADTE_URL, data);
   return res.data;
 };
 
