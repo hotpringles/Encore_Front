@@ -35,10 +35,10 @@ export const signUp = async (data) => {
 };
 
 // 내 정보 수정 (PUT /accounts)
-// export const updateMyInfo = async (data) => {
-//   const res = await api.patch(ACCOUNT_URL, data);
-//   return res.data;
-// };
+export const updateMyInfo = async (data) => {
+  const res = await api.patch(PROFILE_URL, data);
+  return res.data;
+};
 
 // 비밀번호 수정(PATCH /accounts)
 export const updateMyPassword = async (data) => {
