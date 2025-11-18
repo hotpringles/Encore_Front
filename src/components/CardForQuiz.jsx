@@ -33,19 +33,20 @@ const submitButtonStyles =
 const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
 function OxQuizSection({ sectionId, quiz, onAnswered }) {
-  const [localSelection, setLocalSelection] = useState(null);
+  // const [localSelection, setLocalSelection] = useState(null);
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
-  const handleKeyDownOnRadio = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      e.currentTarget.form.requestSubmit();
-    }
-  };
+  // const handleKeyDownOnRadio = (e) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
+  //     e.currentTarget.form.requestSubmit();
+  //   }
+  // };
 
   if (!quiz) return null;
 
   const isCorrect = submittedAnswer !== null && quiz.answer === submittedAnswer;
+  // const isCorrect = quiz.correct_answer === submittedAnswer;
 
   return (
     <div className="card-page quiz-page">
@@ -60,9 +61,9 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (localSelection === null || submittedAnswer !== null) return;
+            if (submittedAnswer !== null) return;
             setSubmittedAnswer(localSelection);
-            onAnswered?.(quiz.answer === localSelection);
+            onAnswered?.(quiz.correct_answer === localSelection);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -81,7 +82,6 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
                     setLocalSelection(item.value);
                   }}
                   disabled={submittedAnswer !== null}
-                  onKeyDown={handleKeyDownOnRadio}
                 />
                 <label
                   className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
@@ -109,6 +109,7 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
           <FeedbackBlock
             isCorrect={isCorrect}
             message={isCorrect ? "정답입니다!" : "오답입니다!"}
+            explanation={quiz.explanation}
           />
         )}
       </div>
@@ -120,12 +121,12 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
   const [localSelection, setLocalSelection] = useState(null);
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
-  const handleKeyDownOnRadio = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      e.currentTarget.form.requestSubmit();
-    }
-  };
+  // const handleKeyDownOnRadio = (e) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
+  //     e.currentTarget.form.requestSubmit();
+  //   }
+  // };
 
   if (!quiz) return null;
 
@@ -146,7 +147,7 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
             e.preventDefault();
             if (localSelection === null || submittedAnswer !== null) return;
             setSubmittedAnswer(localSelection);
-            onAnswered?.(quiz.answer === localSelection);
+            onAnswered?.(quiz[localSelection].is_correct === localSelection);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -163,7 +164,6 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
                     setLocalSelection(option);
                   }}
                   disabled={submittedAnswer !== null}
-                  onKeyDown={handleKeyDownOnRadio}
                 />
                 <label
                   className="flex cursor-pointer items-center gap-4 rounded-lg border border-solid border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 pl-11 transition-colors duration-150"
@@ -222,7 +222,8 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
               if (!inputValue.trim()) return;
               const normalizedInput = inputValue.trim();
               const correct =
-                normalizedInput.toLowerCase() === quiz.answer.toLowerCase();
+                normalizedInput.toLowerCase() ===
+                quiz.correct_answer.toLowerCase();
               const result = {
                 text: normalizedInput,
                 isCorrect: correct,
@@ -241,12 +242,6 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={submittedAnswer !== null}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  e.currentTarget.form.requestSubmit();
-                }
-              }}
             ></textarea>
             <button
               type="submit"
