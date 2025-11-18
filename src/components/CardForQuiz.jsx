@@ -45,7 +45,9 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
 
   if (!quiz) return null;
 
-  const isCorrect = submittedAnswer !== null && quiz.answer === submittedAnswer;
+  const [isCorrect, setIsCorrect] = useState(
+    submittedAnswer !== null && quiz.correct_answer === submittedAnswer
+  );
   // const isCorrect = quiz.correct_answer === submittedAnswer;
 
   return (
@@ -63,7 +65,9 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
             e.preventDefault();
             if (submittedAnswer !== null) return;
             setSubmittedAnswer(localSelection);
-            onAnswered?.(quiz.correct_answer === localSelection);
+            const correct = quiz.correct_answer === localSelection;
+            setIsCorrect(correct);
+            onAnswered?.(correct);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -130,7 +134,9 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
 
   if (!quiz) return null;
 
-  const isCorrect = submittedAnswer !== null && quiz.answer === submittedAnswer;
+  const [isCorrect, setIsCorrect] = useState(
+    submittedAnswer !== null && quiz.answer === submittedAnswer
+  );
 
   return (
     <div className="card-page quiz-page">
@@ -147,7 +153,9 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
             e.preventDefault();
             if (localSelection === null || submittedAnswer !== null) return;
             setSubmittedAnswer(localSelection);
-            onAnswered?.(quiz[localSelection].is_correct === localSelection);
+            const correct = quiz[localSelection].is_correct === localSelection;
+            setIsCorrect(correct);
+            onAnswered?.(correct);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -205,7 +213,9 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
 
   if (!quiz) return null;
 
-  const isCorrect = submittedAnswer?.isCorrect === true;
+  const [isCorrect, setIsCorrect] = useState(
+    submittedAnswer?.isCorrect === true
+  );
 
   return (
     <div className="card-page quiz-page">
@@ -229,6 +239,7 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
                 isCorrect: correct,
               };
               setSubmittedAnswer(result);
+              setIsCorrect(correct);
               onAnswered?.(correct);
             }}
           >
