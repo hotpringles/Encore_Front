@@ -162,7 +162,7 @@ function Card({
           <p className="text-red-500">{error}</p>
         </div>
       )}
-      {hasQuiz && !quizLoading && !error && isQuizDataReady && (
+      {hasQuiz && !quizLoading && !error && (
         <CardForQuiz
           hasQuiz={hasQuiz}
           quizReady={quizReady}
