@@ -333,11 +333,11 @@ function CardForQuiz({
             const sectionId = `${uniqueId}-${index}`;
             const handleAnswered = (isCorrect) => {
               if (isCorrect) {
-                onQuizCorrect?.(10);
+                onQuizCorrect?.(15);
               }
             };
 
-            if (entry.quiz_type === "ox") {
+            if (entry.quiz_type === "OX") {
               return (
                 <OxQuizSection
                   key={sectionKey}
@@ -347,7 +347,7 @@ function CardForQuiz({
                 />
               );
             }
-            if (entry.quiz_type === "mc") {
+            if (entry.quiz_type === "MC4") {
               return (
                 <McQuizSection
                   key={sectionKey}
@@ -357,7 +357,7 @@ function CardForQuiz({
                 />
               );
             }
-            if (entry.quiz_type === "sa") {
+            if (entry.quiz_type === "SC") {
               return (
                 <SaQuizSection
                   key={sectionKey}
