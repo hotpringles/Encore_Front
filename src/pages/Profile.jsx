@@ -54,21 +54,21 @@ function Profile() {
   const handleAccountDelete = async () => {
     if (
       window.confirm(
-        "정말 계정을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+        "정말 계정을 영구적으로 삭제하시겠습니까? 저를 해치지 말아주세요."
       )
     ) {
-      try {
-        await deleteMyAccount();
-        await logout(); // 서버 측 로그아웃
-        localStorage.removeItem("accessToken"); // 클라이언트 측 토큰 제거
-        setUser({}); // App 상태의 user 정보 초기화
-        alert("계정이 삭제되었습니다. 로그인 페이지로 이동합니다.");
-        navigate("/login", { replace: true });
-        // window.location.reload(); // App 상태를 완전히 초기화하기 위해 필요할 수 있음
-      } catch (error) {
-        console.error("계정 삭제 실패:", error);
-        alert("계정 삭제에 실패했습니다. 다시 시도해주세요.");
-      }
+      // try {
+      //   await deleteMyAccount();
+      //   await logout(); // 서버 측 로그아웃
+      //   localStorage.removeItem("accessToken"); // 클라이언트 측 토큰 제거
+      //   setUser({}); // App 상태의 user 정보 초기화
+      //   alert("계정이 삭제되었습니다. 로그인 페이지로 이동합니다.");
+      //   navigate("/login", { replace: true });
+      //   // window.location.reload(); // App 상태를 완전히 초기화하기 위해 필요할 수 있음
+      // } catch (error) {
+      //   console.error("계정 삭제 실패:", error);
+      //   alert("계정 삭제에 실패했습니다. 다시 시도해주세요.");
+      // }
     }
   };
 
@@ -118,14 +118,14 @@ function Profile() {
                   </span>
                   {/* [수정] 실제 점수로 변경 */}
                   <span className="text-primary text-sm font-bold">
-                    {user?.score || 0} / 100
+                    {user?.score || 0} / 1000
                   </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   {/* [수정] 실제 점수를 기반으로 경험치 바 표시 */}
                   <div
                     className="bg-primary h-2.5 rounded-full"
-                    style={{ width: `${(user?.score || 0) % 100}%` }}
+                    style={{ width: `${(user?.score || 0) % 1000}%` }}
                   ></div>
                 </div>
               </div>
