@@ -46,7 +46,7 @@ function Profile() {
       setConfirmNewPassword("");
     } catch (error) {
       console.error("비밀번호 변경 실패:", error);
-      alert("비밀번호 변경에 실패했습니다. 현재 비밀번호를 확인해주세요.");
+      alert("비밀번호가 8자리 이상인지 확인해주세요.");
     }
   };
 

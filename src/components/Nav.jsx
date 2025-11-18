@@ -29,8 +29,10 @@ function Nav() {
       </div>
       <div className="flex items-center gap-2">
         <div className="text-sm text-gray-600">
-          <span className="font-semibold">{user?.username || "방문자"}</span>님,
-          환영합니다!
+          <Link to="/profile" className="font-semibold">
+            {user?.username || "방문자"}
+          </Link>
+          님, 환영합니다!
         </div>
         <button
           className="w-[45px] h-[45px] flex items-center justify-center bg-white hover:bg-gray-100 text-gray-700 rounded-lg focus:outline-none
