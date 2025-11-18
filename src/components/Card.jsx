@@ -3,9 +3,9 @@ import CardForNews from "./CardForNews.jsx"; // 같은 components 폴더 내
 import CardForQuiz from "./CardForQuiz.jsx"; // 같은 components 폴더 내
 import "../styles/Card.css";
 import {
-  fetchOxQuizDetail,
-  fetchMcQuizDetail,
-  fetchSaQuizDetail,
+  fetchOxQuizzes,
+  fetchMcQuizzes,
+  fetchSaQuizzes,
 } from "../api/quizApi.js";
 import { useUserStore } from "../store/userStore.js";
 
@@ -45,11 +45,11 @@ function Card({
     if (!id) return; // quizId가 없으면 함수를 실행하지 않습니다.
     try {
       setQuizLoading(true); // 로딩 시작
-      const ox = await fetchOxQuizDetail(id);
-      ox.results.filter((item) => quizId === item.summary);
-      const mc = await fetchMcQuizDetail(id);
+      const ox = await fetchOxQuizzes();
+      ox.filter((item) => quizId === item.summary);
+      const mc = await fetchMcQuizzes();
       mc.results.filter((item) => quizId === item.summary);
-      const sa = await fetchSaQuizDetail(id);
+      const sa = await fetchSaQuizzes();
       sa.results.filter((item) => quizId === item.summary);
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
