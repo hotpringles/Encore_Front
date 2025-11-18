@@ -33,7 +33,7 @@ const submitButtonStyles =
 const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
 function OxQuizSection({ sectionId, quiz, onAnswered }) {
-  // const [localSelection, setLocalSelection] = useState(null);
+  const [localSelection, setLocalSelection] = useState(null);
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
   // const handleKeyDownOnRadio = (e) => {
