@@ -45,8 +45,7 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
 
   if (!quiz) return null;
 
-  const isCorrect =
-    submittedAnswer !== null && quiz.answer === submittedAnswer;
+  const isCorrect = submittedAnswer !== null && quiz.answer === submittedAnswer;
 
   return (
     <div className="card-page quiz-page">
@@ -130,8 +129,7 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
 
   if (!quiz) return null;
 
-  const isCorrect =
-    submittedAnswer !== null && quiz.answer === submittedAnswer;
+  const isCorrect = submittedAnswer !== null && quiz.answer === submittedAnswer;
 
   return (
     <div className="card-page quiz-page">
@@ -276,15 +274,14 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
 
 function CardForQuiz({
   hasQuiz,
-  sequenceData = [],
   quizReady,
-  handleGenerateQuiz,
   onQuizCorrect,
+  handleGenerateQuiz,
+  quizContents,
 }) {
   // 퀴즈 고유 ID (라디오 버튼 name 속성에 사용)
   // [개선] React 18+ 환경에서는 useId 사용을 권장합니다.
   const uniqueId = useId();
-  const canRenderSequence = Array.isArray(sequenceData) && sequenceData.length > 0;
 
   return (
     <>
@@ -328,11 +325,11 @@ function CardForQuiz({
       )}
 
       {/* 퀴즈가 준비되었을 때 렌더링 */}
-      {quizReady && hasQuiz && canRenderSequence && (
+      {quizReady && hasQuiz && (
         <>
-          {sequenceData.map((entry, index) => {
-            if (!entry?.quiz) return null;
-            const sectionKey = `${entry.type}-${entry.typeIndex}-${index}`;
+          {quizContents.map((entry, index) => {
+            if (!entry) return null;
+            const sectionKey = `${index}`;
             const sectionId = `${uniqueId}-${index}`;
             const handleAnswered = (isCorrect) => {
               if (isCorrect) {
@@ -340,32 +337,32 @@ function CardForQuiz({
               }
             };
 
-            if (entry.type === "ox") {
+            if (entry.quiz_type === "ox") {
               return (
                 <OxQuizSection
                   key={sectionKey}
                   sectionId={sectionId}
-                  quiz={entry.quiz}
+                  quiz={entry}
                   onAnswered={handleAnswered}
                 />
               );
             }
-            if (entry.type === "mc") {
+            if (entry.quiz_type === "mc") {
               return (
                 <McQuizSection
                   key={sectionKey}
                   sectionId={sectionId}
-                  quiz={entry.quiz}
+                  quiz={entry}
                   onAnswered={handleAnswered}
                 />
               );
             }
-            if (entry.type === "sa") {
+            if (entry.quiz_type === "sa") {
               return (
                 <SaQuizSection
                   key={sectionKey}
                   sectionId={sectionId}
-                  quiz={entry.quiz}
+                  quiz={entry}
                   onAnswered={handleAnswered}
                 />
               );

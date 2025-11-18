@@ -46,8 +46,11 @@ function Card({
     try {
       setQuizLoading(true); // 로딩 시작
       const ox = await fetchOxQuizDetail(id);
+      ox.results.filter((item) => quizId === item.summary);
       const mc = await fetchMcQuizDetail(id);
+      mc.results.filter((item) => quizId === item.summary);
       const sa = await fetchSaQuizDetail(id);
+      sa.results.filter((item) => quizId === item.summary);
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
@@ -66,61 +69,74 @@ function Card({
     // quizId가 있을 때만 퀴즈를 로드합니다.
     if (quizId) loadQuiz(quizId);
   }, [quizId, loadQuiz]);
+
+  const quizContents = useMemo(() => {
+    let oxCount = 0;
+    let mcCount = 0;
+    let saCount = 0;
+
+    return quizList.map((type) => {
+      if (type === "ox") {
+        return oxQuizzes[oxCount++];
+      } else if (type === "mc") {
+        return mcQuizzes[mcCount++];
+      } else if (type === "sa") {
+        return saQuizzes[saCount++];
+      } else {
+        return null;
+      }
+    });
+  }, [quizList, oxQuizzes, mcQuizzes, saQuizzes]);
+
   // ox 선택 답
 
-  const quizDataMap = useMemo(
-    () => ({
-      ox: oxQuizzes,
-      mc: mcQuizzes,
-      sa: saQuizzes,
-    }),
-    [oxQuizzes, mcQuizzes, saQuizzes]
-  );
+  // const quizDataMap = useMemo(
+  //   () => ({
+  //     ox: oxQuizzes,
+  //     mc: mcQuizzes,
+  //     sa: saQuizzes,
+  //   }),
+  //   [oxQuizzes, mcQuizzes, saQuizzes]
+  // );
 
-  const requiredCountByType = useMemo(() => {
-    return quizList.reduce((acc, type) => {
-      if (!["ox", "mc", "sa"].includes(type)) return acc;
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
-    }, {});
-  }, [quizList]);
+  // const requiredCountByType = useMemo(() => {
+  //   return quizList.reduce((acc, type) => {
+  //     if (!["ox", "mc", "sa"].includes(type)) return acc;
+  //     acc[type] = (acc[type] || 0) + 1;
+  //     return acc;
+  //   }, {});
+  // }, [quizList]);
 
-  const isQuizDataReady = useMemo(() => {
-    return Object.entries(requiredCountByType).every(([type, count]) => {
-      const quizzes = quizDataMap[type] || [];
-      return quizzes.length >= count;
-    });
-  }, [requiredCountByType, quizDataMap]);
+  // const isQuizDataReady = useMemo(() => {
+  //   return Object.entries(requiredCountByType).every(([type, count]) => {
+  //     const quizzes = quizDataMap[type] || [];
+  //     return quizzes.length >= count;
+  //   });
+  // }, [requiredCountByType, quizDataMap]);
 
-  const sequenceData = useMemo(() => {
-    if (!isQuizDataReady) return [];
-    const counters = { ox: 0, mc: 0, sa: 0 };
-    return quizList
-      .map((type, orderIndex) => {
-        if (!["ox", "mc", "sa"].includes(type)) return null;
-        const currentIndex = counters[type] || 0;
-        const quiz = quizDataMap[type]?.[currentIndex];
-        counters[type] = currentIndex + 1;
-        if (!quiz) return null;
-        return {
-          type,
-          quiz,
-          orderIndex,
-          typeIndex: currentIndex,
-        };
-      })
-      .filter(Boolean);
-  }, [isQuizDataReady, quizList, quizDataMap]);
+  // const sequenceData = useMemo(() => {
+  //   if (!isQuizDataReady) return [];
+  //   const counters = { ox: 0, mc: 0, sa: 0 };
+  //   return quizList
+  //     .map((type, orderIndex) => {
+  //       if (!["ox", "mc", "sa"].includes(type)) return null;
+  //       const currentIndex = counters[type] || 0;
+  //       const quiz = quizDataMap[type]?.[currentIndex];
+  //       counters[type] = currentIndex + 1;
+  //       if (!quiz) return null;
+  //       return {
+  //         type,
+  //         quiz,
+  //         orderIndex,
+  //         typeIndex: currentIndex,
+  //       };
+  //     })
+  //     .filter(Boolean);
+  // }, [isQuizDataReady, quizList, quizDataMap]);
 
   const handleGenerateQuiz = () => {
     // [수정] 퀴즈 데이터가 모두 로드되었을 때만 퀴즈를 준비시킵니다.
-    if (
-      !hasQuiz ||
-      quizLoading ||
-      !isQuizDataReady ||
-      sequenceData.length === 0
-    )
-      return;
+    if (!hasQuiz || quizLoading) return;
 
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
   };
@@ -149,10 +165,10 @@ function Card({
       {hasQuiz && !quizLoading && !error && isQuizDataReady && (
         <CardForQuiz
           hasQuiz={hasQuiz}
-          sequenceData={sequenceData}
           quizReady={quizReady}
           onQuizCorrect={onQuizCorrect}
           handleGenerateQuiz={handleGenerateQuiz}
+          quizContents={quizContents}
         />
       )}
     </div>
