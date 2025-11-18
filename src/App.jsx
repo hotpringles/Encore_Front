@@ -142,7 +142,7 @@ function App() {
   useEffect(() => {
     if (authLoading || !user) return;
     loadNewsGroup();
-  }, [authLoading, user]); // 인증 완료 후 사용자 정보가 있을 때만 실행합니다.
+  }, [authLoading, user?.id]); // 인증 완료 후 사용자 정보가 있을 때만 실행합니다.
 
   // 4) 상태에 따라 다른 화면 보여주기
   // [수정] 인증 로딩 상태를 먼저 확인합니다.
