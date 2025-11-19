@@ -37,14 +37,21 @@ function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // [수정] useEffect를 두 개로 분리하여 역할을 명확히 합니다.
+  // 메시지가 바뀔 때마다 쿠키도 함께 갱신합니다.
+  const persistMessages = (updater) => {
+    setMessages((prevMessages) => {
+      const nextMessages =
+        typeof updater === "function" ? updater(prevMessages) : updater;
+      Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(nextMessages), {
+        expires: 1,
+        path: "/",
+      });
+      return nextMessages;
+    });
+  };
+
   useEffect(() => {
     scrollToBottom();
-    console.log("쿠키에 저장되는 messages:", messages);
-    Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), {
-      expires: 1,
-      path: "/", // [수정] 쿠키가 사이트 전체에서 유효하도록 path를 설정합니다.
-    });
   }, [messages]);
 
   const handleSendMessage = async (e) => {
@@ -75,7 +82,7 @@ function ChatBot() {
     };
 
     // [수정] 사용자 메시지와 '입력 중' 메시지를 먼저 화면에 즉시 표시합니다.
-    setMessages((prevMessages) => [
+    persistMessages((prevMessages) => [
       ...prevMessages,
       userMessage,
       botTypingMessage,
@@ -88,7 +95,7 @@ function ChatBot() {
 
       // 2. [수정] API 호출이 성공하면, 그 결과를 사용하여 상태를 업데이트합니다.
       //    이때 함수형 업데이트를 사용하여 최신 상태를 보장합니다.
-      setMessages((prevMessages) =>
+      persistMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === botTypingMessage.id
             ? { ...msg, text: data.answer, isTyping: false }
@@ -98,7 +105,7 @@ function ChatBot() {
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);
       // 3. [수정] 에러 발생 시에도 동일한 방식으로 상태를 업데이트합니다.
-      setMessages((prevMessages) =>
+      persistMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === botTypingMessage.id
             ? {
