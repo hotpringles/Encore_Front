@@ -53,36 +53,52 @@ function ChatBot() {
       sender: "user", // 화면 표시를 위한 발신자 정보
     };
 
-    // [수정] 사용자 메시지를 먼저 화면에 표시하고, 봇 응답을 기다립니다.
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    // [수정] 사용자 메시지와 '입력 중' 상태의 봇 메시지를 한 번에 추가합니다.
+    const botTypingMessage = {
+      id: `bot-${Date.now()}`,
+      text: "입력 중...",
+      sender: "bot",
+      isTyping: true, // 타이핑 상태임을 표시
+    };
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      userMessage,
+      botTypingMessage,
+    ]);
     setNewMessage("");
-    setIsTyping(true); // [추가] 입력 중 상태 시작
 
     try {
       // 1. API를 호출하여 봇의 응답을 가져옵니다.
       const data = await fetchQna({ question: newMessage });
 
-      // 2. 봇의 응답 메시지 객체를 생성합니다.
-      const botResponse = {
-        id: `bot-${Date.now()}`,
-        text: data.answer,
-        sender: "bot",
-      };
-
-      // 3. [수정] 사용자 메시지가 포함된 최신 상태에 봇의 응답을 추가합니다.
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
+      // 2. '입력 중...' 메시지를 실제 봇의 응답으로 교체합니다.
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
+          msg.id === botTypingMessage.id
+            ? { ...msg, text: data.answer, isTyping: false }
+            : msg
+        )
+      );
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);
-      const errorResponse = {
-        id: `bot-error-${Date.now()}`,
-        text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
-        sender: "bot",
-      };
-      setMessages((prevMessages) => [...prevMessages, errorResponse]);
-    } finally {
-      setIsTyping(false); // [추가] 입력 중 상태 종료
+      // 3. 에러 발생 시 '입력 중...' 메시지를 에러 메시지로 교체합니다.
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
+          msg.id === botTypingMessage.id
+            ? {
+                ...msg,
+                text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
+                isTyping: false,
+              }
+            : msg
+        )
+      );
     }
   };
+
+  // [추가] 봇이 응답 중인지 확인하는 변수. messages 배열의 마지막 메시지가 '입력 중' 상태인지 확인합니다.
+  const isBotReplying = messages[messages.length - 1]?.isTyping === true;
 
   return (
     <div className="chat-sidebar-container">
@@ -90,17 +106,16 @@ function ChatBot() {
       <div className="chat-messages">
         {messages.map((message) => (
           <div key={message.id} className={`chat-message ${message.sender}`}>
-            <p className="message-text" style={{ whiteSpace: "pre-wrap" }}>
+            <p
+              className={`message-text ${
+                message.isTyping ? "typing-indicator" : ""
+              }`}
+              style={{ whiteSpace: "pre-wrap" }}
+            >
               {message.text}
             </p>
           </div>
         ))}
-        {/* [추가] 봇이 입력 중일 때 로딩 인디케이터를 표시합니다. */}
-        {isTyping && (
-          <div className="chat-message bot">
-            <p className="message-text typing-indicator">입력 중...</p>
-          </div>
-        )}
         <div ref={messagesEndRef} />
       </div>
       <form className="chat-input-form" onSubmit={handleSendMessage}>
@@ -111,7 +126,11 @@ function ChatBot() {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="메시지를 입력하세요..."
         />
-        <button disabled={isTyping} type="submit" className="send-button">
+        <button
+          type="submit"
+          className="send-button"
+          disabled={isBotReplying} // [수정] 봇이 응답 중일 때 버튼을 비활성화합니다.
+        >
           전송
         </button>
       </form>
