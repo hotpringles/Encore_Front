@@ -268,7 +268,9 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
           <FeedbackBlock
             isCorrect={isCorrect}
             message={
-              isCorrect ? "정답입니다!" : `오답입니다! (정답: ${quiz.answer})`
+              isCorrect
+                ? "정답입니다!"
+                : `오답입니다! (정답: ${quiz.correct_answer})`
             }
             explanation={quiz.explanation}
           />
