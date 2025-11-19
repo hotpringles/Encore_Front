@@ -154,7 +154,8 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
             if (localSelection === null || submittedAnswer !== null) return;
             setSubmittedAnswer(localSelection);
             const correct =
-              quiz.options[localSelection.order].is_correct === localSelection;
+              quiz.options[localSelection.order - 1].is_correct ===
+              localSelection;
             setIsCorrect(correct);
             onAnswered?.(correct);
           }}
