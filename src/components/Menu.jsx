@@ -98,7 +98,7 @@ function Menu() {
             최근 본 뉴스
           </span>
           {/* [수정] 7열 그리드 레이아웃으로 변경 */}
-          <ul className="grid grid-cols-7 gap-1 max-h-48 overflow-y-auto">
+          <ul className="grid grid-cols-1 gap-1 h-[339px] overflow-y-auto">
             {newsGroup.map((reports, index) => (
               <li key={reports[0]?.date || index}>
                 <Link
