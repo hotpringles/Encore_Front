@@ -53,28 +53,32 @@ function ChatBot() {
       sender: "user", // 화면 표시를 위한 발신자 정보
     };
 
-    setMessages((prevMessages) => [...prevMessages, userMessage]); // 사용자의 메시지를 먼저 화면에 표시
+    // [수정] 사용자 메시지를 먼저 화면에 표시하고, 봇 응답을 기다립니다.
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
     setNewMessage("");
-
     setIsTyping(true); // [추가] 입력 중 상태 시작
 
-    // [추가] 여기에 AI 챗봇 API를 호출하는 로직을 구현합니다.
     try {
-      // 예시: const response = await fetch('/api/chatbot', { method: 'POST', body: JSON.stringify({ message: newMessage }) });
+      // 1. API를 호출하여 봇의 응답을 가져옵니다.
       const data = await fetchQna({ question: newMessage });
 
-      // 아래는 API 호출을 흉내 낸 가짜 응답입니다.
+      // 2. 봇의 응답 메시지 객체를 생성합니다.
       const botResponse = {
-        id: `bot-${Date.now()}`, // [수정] ID를 더 고유하게 만듭니다.
-        text: data.answer, // [수정] 실제 API 응답 데이터를 사용합니다.
+        id: `bot-${Date.now()}`,
+        text: data.answer,
         sender: "bot",
       };
 
-      // 봇의 응답을 메시지 목록에 추가합니다.
+      // 3. [수정] 사용자 메시지가 포함된 최신 상태에 봇의 응답을 추가합니다.
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);
-      // 필요하다면 에러 메시지를 UI에 표시할 수 있습니다.
+      const errorResponse = {
+        id: `bot-error-${Date.now()}`,
+        text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
+        sender: "bot",
+      };
+      setMessages((prevMessages) => [...prevMessages, errorResponse]);
     } finally {
       setIsTyping(false); // [추가] 입력 중 상태 종료
     }
