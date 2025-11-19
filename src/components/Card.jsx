@@ -10,10 +10,10 @@ import {
 import { useUserStore } from "../store/userStore.js";
 
 const QUIZ_SEQUENCE_BY_GRADE = {
-  씨앗: ["ox", "ox"],
-  새싹: ["mc", "mc"],
-  나무: ["mc", "mc"],
-  숲: ["sa", "sa"],
+  씨앗: ["OX", "OX"],
+  새싹: ["MC4", "MC4"],
+  나무: ["MC4", "MC4"],
+  숲: ["SC", "SC"],
 };
 
 function Card({
@@ -27,7 +27,7 @@ function Card({
 }) {
   const userGrade = useUserStore((state) => state.user?.grade);
   const quizList = useMemo(() => {
-    return QUIZ_SEQUENCE_BY_GRADE[userGrade];
+    return QUIZ_SEQUENCE_BY_GRADE[userGrade] || ["OX", "OX"];
   }, [userGrade]);
 
   const hasQuiz = Boolean(quizId); // [수정] 'quiz'가 아닌 'quizId'의 존재 여부로 확인합니다.
