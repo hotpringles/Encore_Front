@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie"; // [추가] js-cookie 라이브러리 import
 import "../styles/ChatBot.css";
-
-// [추가] 오늘 자정에 만료되는 쿠키 만료 시간을 계산하는 함수
-const getCookieExpires = () => {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(0, 0, 0, 0);
-  return tomorrow;
-};
+import { useUserStore } from "../store/userStore"; // [추가] 사용자 정보를 가져오기 위해 import
+import { fetchQna } from "../api/qnaApi"; // [추가] qnaApi에서 fetchQna 함수 import
 
 const CHAT_COOKIE_KEY = "chat_messages";
 
 function ChatBot() {
+  const user = useUserStore((state) => state.user);
   // [수정] useState의 초기값을 함수로 설정하여, 쿠키에서 데이터를 먼저 읽어오도록 합니다.
   const [messages, setMessages] = useState(() => {
     const savedMessages = Cookies.get(CHAT_COOKIE_KEY);
@@ -43,9 +38,7 @@ function ChatBot() {
   // [수정] useEffect를 두 개로 분리하여 역할을 명확히 합니다.
   useEffect(() => {
     scrollToBottom();
-    Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), {
-      expires: getCookieExpires(),
-    });
+    Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), { expires: 1 });
   }, [messages]);
 
   const handleSendMessage = async (e) => {
@@ -53,13 +46,14 @@ function ChatBot() {
     if (newMessage.trim() === "") return;
 
     const userMessage = {
-      id: `user-${Date.now()}`, // [수정] ID를 더 고유하게 만듭니다.
-      text: newMessage,
-      sender: "user",
+      id: `user-${Date.now()}`, // 화면 표시를 위한 고유 ID
+      user: user.id, // API 전송을 위한 사용자 ID
+      question: newMessage, // API 전송을 위한 질문 내용
+      text: newMessage, // 화면 표시를 위한 메시지 내용
+      sender: "user", // 화면 표시를 위한 발신자 정보
     };
 
-    // [수정] 사용자의 메시지를 먼저 화면에 표시합니다.
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]); // 사용자의 메시지를 먼저 화면에 표시
     setNewMessage("");
 
     setIsTyping(true); // [추가] 입력 중 상태 시작
@@ -67,19 +61,16 @@ function ChatBot() {
     // [추가] 여기에 AI 챗봇 API를 호출하는 로직을 구현합니다.
     try {
       // 예시: const response = await fetch('/api/chatbot', { method: 'POST', body: JSON.stringify({ message: newMessage }) });
-      // 예시: const data = await response.json();
-
-      // [추가] 실제 API 호출 시 지연을 시뮬레이션합니다.
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const data = await fetchQna({ question: newMessage });
 
       // 아래는 API 호출을 흉내 낸 가짜 응답입니다.
       const botResponse = {
         id: `bot-${Date.now()}`, // [수정] ID를 더 고유하게 만듭니다.
-        text: `'${newMessage}'에 대한 답변입니다. (AI 응답)`,
+        text: data.answer, // [수정] 실제 API 응답 데이터를 사용합니다.
         sender: "bot",
       };
 
-      // [수정] 봇의 응답을 메시지 목록에 추가합니다.
+      // 봇의 응답을 메시지 목록에 추가합니다.
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);

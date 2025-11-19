@@ -1,7 +1,12 @@
 .chat-sidebar-container {
+  /* [추가] 스크롤 시에도 위치를 고정합니다. */
+  position: sticky;
+  top: 60px; /* 상단 Nav 높이만큼 띄웁니다. */
+
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* [수정] 높이를 화면 높이에서 Nav 높이를 뺀 값으로 설정합니다. */
+  height: calc(100vh - 60px);
   background-color: #f9f9f9;
 }
 
