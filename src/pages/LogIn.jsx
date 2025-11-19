@@ -26,8 +26,8 @@ const LogIn = () => {
     e.preventDefault(); // 폼 기본 제출 동작 방지
 
     try {
-      // 1. API를 호출하여 로그인 시도 (성공 시 토큰이 저장됨)
-      await login({ username, password });
+      // 1. API를 호출하여 로그인 시도 (성공 시 accessToken과 refreshToken이 저장됨)
+      await login({ username, password }); // 이 함수는 이제 accountApi.js에서 가져옵니다.
 
       // 2. 저장된 토큰으로 사용자 프로필 정보를 가져옴
       const user = await fetchProfile();
