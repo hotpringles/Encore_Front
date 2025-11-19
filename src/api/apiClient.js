@@ -2,7 +2,7 @@ import axios from "axios";
 import { refreshToken } from "./accountApi";
 
 const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000", // 백엔드 API 기본 URL
+  baseURL: "http://127.0.0.1:8000/accounts", // 백엔드 API 기본 URL
   headers: {
     "Content-Type": "application/json",
   },
