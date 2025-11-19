@@ -214,7 +214,7 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
   if (!quiz) return null;
 
   const [isCorrect, setIsCorrect] = useState(
-    submittedAnswer?.isCorrect === true
+    submittedAnswer === quiz.correct_answer
   );
 
   return (
