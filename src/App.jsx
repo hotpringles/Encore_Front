@@ -131,9 +131,12 @@ function App() {
           console.error("자동 로그인 실패:", error);
           localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
           localStorage.removeItem("refreshToken");
+        } finally {
+          setAuthLoading(false); // 인증 확인 완료 (성공/실패 여부와 관계없이)
         }
+      } else {
+        setAuthLoading(false); // 토큰이 없는 경우에도 인증 확인은 완료된 것임
       }
-      setAuthLoading(false); // 인증 확인 완료
     };
 
     checkLoginStatus();
@@ -147,7 +150,16 @@ function App() {
 
   // 4) 상태에 따라 다른 화면 보여주기
   // [수정] 인증 로딩 상태를 먼저 확인합니다.
-  if (authLoading) return <div>인증 정보를 확인하는 중...</div>;
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background-light dark:bg-background-dark text-text-primary dark:text-white">
+        <div className="flex items-center gap-3">
+          <span className="material-symbols-outlined animate-spin">sync</span>
+          <span>인증 정보를 확인하는 중...</span>
+        </div>
+      </div>
+    );
+  }
   if (loading) return <div>뉴스 데이터를 불러오는 중...</div>;
   if (error) return <div>{error}</div>;
 
