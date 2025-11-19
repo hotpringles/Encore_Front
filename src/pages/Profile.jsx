@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateMyPassword, deleteMyAccount, logout } from "../api/accountApi";
+import { updateMyPassword } from "../api/accountApi";
 import { useUserStore } from "../store/userStore";
 
 // [추가] 등급 아이콘 이미지 import
