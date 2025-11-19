@@ -28,6 +28,9 @@ function ChatBot() {
     ];
   });
   const [newMessage, setNewMessage] = useState("");
+  // [추가] API 호출 로딩 상태를 관리합니다.
+  // 이 상태는 '전송' 버튼 비활성화에만 사용됩니다.
+  const [isReplying, setIsReplying] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -47,6 +50,9 @@ function ChatBot() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim() === "") return;
+
+    // [수정] 로딩 상태 시작
+    setIsReplying(true);
 
     // [수정] API 호출과 상태 업데이트에 사용할 메시지 내용을 변수에 저장합니다.
     const questionText = newMessage.trim();
@@ -68,6 +74,7 @@ function ChatBot() {
       isTyping: true, // 타이핑 상태임을 표시
     };
 
+    // [수정] 사용자 메시지와 '입력 중' 메시지를 먼저 화면에 즉시 표시합니다.
     setMessages((prevMessages) => [
       ...prevMessages,
       userMessage,
@@ -79,33 +86,34 @@ function ChatBot() {
       // 1. API를 호출하여 봇의 응답을 가져옵니다.
       const data = await fetchQna({ question: questionText });
 
-      // 2. '입력 중...' 메시지를 실제 봇의 응답으로 교체합니다.
+      // 2. [수정] API 호출이 성공하면, 그 결과를 사용하여 상태를 업데이트합니다.
+      //    이때 함수형 업데이트를 사용하여 최신 상태를 보장합니다.
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === botTypingMessage.id
-            ? { ...msg, text: data.answer, isTyping: false } // isTyping을 false로 변경
+            ? { ...msg, text: data.answer, isTyping: false }
             : msg
         )
       );
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);
-      // 3. 에러 발생 시 '입력 중...' 메시지를 에러 메시지로 교체합니다.
+      // 3. [수정] 에러 발생 시에도 동일한 방식으로 상태를 업데이트합니다.
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === botTypingMessage.id
             ? {
                 ...msg,
                 text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
-                isTyping: false, // isTyping을 false로 변경
+                isTyping: false,
               }
             : msg
         )
       );
+    } finally {
+      // [수정] API 호출이 끝나면 로딩 상태를 해제합니다.
+      setIsReplying(false);
     }
   };
-
-  // [추가] 봇이 응답 중인지 확인하는 변수. messages 배열의 마지막 메시지가 '입력 중' 상태인지 확인합니다.
-  const isBotReplying = messages[messages.length - 1]?.isTyping === true;
 
   return (
     <div className="chat-sidebar-container">
@@ -136,7 +144,7 @@ function ChatBot() {
         <button
           type="submit"
           className="send-button"
-          disabled={isBotReplying} // [수정] 봇이 응답 중일 때 버튼을 비활성화합니다.
+          disabled={isReplying} // [수정] isReplying 상태로 버튼 비활성화를 제어합니다.
         >
           전송
         </button>
