@@ -13,6 +13,7 @@ function Profile() {
   const user = useUserStore((state) => state.user);
 
   const tier = user.grade;
+  console.log(tier);
   const navigate = useNavigate();
   // 비밀번호 변경 폼을 위한 state
   const [currentPassword, setCurrentPassword] = useState("");

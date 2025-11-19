@@ -1,15 +1,15 @@
 import axios from "axios";
 import { refreshToken } from "./accountApi";
 
-const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/accounts", // 백엔드 API 기본 URL
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL, // .env 파일의 환경 변수 사용
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 // 1. 요청 인터셉터: 모든 요청에 액세스 토큰을 자동으로 추가합니다.
-apiClient.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -37,7 +37,7 @@ const processQueue = (error, token = null) => {
 };
 
 // 2. 응답 인터셉터: 401 에러 발생 시 토큰 갱신을 시도합니다.
-apiClient.interceptors.response.use(
+api.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -53,7 +53,7 @@ apiClient.interceptors.response.use(
         })
           .then((token) => {
             originalRequest.headers["Authorization"] = "Bearer " + token;
-            return apiClient(originalRequest);
+            return api(originalRequest);
           })
           .catch((err) => {
             return Promise.reject(err);
@@ -67,7 +67,7 @@ apiClient.interceptors.response.use(
         const newAccessToken = await refreshToken();
         processQueue(null, newAccessToken);
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return apiClient(originalRequest); // 실패했던 원래 요청을 다시 시도
+        return api(originalRequest); // 실패했던 원래 요청을 다시 시도
       } catch (refreshError) {
         processQueue(refreshError, null);
         // 갱신 실패 시 로그아웃 처리 (App.jsx 등에서 처리하거나 여기서 직접 처리)
@@ -84,4 +84,4 @@ apiClient.interceptors.response.use(
   }
 );
 
-export default apiClient;
+export default api;
