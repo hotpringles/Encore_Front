@@ -190,7 +190,7 @@ const QuizEnd = ({ score }) => {
       // 1. 등급에 따라 서버에 점수 업데이트 요청
       const updatedUser = await updateMyInfo({
         grade: tier.name,
-        score: tier.name === "새싹" ? 1000 : 0,
+        score: tier.name === "새싹" ? 1000 : 10,
       });
       // 2. 서버로부터 받은 최신 사용자 정보로 클라이언트 상태(스토어) 업데이트
       setUser(updatedUser);
