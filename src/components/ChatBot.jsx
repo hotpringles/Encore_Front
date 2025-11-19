@@ -107,7 +107,7 @@ function ChatBot() {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="메시지를 입력하세요..."
         />
-        <button type="submit" className="send-button">
+        <button disabled={isTyping} type="submit" className="send-button">
           전송
         </button>
       </form>
