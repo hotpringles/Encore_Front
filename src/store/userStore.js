@@ -9,6 +9,7 @@ export const useUserStore = create((set) => ({
     set(() => {
       if (typeof profile.score === "number") {
         const score = profile.score;
+        const newGrade = null;
         if (score >= 10000) {
           newGrade = "숲";
         } else if (score >= 4000) {
