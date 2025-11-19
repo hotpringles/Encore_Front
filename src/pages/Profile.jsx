@@ -10,17 +10,14 @@ import tree from "../assets/tree.png";
 import forest from "../assets/forest.png";
 
 function Profile() {
-  const user = useUserStore((state) => state.user);
-
-  const tier = user.grade;
-  console.log(tier);
   const navigate = useNavigate();
   // 비밀번호 변경 폼을 위한 state
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const levelIcon = {
+  const levelIcon = useUserStore((state) => state.levelIcon);
+  const levelIcons = {
     씨앗: seed,
     새싹: sprout,
     나무: tree,
@@ -86,7 +83,7 @@ function Profile() {
         <section className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center gap-6">
             <img
-              src={levelIcon[tier]}
+              src={levelIcons[levelIcon]}
               alt={tier}
               className="size-24 rounded-full object-cover border-2 border-gray-200"
             />
