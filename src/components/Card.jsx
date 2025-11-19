@@ -75,11 +75,11 @@ function Card({
     let saCount = 0;
 
     return quizList.map((type) => {
-      if (type === "ox") {
+      if (type === "OX") {
         return oxQuizzes[oxCount++];
-      } else if (type === "mc") {
+      } else if (type === "MC4") {
         return mcQuizzes[mcCount++];
-      } else if (type === "sa") {
+      } else if (type === "SC") {
         return saQuizzes[saCount++];
       } else {
         return null;
