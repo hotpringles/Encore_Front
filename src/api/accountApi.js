@@ -1,7 +1,7 @@
 import api from "./apiClient";
 
 export const login = async (data) => {
-  const res = await api.post("/login/", data);
+  const res = await api.post("/accounts/login/", data);
   const { access, refresh } = res.data;
   localStorage.setItem("accessToken", access);
   localStorage.setItem("refreshToken", refresh); // 리프레시 토큰 저장
@@ -14,7 +14,7 @@ export const refreshToken = async () => {
     throw new Error("No refresh token available.");
   }
   try {
-    const response = await api.post("/token/refresh/", { refresh });
+    const response = await api.post("/accounts/token/refresh/", { refresh });
     const { access } = response.data;
     localStorage.setItem("accessToken", access);
     return access;
@@ -28,7 +28,7 @@ export const refreshToken = async () => {
 };
 
 export const fetchProfile = async () => {
-  const response = await api.get("/profile/");
+  const response = await api.get("/accounts/profile/");
   return response.data;
 };
 
@@ -51,21 +51,21 @@ export const logout = async () => {
 };
 
 export const updateMyInfo = async (data) => {
-  const response = await api.patch("/profile/", data);
+  const response = await api.patch("/accounts/profile/", data);
   return response.data;
 };
 
 export const updateMyPassword = async (data) => {
   // data 객체에는 일반적으로 old_password, new_password1, new_password2 필드가 포함됩니다.
   // 백엔드 API 명세에 따라 필드 이름과 엔드포인트('/auth/password/change/')를 확인하고 수정해주세요.
-  const response = await api.post("/password-change/", data);
+  const response = await api.post("/accounts/password-change/", data);
   return response.data;
 };
 
 export const signUp = async (data) => {
   // data 객체에는 username, email, password, password2 등이 포함될 수 있습니다.
   // 백엔드 API 명세에 따라 엔드포인트('/auth/registration/')와 필드 이름을 확인하고 수정해주세요.
-  const response = await api.post("/signup/", data);
+  const response = await api.post("/accounts/signup/", data);
   return response.data;
 };
 
