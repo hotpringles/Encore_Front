@@ -86,7 +86,9 @@ function ChatBot() {
       <div className="chat-messages">
         {messages.map((message) => (
           <div key={message.id} className={`chat-message ${message.sender}`}>
-            <p className="message-text">{message.text}</p>
+            <p className="message-text" style={{ whiteSpace: "pre-wrap" }}>
+              {message.text}
+            </p>
           </div>
         ))}
         {/* [추가] 봇이 입력 중일 때 로딩 인디케이터를 표시합니다. */}
