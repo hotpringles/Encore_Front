@@ -37,7 +37,10 @@ function ChatBot() {
   // [수정] useEffect를 두 개로 분리하여 역할을 명확히 합니다.
   useEffect(() => {
     scrollToBottom();
-    Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), { expires: 1 });
+    Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), {
+      expires: 1,
+      path: "/",
+    });
   }, [messages]);
 
   const handleSendMessage = async (e) => {
