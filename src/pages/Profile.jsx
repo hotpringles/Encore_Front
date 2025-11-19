@@ -10,7 +10,7 @@ import tree from "../assets/tree.png";
 import forest from "../assets/forest.png";
 
 function Profile() {
-  const { user, setUser } = useUserStore();
+  const user = useUserStore((state) => state.user);
 
   const tier = user.grade;
   const navigate = useNavigate();
