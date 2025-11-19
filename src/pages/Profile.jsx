@@ -16,7 +16,7 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const levelIcon = useUserStore((state) => state.levelIcon);
+  const { user, levelIcon } = useUserStore();
   const levelIcons = {
     씨앗: seed,
     새싹: sprout,
