@@ -84,7 +84,7 @@ function Profile() {
           <div className="flex items-center gap-6">
             <img
               src={levelIcons[levelIcon]}
-              alt={tier}
+              alt={levelIcon}
               className="size-24 rounded-full object-cover border-2 border-gray-200"
             />
             <div className="flex flex-col w-full">
