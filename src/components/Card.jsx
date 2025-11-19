@@ -15,7 +15,6 @@ const QUIZ_SEQUENCE_BY_GRADE = {
   나무: ["mc", "mc"],
   숲: ["sa", "sa"],
 };
-const DEFAULT_QUIZ_SEQUENCE = ["ox", "mc", "sa"];
 
 function Card({
   title,
@@ -28,7 +27,7 @@ function Card({
 }) {
   const userGrade = useUserStore((state) => state.user?.grade);
   const quizList = useMemo(() => {
-    return QUIZ_SEQUENCE_BY_GRADE[userGrade] ?? DEFAULT_QUIZ_SEQUENCE;
+    return QUIZ_SEQUENCE_BY_GRADE[userGrade];
   }, [userGrade]);
 
   const hasQuiz = Boolean(quizId); // [수정] 'quiz'가 아닌 'quizId'의 존재 여부로 확인합니다.
