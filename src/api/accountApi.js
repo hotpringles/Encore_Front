@@ -36,9 +36,21 @@ export const fetchProfile = async () => {
 };
 
 export const logout = async () => {
-  // 서버에 로그아웃 요청이 필요하다면 여기에 구현
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
+  const refresh = localStorage.getItem("refreshToken");
+  try {
+    if (refresh) {
+      // 서버에 refreshToken을 보내 블랙리스트에 추가하도록 요청합니다.
+      // 서버의 로그아웃 엔드포인트('/logout/')로 요청을 보냅니다.
+      await apiClient.post("/logout/", { refresh });
+    }
+  } catch (error) {
+    console.error("서버 로그아웃 실패:", error);
+    // 서버 로그아웃이 실패하더라도 클라이언트 측에서는 로그아웃 처리를 계속 진행합니다.
+  } finally {
+    // 로컬 스토리지에서 토큰들을 제거합니다.
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  }
 };
 
 export const updateMyInfo = async (data) => {
