@@ -1,32 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import Cookies from "js-cookie"; // [추가] js-cookie 라이브러리 import
 import "../styles/ChatBot.css";
 import { useUserStore } from "../store/userStore"; // [추가] 사용자 정보를 가져오기 위해 import
 import { fetchQna } from "../api/qnaApi"; // [추가] qnaApi에서 fetchQna 함수 import
 
-const CHAT_COOKIE_KEY = "chat_messages";
-
 function ChatBot() {
   const user = useUserStore((state) => state.user);
-  // [수정] useState의 초기값을 함수로 설정하여, 쿠키에서 데이터를 먼저 읽어오도록 합니다.
-  const [messages, setMessages] = useState(() => {
-    const savedMessages = Cookies.get(CHAT_COOKIE_KEY);
-    if (savedMessages) {
-      try {
-        return JSON.parse(savedMessages);
-      } catch (e) {
-        console.error("채팅 기록을 파싱하는 데 실패했습니다.", e);
-      }
-    }
-    // 쿠키가 없으면 기본 메시지를 반환합니다.
-    return [
-      {
-        id: 1,
-        text: "안녕하세요! 금융에 대해 궁금한 점이 있나요?",
-        sender: "bot",
-      },
-    ];
-  });
+  // [수정] 쿠키 로직을 제거하고, 기본 메시지로 상태를 초기화합니다.
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: "안녕하세요! 금융에 대해 궁금한 점이 있나요?",
+      sender: "bot",
+    },
+  ]);
   const [newMessage, setNewMessage] = useState("");
   // [추가] API 호출 로딩 상태를 관리합니다.
   // 이 상태는 '전송' 버튼 비활성화에만 사용됩니다.
@@ -37,22 +23,9 @@ function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 메시지가 바뀔 때마다 쿠키도 함께 갱신합니다.
-  const persistMessages = (updater) => {
-    setMessages((prevMessages) => {
-      const nextMessages =
-        typeof updater === "function" ? updater(prevMessages) : updater;
-      Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(nextMessages), {
-        expires: 1,
-        path: "/",
-      });
-      return nextMessages;
-    });
-  };
-
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages]); // messages 상태가 변경될 때마다 스크롤을 맨 아래로 이동합니다.
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -82,8 +55,8 @@ function ChatBot() {
     };
 
     // [수정] 사용자 메시지와 '입력 중' 메시지를 먼저 화면에 즉시 표시합니다.
-    persistMessages((prevMessages) => [
-      ...prevMessages,
+    setMessages((prevMessages) => [
+      ...prevMessages, // [수정] persistMessages 대신 setMessages를 직접 사용합니다.
       userMessage,
       botTypingMessage,
     ]);
@@ -95,25 +68,31 @@ function ChatBot() {
 
       // 2. [수정] API 호출이 성공하면, 그 결과를 사용하여 상태를 업데이트합니다.
       //    이때 함수형 업데이트를 사용하여 최신 상태를 보장합니다.
-      persistMessages((prevMessages) =>
-        prevMessages.map((msg) =>
-          msg.id === botTypingMessage.id
-            ? { ...msg, text: data.answer, isTyping: false }
-            : msg
+      setMessages((prevMessages) =>
+        prevMessages.map(
+          (
+            msg // [수정] persistMessages 대신 setMessages를 직접 사용합니다.
+          ) =>
+            msg.id === botTypingMessage.id
+              ? { ...msg, text: data.answer, isTyping: false }
+              : msg
         )
       );
     } catch (error) {
       console.error("챗봇 응답을 가져오는 데 실패했습니다.", error);
       // 3. [수정] 에러 발생 시에도 동일한 방식으로 상태를 업데이트합니다.
-      persistMessages((prevMessages) =>
-        prevMessages.map((msg) =>
-          msg.id === botTypingMessage.id
-            ? {
-                ...msg,
-                text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
-                isTyping: false,
-              }
-            : msg
+      setMessages((prevMessages) =>
+        prevMessages.map(
+          (
+            msg // [수정] persistMessages 대신 setMessages를 직접 사용합니다.
+          ) =>
+            msg.id === botTypingMessage.id
+              ? {
+                  ...msg,
+                  text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
+                  isTyping: false,
+                }
+              : msg
         )
       );
     } finally {
