@@ -179,7 +179,7 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
                 >
                   <div className="flex grow flex-col">
                     <p className="text-sm font-medium leading-normal text-slate-800 dark:text-slate-200">
-                      {option}
+                      {option.text}
                     </p>
                   </div>
                 </label>
