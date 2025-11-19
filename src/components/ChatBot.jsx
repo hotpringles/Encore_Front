@@ -40,6 +40,7 @@ function ChatBot() {
     console.log("쿠키에 저장되는 messages:", messages);
     Cookies.set(CHAT_COOKIE_KEY, JSON.stringify(messages), {
       expires: 1,
+      path: "/", // [수정] 쿠키가 사이트 전체에서 유효하도록 path를 설정합니다.
     });
   }, [messages]);
 
@@ -47,11 +48,15 @@ function ChatBot() {
     e.preventDefault();
     if (newMessage.trim() === "") return;
 
+    // [수정] API 호출과 상태 업데이트에 사용할 메시지 내용을 변수에 저장합니다.
+    const questionText = newMessage.trim();
+
     const userMessage = {
       id: `user-${Date.now()}`, // 화면 표시를 위한 고유 ID
       user: user.id, // API 전송을 위한 사용자 ID
-      question: newMessage, // API 전송을 위한 질문 내용
-      text: newMessage, // 화면 표시를 위한 메시지 내용
+      // [수정] 상태 대신 변수를 사용합니다.
+      question: questionText, // API 전송을 위한 질문 내용
+      text: questionText, // 화면 표시를 위한 메시지 내용
       sender: "user", // 화면 표시를 위한 발신자 정보
     };
 
@@ -72,7 +77,7 @@ function ChatBot() {
 
     try {
       // 1. API를 호출하여 봇의 응답을 가져옵니다.
-      const data = await fetchQna({ question: newMessage });
+      const data = await fetchQna({ question: questionText });
 
       // 2. '입력 중...' 메시지를 실제 봇의 응답으로 교체합니다.
       setMessages((prevMessages) =>
