@@ -22,10 +22,15 @@ export const login = async (data) => {
 // 로그아웃 (POST /accounts/logout)
 export const logout = async () => {
   // [수정] 로그아웃 시 서버에 refresh 토큰을 전송하여 만료시킵니다.
-  const refreshToken = localStorage.getItem("refreshToken");
-  await api.post(LOGOUT_URL, { refresh: refreshToken });
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken"); // [추가] localStorage에서 refresh 토큰도 제거합니다.
+  try {
+    const refreshToken = localStorage.getItem("refreshToken");
+    await api.post(LOGOUT_URL, { refresh: refreshToken });
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken"); // [추가] localStorage에서 refresh 토큰도 제거합니다.
+  } catch (error) {
+    console.error("로그아웃 실패:", error);
+    throw error; // 에러를 상위로 전파하여 호출부에서 처리할 수 있도록 함
+  }
 };
 
 // 회원가입 (POST /accounts)
