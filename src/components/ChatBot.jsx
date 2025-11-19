@@ -28,7 +28,6 @@ function ChatBot() {
     ];
   });
   const [newMessage, setNewMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false); // [추가] 봇이 입력 중인지 상태
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -76,7 +75,7 @@ function ChatBot() {
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === botTypingMessage.id
-            ? { ...msg, text: data.answer, isTyping: false }
+            ? { ...msg, text: data.answer, isTyping: false } // isTyping을 false로 변경
             : msg
         )
       );
@@ -89,7 +88,7 @@ function ChatBot() {
             ? {
                 ...msg,
                 text: "죄송합니다, 답변을 가져오는 중 오류가 발생했습니다.",
-                isTyping: false,
+                isTyping: false, // isTyping을 false로 변경
               }
             : msg
         )
