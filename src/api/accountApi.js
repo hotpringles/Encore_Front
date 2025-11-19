@@ -1,11 +1,11 @@
 import api from "./apiClient";
 
 export const login = async (data) => {
-  const response = await api.post("/login/", data);
-  const { access, refresh } = response.data;
+  const res = await api.post("/login/", data);
+  const { access, refresh } = res.data;
   localStorage.setItem("accessToken", access);
   localStorage.setItem("refreshToken", refresh); // 리프레시 토큰 저장
-  return response.data;
+  return res.data;
 };
 
 export const refreshToken = async () => {
