@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../api/accountApi.js";
 import { useUiStore } from "../store/uiStore.js";
 import { useNewsStore } from "../store/newsStore.js";
@@ -17,6 +17,7 @@ function Menu() {
 
   const { isMenuVisible, toggleMenu, closeMenu } = useUiStore();
   const { user, logOut } = useUserStore();
+  const navigate = useNavigate();
 
   // 링크 클릭 시 동작을 정의하는 새로운 핸들러
   const handleLinkClick = (path) => {
@@ -35,7 +36,7 @@ function Menu() {
     await logout();
     // localStorage.removeItem("accessToken"); // logout() API 함수에서 이미 처리합니다.
     closeMenu();
-    logOut();
+    navigate("/login");
     // 로그인 페이지로 이동하는 로직은 App.jsx 등 상위에서 처리하는 것이 더 좋습니다.
   };
 
