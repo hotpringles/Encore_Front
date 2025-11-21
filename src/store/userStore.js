@@ -14,7 +14,7 @@ export const useUserStore = create((set) => ({
 
   setUser: (profile) => {
     set((state) => {
-      const updatedUser = { ...state, ...profile };
+      const updatedUser = { ...state.user, ...profile };
 
       if (updatedUser.score !== undefined) {
         updatedUser.grade = getGradeFromScore(updatedUser.score);
