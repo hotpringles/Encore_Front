@@ -8,10 +8,10 @@ const HeroSection = () => (
   <section className="w-full py-20 text-center sm:py-28 md:py-32">
     <div className="flex flex-col items-center gap-6">
       <h1 className="text-4xl font-black leading-tight tracking-tighter text-text-primary dark:text-white md:text-5xl lg:text-6xl">
-        EconoLearn AI 작동 방식
+        FinanceForU AI 작동 방식
       </h1>
       <p className="max-w-3xl text-base font-normal leading-normal text-text-secondary dark:text-gray-300 md:text-lg">
-        EconoLearn AI에 오신 것을 환영합니다! 저희 AI 에이전트가 어떻게 당신의
+        FinanceForU AI에 오신 것을 환영합니다! 저희 AI 에이전트가 어떻게 당신의
         맞춤형 경제 학습을 돕는지 자세히 알아보세요.
       </p>
       {/* "무료로 시작하기" 버튼 제거 */}
@@ -42,7 +42,7 @@ const HowItWorksSection = () => (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-4 text-center">
         <h2 className="text-3xl font-bold leading-tight tracking-tight text-text-primary dark:text-white md:text-4xl">
-          EconoLearn AI 핵심 기능
+          FinanceForU AI 핵심 기능
         </h2>
         <p className="mx-auto max-w-2xl text-base font-normal leading-normal text-text-secondary dark:text-gray-300 md:text-lg">
           당신의 경제 지식 성장을 돕는 3가지 핵심 기능을 소개합니다.
@@ -125,7 +125,7 @@ function DescriptionPage() {
       <HowItWorksSection />
       <FeatureSplitSection
         title="당신만을 위한 맞춤형 학습 경험"
-        text="EconoLearn AI의 모든 콘텐츠는 당신의 현재 경제 등급(씨앗, 새싹, 나무, 숲)에 맞춰 제공됩니다. 기사 요약부터 퀴즈의 난이도까지, 당신의 수준에 꼭 맞는 맞춤형 학습을 경험하세요. 사이드바에서는 이전에 학습한 기사 내역을 언제든 다시 확인할 수 있습니다."
+        text="FinanceForU AI의 모든 콘텐츠는 당신의 현재 경제 등급(씨앗, 새싹, 나무, 숲)에 맞춰 제공됩니다. 기사 요약부터 퀴즈의 난이도까지, 당신의 수준에 꼭 맞는 맞춤형 학습을 경험하세요. 사이드바에서는 이전에 학습한 기사 내역을 언제든 다시 확인할 수 있습니다."
         imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuB2Qt2gInc5_fZv8qSucSFiJ13khemLLVZnjG3DauplkfeK2-MYH3FMvoJjHUPD8kABQVxWV-eg1xEbu6vbMQgFN_MMHWU0SFRhzwaYXDQMr3TWGsMBkx_qSk2BsSIAemPE6aQ5A2qxFx-b5rzmbMSIghAJGCuk7LOvlLXXbeajl47TLQd0qjgU5M4ryTbEpSuUNR_t-cW4NxcGe0lnpsxEMeDy28OB9w_oxMqY4ZnIaDeHDAX_RGhTTmnekyeY4WWNbXfKDsmynPk"
         alt="경제 뉴스 기사에 대해 토론하는 AI 채팅 인터페이스의 UI 목업"
       />

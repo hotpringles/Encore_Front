@@ -13,9 +13,14 @@ export const useUserStore = create((set) => ({
   hasTested: false,
 
   setUser: (profile) => {
-    const newGrade = getGradeFromScore(profile.score);
-    set({
-      user: { ...profile, grade: newGrade },
+    set((state) => {
+      const updatedUser = { ...state, ...profile };
+
+      if (updatedUser.score !== undefined) {
+        updatedUser.grade = getGradeFromScore(updatedUser.score);
+      }
+
+      return { user: updatedUser };
     });
   },
   setHasTested: (value) => set({ hasTested: value }),

@@ -180,7 +180,7 @@ const QuizEnd = ({ score }) => {
   };
   const tier = getTierInfoFromResult(score);
 
-  const levelIcon = {
+  const levelIcons = {
     씨앗: seed,
     새싹: sprout,
     나무: tree,
@@ -198,7 +198,7 @@ const QuizEnd = ({ score }) => {
       };
       await updateMyInfo(updatedUser);
       // 2. 서버로부터 받은 최신 사용자 정보로 클라이언트 상태(스토어) 업데이트
-      setUser(updatedUser);
+      setUser((state) => ({ ...state, ...updatedUser }));
       setHasTested(true);
       // 3. 지정된 경로로 이동
       navigate(path);
@@ -220,7 +220,7 @@ const QuizEnd = ({ score }) => {
         <img
           alt={"등급 아이콘"}
           className="w-24 h-24 mt-4 mb-2"
-          src={levelIcon[tier.name]} // [수정] 등급별 아이콘
+          src={levelIcons[tier.name]} // [수정] 등급별 아이콘
         />
         <p className="text-2xl font-bold text-primary mt-2">{tier.name}</p>
 
