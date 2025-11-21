@@ -13,64 +13,67 @@ import forest from "../assets/forest.png";
 const TOTAL_QUESTIONS = 12; // 총 문제 수 (12개)
 
 // 1. 퀴즈 시작 화면 (수정 없음)
-const QuizStart = ({ onStartQuiz }) => (
-  <div className="w-full max-w-3xl h-full">
-    <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg border border-gray-200/80 dark:border-white/10 overflow-hidden">
-      <div className="p-8 sm:p-12 md:p-16 text-center">
-        <div className="flex justify-center mb-6">
-          <div className="w-24 h-24 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary text-5xl">
-              school
-            </span>
+const QuizStart = ({ onStartQuiz }) => {
+  const user = useUserStore((state) => state.user);
+  return (
+    <div className="w-full max-w-3xl h-full">
+      <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg border border-gray-200/80 dark:border-white/10 overflow-hidden">
+        <div className="p-8 sm:p-12 md:p-16 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-24 h-24 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-primary text-5xl">
+                school
+              </span>
+            </div>
           </div>
+          <h1 className="text-gray-900 dark:text-white tracking-tight text-4xl font-extrabold leading-tight pb-2">
+            경제 상식 퀴즈
+          </h1>
+          <h2 className="text-gray-700 dark:text-gray-300 text-lg font-medium leading-tight tracking-[-0.015em] pb-4">
+            {user.name}님, 환영합니다!
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed max-w-xl mx-auto">
+            이 퀴즈는 개인의 경제 지식을 테스트하기 위해 만들어졌습니다.
+          </p>
+          <div className="mt-8 mb-10 p-6 bg-gray-50 dark:bg-gray-800/60 rounded-lg border border-gray-200/80 dark:border-white/10">
+            <ul className="flex flex-col sm:flex-row justify-center items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-left">
+              <li className="flex items-center text-gray-700 dark:text-gray-300">
+                <span className="material-symbols-outlined mr-3 text-primary">
+                  checklist
+                </span>
+                <span className="text-sm font-medium">
+                  총 {TOTAL_QUESTIONS}개의 문제
+                </span>
+              </li>
+              <li className="flex items-center text-gray-700 dark:text-gray-300">
+                <span className="material-symbols-outlined mr-3 text-primary">
+                  filter_1
+                </span>
+                <span className="text-sm font-medium">
+                  문제는 한 번에 하나씩 표시됩니다
+                </span>
+              </li>
+              <li className="flex items-center text-gray-700 dark:text-gray-300">
+                <span className="material-symbols-outlined mr-3 text-primary">
+                  psychology
+                </span>
+                <span className="text-sm font-medium">
+                  경제 지식을 점검해 보세요
+                </span>
+              </li>
+            </ul>
+          </div>
+          <button
+            onClick={onStartQuiz}
+            className="w-full sm:w-auto flex-shrink-0 min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/30 hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all duration-300"
+          >
+            <span className="truncate">퀴즈 시작</span>
+          </button>
         </div>
-        <h1 className="text-gray-900 dark:text-white tracking-tight text-4xl font-extrabold leading-tight pb-2">
-          경제 상식 퀴즈
-        </h1>
-        <h2 className="text-gray-700 dark:text-gray-300 text-lg font-medium leading-tight tracking-[-0.015em] pb-4">
-          OOO님, 환영합니다!
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed max-w-xl mx-auto">
-          이 퀴즈는 개인의 경제 지식을 테스트하기 위해 만들어졌습니다.
-        </p>
-        <div className="mt-8 mb-10 p-6 bg-gray-50 dark:bg-gray-800/60 rounded-lg border border-gray-200/80 dark:border-white/10">
-          <ul className="flex flex-col sm:flex-row justify-center items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-left">
-            <li className="flex items-center text-gray-700 dark:text-gray-300">
-              <span className="material-symbols-outlined mr-3 text-primary">
-                checklist
-              </span>
-              <span className="text-sm font-medium">
-                총 {TOTAL_QUESTIONS}개의 문제
-              </span>
-            </li>
-            <li className="flex items-center text-gray-700 dark:text-gray-300">
-              <span className="material-symbols-outlined mr-3 text-primary">
-                filter_1
-              </span>
-              <span className="text-sm font-medium">
-                문제는 한 번에 하나씩 표시됩니다
-              </span>
-            </li>
-            <li className="flex items-center text-gray-700 dark:text-gray-300">
-              <span className="material-symbols-outlined mr-3 text-primary">
-                psychology
-              </span>
-              <span className="text-sm font-medium">
-                경제 지식을 점검해 보세요
-              </span>
-            </li>
-          </ul>
-        </div>
-        <button
-          onClick={onStartQuiz}
-          className="w-full sm:w-auto flex-shrink-0 min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/30 hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all duration-300"
-        >
-          <span className="truncate">퀴즈 시작</span>
-        </button>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // 2. 퀴즈 진행 화면 (수정 없음)
 const QuizMiddle = ({
@@ -188,10 +191,12 @@ const QuizEnd = ({ score }) => {
   const handleNavigation = async (path) => {
     try {
       // 1. 등급에 따라 서버에 점수 업데이트 요청
-      const updatedUser = await updateMyInfo({
+      // updatedUser를 await로 받지말고 일반 const 변수로 만든 다음에 사용
+      const updatedUser = {
         grade: tier.name,
         score: tier.name === "새싹" ? 1000 : 10,
-      });
+      };
+      await updateMyInfo(updatedUser);
       // 2. 서버로부터 받은 최신 사용자 정보로 클라이언트 상태(스토어) 업데이트
       setUser(updatedUser);
       setHasTested(true);
