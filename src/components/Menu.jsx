@@ -62,18 +62,21 @@ function Menu() {
           ${isMenuVisible ? "w-[240px]" : "w-[60px]"}`}
       >
         {/* [추가] 메뉴 토글 버튼 */}
-        <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
-          <button
-            onClick={toggleMenu}
-            className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border-none outline-none "
-            title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
-          >
-            <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
-              menu
-            </span>
-            <span className="text-lg font-medium">메뉴</span>
-          </button>
-        </div>
+        {/* <div className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
+          
+        </div> */}
+        <button
+          onClick={toggleMenu}
+          className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline border-none outline-none "
+          title={isMenuVisible ? "메뉴 접기" : "메뉴 펼치기"}
+        >
+          <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
+            menu
+          </span>
+          <span className="font-semibold text-base font-['Pretendard','Noto_Sans_KR',sans-serif]">
+            메뉴
+          </span>
+        </button>
         <ul className="flex flex-col p-[7.5px] space-y-2 whitespace-nowrap">
           {menuItems.map((item) => (
             <li key={item.path}>
