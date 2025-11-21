@@ -16,7 +16,7 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const { user, levelIcon } = useUserStore();
+  const { user } = useUserStore((state) => state.user);
   const levelIcons = {
     씨앗: seed,
     새싹: sprout,
@@ -83,8 +83,8 @@ function Profile() {
         <section className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center gap-6">
             <img
-              src={levelIcons[levelIcon]}
-              alt={levelIcon}
+              src={levelIcons[user.grade]}
+              alt={user.grade}
               className="size-24 rounded-full object-cover border-2 border-gray-200"
             />
             <div className="flex flex-col w-full">

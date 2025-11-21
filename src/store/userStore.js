@@ -11,16 +11,13 @@ const getGradeFromScore = (score) => {
 export const useUserStore = create((set) => ({
   user: null,
   hasTested: false,
-  levelIcon: null,
 
   setUser: (profile) => {
     const newGrade = getGradeFromScore(profile.score);
     set({
       user: { ...profile, grade: newGrade },
-      levelIcon: newGrade,
     });
   },
   setHasTested: (value) => set({ hasTested: value }),
-  logOut: () => set({ user: null, hasTested: false, levelIcon: null }),
-  setLevelIcon: (value) => set({ levelIcon: value }),
+  logOut: () => set({ user: null, hasTested: false }),
 }));

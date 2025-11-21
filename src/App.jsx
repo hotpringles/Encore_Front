@@ -22,8 +22,7 @@ function App() {
   const location = useLocation();
   const isSignPage = ["/", "/login", "/signup"].includes(location.pathname);
   const isChatBotVisible = useUiStore((state) => state.isChatBotVisible);
-  const { user, setUser, hasTested, setHasTested, setLevelIcon } =
-    useUserStore();
+  const { user, setUser, hasTested, setHasTested } = useUserStore();
   // const [articles, setArticles] = useState([]);
   // const [selectedReports, setSelectedReports] = useState(null);
   const { setNewsGroup, setSelectedNewsGroup } = useNewsStore();
@@ -126,7 +125,6 @@ function App() {
           const userData = await fetchProfile();
           setUser(userData);
           setHasTested(!!userData.grade); // [추가] 등급 유무로 hasTested 설정
-          setLevelIcon(userData.grade); // [추가] 등급 아이콘 설정
         } catch (error) {
           console.error("자동 로그인 실패:", error);
           localStorage.removeItem("accessToken"); // 유효하지 않은 토큰 제거
