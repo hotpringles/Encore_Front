@@ -198,7 +198,7 @@ const QuizEnd = ({ score }) => {
       };
       await updateMyInfo(updatedUser);
       // 2. 서버로부터 받은 최신 사용자 정보로 클라이언트 상태(스토어) 업데이트
-      setUser((state) => ({ ...state, ...updatedUser }));
+      setUser((state) => ({ ...state.user, ...updatedUser }));
       setHasTested(true);
       // 3. 지정된 경로로 이동
       navigate(path);

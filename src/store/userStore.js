@@ -5,6 +5,7 @@ const getGradeFromScore = (score) => {
   if (score >= 10000) return "숲";
   if (score >= 4000) return "나무";
   if (score >= 1000) return "새싹";
+  else return "씨앗";
   return null;
 };
 
