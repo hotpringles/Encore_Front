@@ -132,7 +132,7 @@ function Menu() {
             <img
               alt="프로필"
               className="w-10 h-10 rounded-full mr-3 bg-gray-300"
-              src={levelIcons[user.grade]} // [수정] 사용자 프로필 이미지
+              src={levelIcons[user?.grade]} // [수정] 사용자 프로필 이미지
             />
             {/* 프로필 이미지 플레이스홀더 */}
             <div className="flex-grow whitespace-nowrap">
