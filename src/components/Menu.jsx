@@ -71,7 +71,7 @@ function Menu() {
             <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
               menu
             </span>
-            <span className="font-semibold text-base font-['Pretendard','Noto_Sans_KR',sans-serif]">
+            <span className="font-['Pretendard','Noto_Sans_KR',sans-serif] text-lg font-medium ">
               메뉴
             </span>
           </button>

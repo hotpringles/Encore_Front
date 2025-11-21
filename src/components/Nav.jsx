@@ -1,3 +1,4 @@
+import { useLocation } from "react";
 import { Link } from "react-router-dom";
 import { useUiStore } from "../store/uiStore.js";
 import { useUserStore } from "../store/userStore.js";
@@ -5,6 +6,7 @@ import { useUserStore } from "../store/userStore.js";
 function Nav() {
   const user = useUserStore((state) => state.user);
   const toggleChatBot = useUiStore((state) => state.toggleChatBot);
+  const location = useLocation();
 
   return (
     <nav className="flex justify-between items-center px-4 h-[60px] bg-white border-b border-gray-200 shadow-sm z-50">
@@ -39,6 +41,7 @@ function Nav() {
           transition-colors no-underline font-['Pretendard','Noto_Sans_KR',sans-serif] border-0 outline-none ring-0 focus-visible:outline-black"
           onClick={toggleChatBot}
           title="챗봇 열기/닫기"
+          disabled={location.pathname !== "/main"}
         >
           <span className="material-symbols-outlined text-2xl">
             chat_bubble

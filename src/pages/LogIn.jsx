@@ -148,7 +148,7 @@ const LogIn = () => {
                         />
                         <button
                           type="button" // 폼 제출 방지
-                          className="absolute right-4 text-slate-500 dark:text-slate-400 flex items-center"
+                          className="absolute right-4 text-slate-500 dark:text-slate-400 flex items-center border-none outline-none focus:border-none focus:outline-none"
                           onClick={handleTogglePassword}
                         >
                           <span className="material-symbols-outlined">
