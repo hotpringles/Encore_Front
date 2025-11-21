@@ -102,7 +102,7 @@ const LogIn = () => {
                   </div>
 
                   <div className="flex flex-col gap-4">
-                    {/* 이메일 입력 */}
+                    {/* 아이디 입력 */}
                     <div className="flex flex-col">
                       <label
                         className="text-[#212529] dark:text-slate-200 text-base font-medium leading-normal pb-2"
@@ -148,7 +148,7 @@ const LogIn = () => {
                         />
                         <button
                           type="button" // 폼 제출 방지
-                          className="absolute right-4 text-slate-500 dark:text-slate-400"
+                          className="absolute right-4 text-slate-500 dark:text-slate-400 flex items-center"
                           onClick={handleTogglePassword}
                         >
                           <span className="material-symbols-outlined">
