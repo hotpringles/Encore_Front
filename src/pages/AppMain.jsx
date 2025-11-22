@@ -5,7 +5,6 @@ import { useNewsStore } from "../store/newsStore.js";
 import image_1 from "../assets/newsImage-1.jpg";
 import image_2 from "../assets/newsImage-2.jpg";
 import image_3 from "../assets/newsImage-3.jpg";
-import
 
 function PageIndicator({ totalCards, currentPage }) {
   const dots = Array.from({ length: totalCards }, (_, index) => index);
