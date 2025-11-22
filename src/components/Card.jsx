@@ -45,11 +45,11 @@ function Card({
     try {
       setQuizLoading(true); // 로딩 시작
       const ox = await fetchOxQuizzes();
-      ox.filter((item) => quizId === item.summary);
+      const oxList = ox.filter((item) => quizId === item.summary);
       const mc = await fetchMcQuizzes();
-      mc.filter((item) => quizId === item.summary);
+      const mcList = mc.filter((item) => quizId === item.summary);
       const sa = await fetchSaQuizzes();
-      sa.filter((item) => quizId === item.summary);
+      const saList = sa.filter((item) => quizId === item.summary);
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
