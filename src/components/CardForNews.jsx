@@ -51,7 +51,7 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
       <div className="card-page">
         <img className="card-image" src={imageUrl} alt={title} />
         <h1 className="card-title">{title}</h1>
-        <p className="flex justify-center items-center text-small text-blue-400">
+        <p className="flex justify-center items-center text-sm text-blue-400">
           <span class="material-symbols-outlined">
             keyboard_double_arrow_down
           </span>{" "}
@@ -68,7 +68,7 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
                 {originalUrl}
               </a>
             </p>
-            <p className="flex justify-center items-center text-small text-blue-400">
+            <p className="flex justify-center items-center text-sm text-blue-400">
               <span class="material-symbols-outlined">
                 keyboard_double_arrow_down
               </span>{" "}
