@@ -53,8 +53,10 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
         <h1 className="card-title">{title}</h1>
       </div>
       <div className="card-page">
-        <p>{wrapKeywordsWithComponent(summary, terms, KeywordTooltip)}</p>
-        <p>출처: {originalUrl}</p>
+        <div className="card-summary">
+          <p>{wrapKeywordsWithComponent(summary, terms, KeywordTooltip)}</p>
+          <p>출처: {originalUrl}</p>
+        </div>
       </div>
     </>
   );
