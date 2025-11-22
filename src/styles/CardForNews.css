@@ -1,5 +1,4 @@
 .card-page {
-  position: relative;
   height: 100%;
   width: 100%;
   scroll-snap-align: start;
@@ -36,6 +35,10 @@
   flex: 1;
   box-sizing: border-box;
   word-break: keep-all;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-summary::-webkit-scrollbar {

@@ -55,7 +55,7 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
       <div className="card-page">
         <div className="card-summary">
           <p>{wrapKeywordsWithComponent(summary, terms, KeywordTooltip)}</p>
-          <p className="absolute bottom-0 right-0">출처: {originalUrl}</p>
+          <p>출처: {originalUrl}</p>
         </div>
       </div>
     </>
