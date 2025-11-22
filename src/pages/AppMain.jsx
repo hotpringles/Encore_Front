@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import Card from "../components/Card.jsx";
 import "../styles/AppMain.css";
 import { useNewsStore } from "../store/newsStore.js";
+import image_1 from "../assets/newsImage-1.jpg";
+import image_2 from "../assets/newsImage-2.jpg";
+import image_3 from "../assets/newsImage-3.jpg";
+import
 
 function PageIndicator({ totalCards, currentPage }) {
   const dots = Array.from({ length: totalCards }, (_, index) => index);
@@ -31,6 +35,12 @@ function AppMain({ onQuizCorrect }) {
   // console.log(selectedNewsGroup);
   const totalCards = cards?.length || 0;
   const [currentPage, setCurrentPage] = useState(0);
+
+  const imageList = {
+    0: image_1,
+    1: image_2,
+    2: image_3,
+  };
 
   // [추가] 요일을 계산하는 로직
   const getDayOfWeek = (dateString) => {
@@ -103,7 +113,7 @@ function AppMain({ onQuizCorrect }) {
                 <div key={report.id} className={getCardClass(index)}>
                   <Card
                     title={report.summaries[0].title}
-                    imageUrl={report.summaries[0].article.imageUrl}
+                    imageUrl={imageList[index]}
                     summary={report.summaries[0].content}
                     terms={report.summaries[0].terms}
                     originalUrl={report.summaries[0].article.url}
