@@ -57,7 +57,7 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
           <p>{wrapKeywordsWithComponent(summary, terms, KeywordTooltip)}</p>
           <p className="text-end">
             출처:{" "}
-            <a ref={`${originalUrl}`} target="_blank">
+            <a href={originalUrl} target="_blank" rel="noopener noreferrer">
               {originalUrl}
             </a>
           </p>
