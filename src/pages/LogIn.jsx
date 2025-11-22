@@ -107,7 +107,7 @@ const LogIn = () => {
                         className="text-[#212529] dark:text-slate-200 text-base font-medium leading-normal pb-2"
                         htmlFor="email"
                       >
-                        이메일 또는 사용자 이름
+                        사용자 이름
                       </label>
                       <div className="relative flex items-center">
                         <span className="material-symbols-outlined absolute left-4 text-slate-500 dark:text-slate-400">

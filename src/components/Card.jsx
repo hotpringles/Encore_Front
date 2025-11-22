@@ -139,7 +139,8 @@ function Card({
 
     setQuizReady(true); // 이 값 변경이 useEffect를 트리거합니다.
   };
-  console.log(quizContents);
+  console.log("quizContents:", quizContents);
+  console.log("quizId:", quizId);
 
   return (
     // [추가] ref 연결
