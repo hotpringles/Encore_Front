@@ -53,9 +53,9 @@ function Card({
 
       // [수정] API가 배열을 반환할 경우를 대비해 첫 번째 요소를 사용합니다.
       // API가 단일 객체를 반환한다면 이 코드는 그대로 두어도 안전합니다.
-      setOxQuizzes(Array.isArray(ox) ? ox : ox ? [ox] : []);
-      setMcQuizzes(Array.isArray(mc) ? mc : mc ? [mc] : []);
-      setSaQuizzes(Array.isArray(sa) ? sa : sa ? [sa] : []);
+      setOxQuizzes(Array.isArray(oxList) ? oxList : oxList ? [oxList] : []);
+      setMcQuizzes(Array.isArray(mcList) ? mcList : mcList ? [mcList] : []);
+      setSaQuizzes(Array.isArray(saList) ? saList : saList ? [saList] : []);
     } catch (err) {
       console.error(err);
       setError("퀴즈를 불러오는 데 실패했습니다.");
