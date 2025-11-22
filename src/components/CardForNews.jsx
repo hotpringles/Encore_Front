@@ -51,16 +51,30 @@ function CardForNews({ title, imageUrl, summary, originalUrl, terms }) {
       <div className="card-page">
         <img className="card-image" src={imageUrl} alt={title} />
         <h1 className="card-title">{title}</h1>
+        <p className="text-center text-blue-400">
+          <span class="material-symbols-outlined">
+            keyboard_double_arrow_down
+          </span>{" "}
+          아래로 스크롤해주세요.
+        </p>
       </div>
       <div className="card-page">
         <div className="card-summary">
           <p>{wrapKeywordsWithComponent(summary, terms, KeywordTooltip)}</p>
-          <p className="text-end">
-            출처:{" "}
-            <a href={originalUrl} target="_blank" rel="noopener noreferrer">
-              {originalUrl}
-            </a>
-          </p>
+          <div>
+            <p className="text-end">
+              출처:{" "}
+              <a href={originalUrl} target="_blank" rel="noopener noreferrer">
+                {originalUrl}
+              </a>
+            </p>
+            <p className="text-center text-blue-400">
+              <span class="material-symbols-outlined">
+                keyboard_double_arrow_down
+              </span>{" "}
+              아래로 스크롤해주세요.
+            </p>
+          </div>
         </div>
       </div>
     </>
