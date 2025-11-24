@@ -242,7 +242,7 @@ const QuizEnd = ({ score }) => {
           </button>
           <button
             onClick={() => handleNavigation("/main")}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] grow"
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/15 grow"
           >
             <span className="truncate">학습 시작하기</span>
           </button>
