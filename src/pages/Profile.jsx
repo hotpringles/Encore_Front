@@ -134,7 +134,10 @@ function Profile() {
                       width:
                         user?.grade === "나무"
                           ? "100%"
-                          : `${(user?.score || 0) % levelScore[user?.grade]}%`,
+                          : `${
+                              ((user?.score || 0) / levelScore[user?.grade]) *
+                              100
+                            }%`,
                     }}
                   ></div>
                 </div>
