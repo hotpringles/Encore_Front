@@ -24,6 +24,13 @@ function Profile() {
     숲: forest,
   };
 
+  const levelScore = {
+    씨앗: 1000,
+    새싹: 4000,
+    나무: 10000,
+    숲: 10000,
+  };
+
   // 비밀번호 업데이트 핸들러
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
@@ -116,14 +123,19 @@ function Profile() {
                   </span>
                   {/* [수정] 실제 점수로 변경 */}
                   <span className="text-primary text-sm font-bold">
-                    {user?.score || 0} / 1000
+                    {user?.score || 0} / {levelScore[user?.grade]}
                   </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   {/* [수정] 실제 점수를 기반으로 경험치 바 표시 */}
                   <div
                     className="bg-primary h-2.5 rounded-full"
-                    style={{ width: `${(user?.score || 0) % 1000}%` }}
+                    style={{
+                      width:
+                        user?.grade === "나무"
+                          ? "100%"
+                          : `${(user?.score || 0) % levelScore[user?.grade]}%`,
+                    }}
                   ></div>
                 </div>
               </div>
