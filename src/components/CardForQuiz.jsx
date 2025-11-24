@@ -316,7 +316,9 @@ function CardForQuiz({
                 <div className="mt-4 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/40 border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300 leading-relaxed">
                     <span className="font-bold">주의:</span> 퀴즈는 총 2개이며
-                    퀴즈 결과는 즉시 경험치에 반영됩니다,
+                    퀴즈 결과는
+                    <br />
+                    즉시 경험치에 반영됩니다,
                     <br />
                     또한 제출한 답은 수정할 수 없습니다.
                   </p>
