@@ -31,7 +31,7 @@ function FeedbackBlock({ isCorrect, message, explanation }) {
 const submitButtonStyles =
   "w-full mt-6 px-6 py-3 border-none rounded-lg bg-primary text-white font-bold cursor-pointer transition-all duration-200 hover:bg-primary/15 disabled:bg-gray-400 disabled:cursor-not-allowed";
 
-function OxQuizSection({ sectionId, quiz, onAnswered }) {
+function OxQuizSection({ sectionId, quiz, onAnswered, index }) {
   const [localSelection, setLocalSelection] = useState(null);
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
@@ -55,7 +55,7 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
         <div className="w-full">
           <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
             <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-              (OX) {quiz.question}
+              {index + 1}.(OX) {quiz.question}
             </p>
           </div>
         </div>
@@ -119,7 +119,7 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
   );
 }
 
-function McQuizSection({ sectionId, quiz, onAnswered }) {
+function McQuizSection({ sectionId, quiz, onAnswered, index }) {
   const [localSelection, setLocalSelection] = useState(null);
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
@@ -142,7 +142,7 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
         <div className="w-full">
           <div className="flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-slate-800 p-6 sm:p-8 shadow-sm">
             <p className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">
-              {quiz.question}
+              {index + 1}.{quiz.question}
             </p>
           </div>
         </div>
@@ -204,7 +204,7 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
   );
 }
 
-function SaQuizSection({ sectionId, quiz, onAnswered }) {
+function SaQuizSection({ sectionId, quiz, onAnswered, index }) {
   const [inputValue, setInputValue] = useState("");
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
 
@@ -219,7 +219,7 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
       <div className="flex flex-col justify-center h-full p-6 sm:p-10 gap-8">
         <div className="flex flex-col gap-8 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm p-6 sm:p-10">
           <h1 className="text-[#111418] dark:text-white tracking-tight text-[22px] sm:text-[28px] font-bold leading-tight text-center">
-            {quiz.question}
+            {index + 1}.{quiz.question}
           </h1>
           <form
             className="flex w-full flex-col gap-4"
@@ -315,10 +315,10 @@ function CardForQuiz({
                 </p>
                 <div className="mt-4 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/40 border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300 leading-relaxed">
-                    <span className="font-bold">주의:</span> 퀴즈 결과는 즉시
-                    경험치에 반영되며,
+                    <span className="font-bold">주의:</span> 퀴즈는 총 2개이며
+                    퀴즈 결과는 즉시 경험치에 반영됩니다,
                     <br />
-                    제출한 답은 수정할 수 없습니다.
+                    또한 제출한 답은 수정할 수 없습니다.
                   </p>
                 </div>
               </div>
@@ -348,6 +348,7 @@ function CardForQuiz({
                   sectionId={sectionId}
                   quiz={entry}
                   onAnswered={handleAnswered}
+                  index={index}
                 />
               );
             }
@@ -358,6 +359,7 @@ function CardForQuiz({
                   sectionId={sectionId}
                   quiz={entry}
                   onAnswered={handleAnswered}
+                  index={index}
                 />
               );
             }
@@ -368,6 +370,7 @@ function CardForQuiz({
                   sectionId={sectionId}
                   quiz={entry}
                   onAnswered={handleAnswered}
+                  index={index}
                 />
               );
             }
