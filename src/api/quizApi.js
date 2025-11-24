@@ -36,7 +36,7 @@ export const fetchOxQuizDetail = async (id) => {
  * @param {Object} data - 수정할 퀴즈 데이터 (질문, 정답, 해설 등)
  */
 export const updateOxQuiz = async (id, data) => {
-  const res = await api.put(`/ox-quiz/${id}`, data);
+  const res = await api.put(`/ox-quiz/${id}/`, data);
   return res.data.results;
 };
 
