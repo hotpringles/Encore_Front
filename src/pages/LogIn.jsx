@@ -160,7 +160,7 @@ const LogIn = () => {
                     {/* 로그인 버튼 */}
                     <button
                       type="submit" // [수정] 이 버튼이 눌리면 <form>의 onSubmit이 실행됩니다.
-                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#1976D2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       로그인
                     </button>

@@ -146,7 +146,7 @@ const QuizMiddle = ({
           <button
             onClick={onNextQuestion}
             disabled={selectedAnswer === null}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-600"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-colors hover:bg-primary/15 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-600"
           >
             <span>
               {questionIndex === TOTAL_QUESTIONS - 1 ? "결과 보기" : "다음"}

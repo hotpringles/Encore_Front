@@ -29,7 +29,7 @@ function FeedbackBlock({ isCorrect, message, explanation }) {
 
 // "제출하기" 버튼 공통 스타일
 const submitButtonStyles =
-  "w-full mt-6 px-6 py-3 border-none rounded-lg bg-primary text-white font-bold cursor-pointer transition-all duration-200 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed";
+  "w-full mt-6 px-6 py-3 border-none rounded-lg bg-primary text-white font-bold cursor-pointer transition-all duration-200 hover:bg-primary/15 disabled:bg-gray-400 disabled:cursor-not-allowed";
 const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
 function OxQuizSection({ sectionId, quiz, onAnswered }) {

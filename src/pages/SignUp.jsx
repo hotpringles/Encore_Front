@@ -202,10 +202,10 @@ const SignUp = () => {
                         />
                         <button
                           type="button"
-                          className="absolute right-4 text-slate-500 dark:text-slate-400"
+                          className="absolute right-4 text-slate-500 dark:text-slate-400 border-none outline-none focus:border-none focus:outline-none"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          <span className="material-symbols-outlined">
+                          <span className="material-symbols-outlined leading-[1.5]">
                             {showPassword ? "visibility_off" : "visibility"}
                           </span>
                         </button>
@@ -234,12 +234,12 @@ const SignUp = () => {
                         />
                         <button
                           type="button"
-                          className="absolute right-4 text-slate-500 dark:text-slate-400"
+                          className="absolute right-4 text-slate-500 dark:text-slate-400 border-none outline-none focus:border-none focus:outline-none"
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }
                         >
-                          <span className="material-symbols-outlined">
+                          <span className="material-symbols-outlined leading-[1.5]">
                             {showConfirmPassword
                               ? "visibility_off"
                               : "visibility"}
@@ -260,7 +260,7 @@ const SignUp = () => {
 
                     <button
                       type="submit"
-                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#1976D2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:bg-gray-400"
+                      className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:bg-gray-400"
                       disabled={isLoading} // [개선] 로딩 중일 때 버튼 비활성화
                     >
                       {isLoading ? "가입 처리 중..." : "회원가입"}

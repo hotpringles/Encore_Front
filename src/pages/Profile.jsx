@@ -184,7 +184,7 @@ function Profile() {
             <div className="p-6 bg-gray-50 rounded-b-lg flex justify-end border-t border-gray-200">
               <button
                 type="submit"
-                className="flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-50 text-white font-semibold text-sm h-10 px-5 rounded-lg bg-primary hover:bg-primary/90 transition-colors"
+                className="flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-50 text-white font-semibold text-sm h-10 px-5 rounded-lg bg-primary hover:bg-primary/15 transition-colors"
               >
                 비밀번호 업데이트
               </button>
