@@ -65,7 +65,7 @@ const QuizStart = ({ onStartQuiz }) => {
           </div>
           <button
             onClick={onStartQuiz}
-            className="w-full sm:w-auto flex-shrink-0 min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/30 hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all duration-300"
+            className="w-full sm:w-auto flex-shrink-0 min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/30 hover:bg-primary/15 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all duration-300"
           >
             <span className="truncate">퀴즈 시작</span>
           </button>
