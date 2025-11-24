@@ -30,7 +30,6 @@ function FeedbackBlock({ isCorrect, message, explanation }) {
 // "제출하기" 버튼 공통 스타일
 const submitButtonStyles =
   "w-full mt-6 px-6 py-3 border-none rounded-lg bg-primary text-white font-bold cursor-pointer transition-all duration-200 hover:bg-primary/15 disabled:bg-gray-400 disabled:cursor-not-allowed";
-const primaryColorStyle = { backgroundColor: "#1b73ee" };
 
 function OxQuizSection({ sectionId, quiz, onAnswered }) {
   const [localSelection, setLocalSelection] = useState(null);
@@ -104,7 +103,6 @@ function OxQuizSection({ sectionId, quiz, onAnswered }) {
             type="submit"
             disabled={submittedAnswer !== null || localSelection === null}
             className={submitButtonStyles}
-            style={primaryColorStyle}
           >
             제출하기
           </button>
@@ -190,7 +188,6 @@ function McQuizSection({ sectionId, quiz, onAnswered }) {
             type="submit"
             disabled={submittedAnswer !== null || localSelection === null}
             className={submitButtonStyles}
-            style={primaryColorStyle}
           >
             제출하기
           </button>
@@ -258,7 +255,6 @@ function SaQuizSection({ sectionId, quiz, onAnswered }) {
               type="submit"
               disabled={submittedAnswer !== null || !inputValue.trim()}
               className={submitButtonStyles}
-              style={primaryColorStyle}
             >
               제출하기
             </button>
@@ -298,13 +294,13 @@ function CardForQuiz({
         <div className="card-page quiz-page">
           <div className="flex flex-col justify-center items-center h-full p-6 text-center gap-4">
             <h3 className="text-2xl md:text-3xl font-bold text-[#111418] dark:text-white">
-              퀴즈 생성하기
+              퀴즈 시작하기
             </h3>
             <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-md">
               요약을 읽고 아래 버튼을 눌러 퀴즈를 시작해보세요.
             </p>
             <button
-              className="px-6 py-3 mt-4 border-none rounded-lg bg-[#111] dark:bg-gray-100 text-white dark:text-gray-900 font-bold cursor-pointer transition-all duration-200 hover:bg-gray-700 dark:hover:bg-gray-300 disabled:bg-gray-400 disabled:cursor-default"
+              className="px-6 py-3 mt-4 border-none rounded-lg bg-primary dark:bg-gray-100 text-white dark:text-gray-900 font-bold cursor-pointer transition-all duration-200 hover:bg-primary/15 dark:hover:bg-gray-300 disabled:bg-gray-400 disabled:cursor-default"
               onClick={handleGenerateQuiz}
               disabled={quizReady}
             >
