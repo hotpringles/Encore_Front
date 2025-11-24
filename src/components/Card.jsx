@@ -3,9 +3,9 @@ import CardForNews from "./CardForNews.jsx"; // 같은 components 폴더 내
 import CardForQuiz from "./CardForQuiz.jsx"; // 같은 components 폴더 내
 import "../styles/Card.css";
 import {
-  fetchOxQuizzes,
-  fetchMcQuizzes,
-  fetchSaQuizzes,
+  fetchOxQuizDetail,
+  fetchMcQuizDetail,
+  fetchSaQuizDetail,
 } from "../api/quizApi.js";
 import { useUserStore } from "../store/userStore.js";
 
@@ -45,13 +45,13 @@ function Card({
     try {
       setQuizLoading(true); // 로딩 시작
       // 퀴즈 summary id로 가져올 수 있는 지 확인해야함
-      const ox = await fetchOxQuizzes();
+      const ox = await fetchOxQuizDetail(quizId);
       console.log(ox);
       const oxList = ox.filter((item) => quizId === item.summary);
-      const mc = await fetchMcQuizzes();
+      const mc = await fetchMcQuizDetail(quizId);
       console.log(mc);
       const mcList = mc.filter((item) => quizId === item.summary);
-      const sa = await fetchSaQuizzes();
+      const sa = await fetchSaQuizDetail(quizId);
       console.log(sa);
       const saList = sa.filter((item) => quizId === item.summary);
 
