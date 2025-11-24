@@ -1,5 +1,6 @@
 import { useState, useId } from "react";
 import "../styles/CardForQuiz.css";
+import { updateOxQuiz, updateMcQuiz, updateSaQuiz } from "../api/quizApi";
 
 // [추가] 정답/오답 피드백을 위한 헬퍼 컴포넌트
 function FeedbackBlock({ isCorrect, message, explanation }) {
@@ -66,7 +67,7 @@ function OxQuizSection({ sectionId, quiz, onAnswered, index }) {
             setSubmittedAnswer(localSelection);
             const correct = quiz.correct_answer === localSelection;
             setIsCorrect(correct);
-            onAnswered?.(correct);
+            onAnswered?.(correct, quiz.flag);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -153,7 +154,7 @@ function McQuizSection({ sectionId, quiz, onAnswered, index }) {
             setSubmittedAnswer(localSelection);
             const correct = quiz.options[localSelection.order - 1].is_correct;
             setIsCorrect(correct);
-            onAnswered?.(correct);
+            onAnswered?.(correct, quiz.flag);
           }}
         >
           <div className="flex flex-col gap-3">
@@ -237,7 +238,7 @@ function SaQuizSection({ sectionId, quiz, onAnswered, index }) {
               };
               setSubmittedAnswer(result);
               setIsCorrect(correct);
-              onAnswered?.(correct);
+              onAnswered?.(correct, quiz.flag);
             }}
           >
             <label className="sr-only" htmlFor="user-answer">
@@ -337,9 +338,18 @@ function CardForQuiz({
             if (!entry) return null;
             const sectionKey = `${index}`;
             const sectionId = `${uniqueId}-${index}`;
-            const handleAnswered = (isCorrect) => {
-              if (isCorrect) {
-                onQuizCorrect?.(15);
+            const handleAnswered = async (isCorrect, flag) => {
+              if (!flag) {
+                if (isCorrect) {
+                  onQuizCorrect?.(15);
+                }
+                if (entry.quiz_type === "OX") {
+                  await updateOxQuiz(entry.id, { ...entry, flag: true });
+                } else if (entry.quiz_type === "MC4") {
+                  await updateMcQuiz(entry.id, { ...entry, flag: true });
+                } else if (entry.quiz_type === "SC") {
+                  await updateSaQuiz(entry.id, { ...entry, flag: true });
+                }
               }
             };
 
