@@ -5,6 +5,7 @@ import { useUserStore } from "../store/userStore.js";
 function Nav() {
   const user = useUserStore((state) => state.user);
   const toggleChatBot = useUiStore((state) => state.toggleChatBot);
+  const setIsChatBotVisible = useUiStore((state) => state.setIsChatBotVisible);
   const location = useLocation();
 
   return (
@@ -30,7 +31,11 @@ function Nav() {
       </div>
       <div className="flex items-center gap-2">
         <div className="text-sm text-gray-600">
-          <Link to="/profile" className="font-semibold">
+          <Link
+            to="/profile"
+            className="font-semibold"
+            onClick={() => setIsChatBotVisible(false)}
+          >
             {user?.username || "방문자"}
           </Link>
           님, 환영합니다!
