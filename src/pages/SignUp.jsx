@@ -110,9 +110,9 @@ const SignUp = () => {
                 </div>
                 {/* [수정] 줄 바꿈 <br /> 태그 적용 */}
                 <h1 className="text-white tracking-tight text-4xl font-bold leading-tight">
-                  경제 기사 분석과 교육,
+                  경제 기사를 통한
                   <br />
-                  학습의 새로운 시작
+                  배움의 새로운 시작
                 </h1>
                 <p className="text-white/80 text-lg font-normal leading-normal">
                   Finance For U와 함께 금융 지식의 새로운 지평을 열어보세요.

@@ -15,7 +15,8 @@ function Menu() {
     { path: "/description", label: "설명", icon: "description" },
   ];
 
-  const { isMenuVisible, toggleMenu, closeMenu } = useUiStore();
+  const { isMenuVisible, setIsChatBotVisible, toggleMenu, closeMenu } =
+    useUiStore();
   const { user, logOut } = useUserStore();
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ function Menu() {
     } else {
       // 다른 경로로 이동할 때는 메뉴를 닫기만 함
       closeMenu();
+      setIsChatBotVisible(false);
     }
   };
 
@@ -81,7 +83,9 @@ function Menu() {
               <Link
                 to={item.path}
                 className="flex items-center p-3 h-[45px] text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline font-['Pretendard','Noto_Sans_KR',sans-serif]"
-                onClick={() => handleLinkClick(item.path)}
+                onClick={() => {
+                  handleLinkClick(item.path);
+                }}
               >
                 <span className="material-symbols-outlined w-[20px] h-[20px] mr-5 text-2xl flex justify-center items-center">
                   {item.icon}
@@ -109,6 +113,7 @@ function Menu() {
                   onClick={() => {
                     setSelectedNewsGroup(reports);
                     closeMenu();
+                    setIsChatBotVisible(false);
                   }}
                   title={reports[0]?.date} // [추가] 날짜에 마우스를 올리면 전체 날짜 표시
                 >
@@ -127,7 +132,10 @@ function Menu() {
           <Link
             to="/profile"
             className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 no-underline"
-            onClick={closeMenu}
+            onClick={() => {
+              closeMenu();
+              setIsChatBotVisible(false);
+            }}
           >
             <img
               alt="프로필"

@@ -44,6 +44,7 @@ function Card({
     if (!id) return; // quizId가 없으면 함수를 실행하지 않습니다.
     try {
       setQuizLoading(true); // 로딩 시작
+      // 퀴즈 summary id로 가져올 수 있는 지 확인해야함
       const ox = await fetchOxQuizzes();
       console.log(ox);
       const oxList = ox.filter((item) => quizId === item.summary);

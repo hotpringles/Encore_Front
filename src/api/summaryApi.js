@@ -7,12 +7,12 @@ import api from "./client";
  * - 예: 요약 리스트 페이지, 대시보드 등에서 사용
  */
 export const fetchSummaries = async () => {
-  // const res = await api.get("/summary-group/", {
-  //   params: {
-  //     ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
-  //   },
-  // });
-  const res = await api.get("/summary-group/");
+  const res = await api.get("/summary-group/", {
+    params: {
+      ordering: "-id", // 백엔드 규칙에 맞게 필드명/값 설정
+    },
+  });
+  // const res = await api.get("/summary-group/");
   return res.data;
 };
 

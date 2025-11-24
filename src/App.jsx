@@ -89,7 +89,7 @@ function App() {
       // console.log(data.results[0].summaries[0]);
       // console.log(data.results[0].summaries[0].id);
       // console.log(data.results);
-      const filteredList = filteredSummaries(data.results);
+      const filteredList = filteredSummaries(data.results); // 21개 받아오게 고정해야됨
       console.log(filteredList);
       const dataObj = groupByDate(filteredList);
       const sortedDates = Object.keys(dataObj).sort((a, b) =>
