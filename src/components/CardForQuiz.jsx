@@ -341,7 +341,7 @@ function CardForQuiz({
             const handleAnswered = async (isCorrect, flag) => {
               if (!flag) {
                 if (isCorrect) {
-                  onQuizCorrect?.(15);
+                  onQuizCorrect?.(15, flag);
                 }
                 if (entry.quiz_type === "OX") {
                   await updateOxQuiz(entry.id, { ...entry, flag: true });

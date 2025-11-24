@@ -33,8 +33,8 @@ function App() {
   const [authLoading, setAuthLoading] = useState(true); // [수정] 인증 로딩 상태 주석 해제
 
   // [추가] 사용자 점수(경험치)를 업데이트하는 함수
-  const updateUserScore = async (amount) => {
-    if (!user) return;
+  const updateUserScore = async (amount, flag) => {
+    if (!user || flag) return;
 
     const newScore = (user.score || 0) + amount;
     const updatedUser = { ...user, score: newScore };
