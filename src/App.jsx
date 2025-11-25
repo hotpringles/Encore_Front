@@ -44,7 +44,6 @@ function App() {
       setUser(updatedUser);
       // 2. 백엔드에 변경사항을 저장
       await updateMyInfo({ score: newScore });
-      console.log(user.score);
     } catch (error) {
       console.error("점수 업데이트 실패:", error);
       // TODO: 필요하다면 여기서 원래 user 상태로 롤백하는 로직을 추가할 수 있습니다.
@@ -81,8 +80,6 @@ function App() {
       setError(null); // 에러 초기화
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
-      console.log(data);
-      console.log(user.id);
       // [수정] API 응답 객체 전체가 아닌, 실제 데이터가 담긴 data.results 배열을 전달합니다.
       // console.log(data);
       // console.log(data.results[0]);
