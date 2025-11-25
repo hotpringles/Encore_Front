@@ -44,7 +44,6 @@ function App() {
       setUser(updatedUser);
       // 2. 백엔드에 변경사항을 저장
       await updateMyInfo({ score: newScore });
-      console.log(user.score);
     } catch (error) {
       console.error("점수 업데이트 실패:", error);
       // TODO: 필요하다면 여기서 원래 user 상태로 롤백하는 로직을 추가할 수 있습니다.
