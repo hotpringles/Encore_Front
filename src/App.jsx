@@ -80,8 +80,6 @@ function App() {
       setError(null); // 에러 초기화
 
       const data = await fetchSummaries(); // ✅ 여기서 백엔드 요청
-      console.log(data);
-      console.log(user.id);
       // [수정] API 응답 객체 전체가 아닌, 실제 데이터가 담긴 data.results 배열을 전달합니다.
       // console.log(data);
       // console.log(data.results[0]);
