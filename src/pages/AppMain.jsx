@@ -84,7 +84,7 @@ function AppMain({ onQuizCorrect }) {
   }
 
   return (
-    <div className="main-container flex flex-col items-center justify-between w-full h-full relative overflow-x-hidden">
+    <div className="main-container flex flex-col items-center justify-between w-full h-full relative overflow-hidden">
       <div className="date-indicator p-[10px_20px] shadow-[0_6px_20px_rgba(0,0,0,0.08)] flex items-baseline gap-[6px]  rounded-[999px] mt-3 mb-[15px]">
         <span className="cards-date font-bold">
           {selectedNewsGroup[0].date}
