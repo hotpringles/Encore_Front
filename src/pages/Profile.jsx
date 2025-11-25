@@ -132,7 +132,7 @@ function Profile() {
                     className="bg-primary h-2.5 rounded-full"
                     style={{
                       width:
-                        user?.grade === "나무"
+                        user?.grade === "숲"
                           ? "100%"
                           : `${
                               ((user?.score || 0) / levelScore[user?.grade]) *
