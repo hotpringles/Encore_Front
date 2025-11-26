@@ -78,10 +78,10 @@ function KeywordTooltip({ term, definition, children }) {
               left: pos.left,
               zIndex: 1000,
             }}
-            className="max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 !text-base text-gray-800 shadow-md"
+            className="max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-gray-800 shadow-md"
           >
-            <div className="font-semibold mb-1">{term}</div>
-            <div className="leading-snug">{definition}</div>
+            <div className="font-semibold mb-1 text-base">{term}</div>
+            <div className="leading-snug text-base">{definition}</div>
           </div>,
           document.body
         )}
