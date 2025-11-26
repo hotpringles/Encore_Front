@@ -107,22 +107,26 @@ function AppMain({ onQuizCorrect }) {
         )}
         <div className="cards-viewport">
           <div className="cards-wrapper">
-            {selectedNewsGroup.map((report, index) => {
-              return (
-                <div key={report.id} className={getCardClass(index)}>
-                  <Card
-                    title={report.summaries[0].title}
-                    imageUrl={imageList[index]}
-                    summary={report.summaries[0].content}
-                    terms={report.summaries[0].terms}
-                    originalUrl={report.summaries[0].article.url}
-                    author={report.summaries[0].article.author}
-                    quizId={report.summaries[0].id}
-                    onQuizCorrect={onQuizCorrect}
-                  />
-                </div>
-              );
-            })}
+            {selectedNewsGroup
+              .filter(
+                (report) => report.summaries && report.summaries.length > 0
+              )
+              .map((report, index) => {
+                return (
+                  <div key={report.id} className={getCardClass(index)}>
+                    <Card
+                      title={report.summaries[0].title}
+                      imageUrl={imageList[index]}
+                      summary={report.summaries[0].content}
+                      terms={report.summaries[0].terms}
+                      originalUrl={report.summaries[0].article.url}
+                      author={report.summaries[0].article.author}
+                      quizId={report.summaries[0].id}
+                      onQuizCorrect={onQuizCorrect}
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
         {totalCards > 1 && (
