@@ -77,9 +77,8 @@ function KeywordTooltip({ term, definition, children }) {
               top: pos.top,
               left: pos.left,
               zIndex: 1000,
-              "font-size": "1rem",
             }}
-            className="max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-gray-800 shadow-md"
+            className="max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-base text-gray-800 shadow-md"
           >
             <div className="font-semibold mb-1">{term}</div>
             <div className="leading-snug">{definition}</div>
